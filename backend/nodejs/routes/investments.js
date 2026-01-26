@@ -91,6 +91,24 @@ router.post('/deposit', authMiddleware, async (req, res) => {
   }
 });
 
+// Confirm deposit transaction hash
+router.post('/deposit/confirm', authMiddleware, async (req, res) => {
+  try {
+    const { amount, method, txHash, txId, walletAddress } = req.body;
+
+    if (!txHash || !amount) {
+      return res.status(400).json({ message: 'Transaction hash and amount are required' });
+    }
+
+    res.json({
+      message: 'Transaction hash submitted',
+      data: { amount, method, txHash, txId, walletAddress },
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 // Create investment
 router.post('/', authMiddleware, async (req, res) => {
   try {

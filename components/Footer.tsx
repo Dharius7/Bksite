@@ -7,7 +7,7 @@ export default function Footer() {
   const quickLinks = [
     { href: '/about', label: 'About Us' },
     { href: '/services', label: 'Services' },
-    { href: '/grants-aid', label: 'Grants & Aid' },
+    { href: '/login', label: 'Grants & Aid' },
     { href: '/contact', label: 'Contact' },
   ];
 
@@ -15,14 +15,12 @@ export default function Footer() {
     { href: '/services/personal-banking', label: 'Personal Banking' },
     { href: '/services/business-banking', label: 'Business Banking' },
     { href: '/services/loans-credit', label: 'Loans & Credit' },
-    { href: '/services/cards', label: 'Cards' },
+    { href: '/login', label: 'Cards' },
   ];
 
   const memberServices = [
-    { href: '/online-banking', label: 'Online Banking' },
-    { href: '/mobile-app', label: 'Mobile App' },
-    { href: '/atm-locations', label: 'ATM Locations' },
-    { href: '/security-center', label: 'Security Center' },
+    { href: '/login', label: 'Online Banking' },
+    { href: '/login', label: 'Security Center' },
   ];
 
   return (

@@ -13,6 +13,25 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
+// Get transfer message (for confirm transfer)
+router.get('/transfer-message', authMiddleware, async (req, res) => {
+  try {
+    const account = await Account.findOne({ userId: req.user._id, isPrimary: true });
+    if (!account) {
+      return res.status(404).json({ message: 'Account not found' });
+    }
+
+    let message = account.transferMessage || '';
+    if (!message && account.status !== 'active') {
+      message = 'Account is not active. Please contact your bank.';
+    }
+
+    res.json({ message });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 // Get account by ID
 router.get('/:id', authMiddleware, async (req, res) => {
   try {

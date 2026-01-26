@@ -23,6 +23,7 @@ app.get('/api/health', (req, res) => {
 
 // Auth routes
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/admin', require('./routes/admin'));
 
 // Protected routes
 app.use('/api/dashboard', require('./routes/dashboard'));
@@ -37,6 +38,7 @@ app.use('/api/tax-refund', require('./routes/taxRefund'));
 app.use('/api/grants', require('./routes/grants'));
 app.use('/api/accounts', require('./routes/accounts'));
 app.use('/api/user', require('./routes/user'));
+app.use('/api/support', require('./routes/support'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {

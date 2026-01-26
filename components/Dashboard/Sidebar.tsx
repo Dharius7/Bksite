@@ -20,6 +20,8 @@ import {
   User,
   LogOut,
   Activity,
+  Menu,
+  X,
 } from 'lucide-react';
 
 export default function Sidebar() {
@@ -46,8 +48,6 @@ export default function Sidebar() {
     { name: 'Currency Swap', path: '/dashboard/currency-swap', icon: RefreshCw },
     { name: 'Loans', path: '/dashboard/loans', icon: Building2 },
     { name: 'Save & Invest', path: '/dashboard/investments', icon: PiggyBank },
-    { name: 'Tax Refund', path: '/dashboard/tax-refund', icon: FileText },
-    { name: 'Grants', path: '/dashboard/grants', icon: HandCoins },
   ];
 
   const accountNav = [
@@ -63,16 +63,11 @@ export default function Sidebar() {
     <>
       {/* Mobile menu button */}
       <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-lg"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white text-gray-800 rounded-lg shadow-sm border border-gray-200"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          {mobileMenuOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
+        {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
 
       {/* Sidebar */}

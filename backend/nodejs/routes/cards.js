@@ -106,4 +106,19 @@ router.patch('/:id', authMiddleware, async (req, res) => {
   }
 });
 
+// Delete card
+router.delete('/:id', authMiddleware, async (req, res) => {
+  try {
+    const card = await Card.findOneAndDelete({ _id: req.params.id, userId: req.user._id });
+
+    if (!card) {
+      return res.status(404).json({ message: 'Card not found' });
+    }
+
+    res.json({ message: 'Card deleted', cardId: req.params.id });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 module.exports = router;

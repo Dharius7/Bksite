@@ -23,6 +23,15 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
+// Get loan types and rates
+router.get('/types/list', authMiddleware, async (req, res) => {
+  try {
+    res.json(LOAN_TYPES);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 // Get loan by ID
 router.get('/:id', authMiddleware, async (req, res) => {
   try {
@@ -31,15 +40,6 @@ router.get('/:id', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Loan not found' });
     }
     res.json(loan);
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-});
-
-// Get loan types and rates
-router.get('/types/list', authMiddleware, async (req, res) => {
-  try {
-    res.json(LOAN_TYPES);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

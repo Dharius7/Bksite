@@ -76,27 +76,31 @@ export default function Rates() {
         </div>
 
         {/* Rate Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
           {rates.map((rate, index) => {
             const Icon = rate.icon;
             return (
-              <div key={index} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
-                <div className={`${rate.iconBg} w-16 h-16 rounded-lg flex items-center justify-center mb-4`}>
-                  <Icon className={`w-8 h-8 ${rate.iconColor}`} />
+              <div key={index} className="bg-white rounded-xl shadow-lg p-4 sm:p-6 hover:shadow-xl transition">
+                <div className="flex flex-col items-start sm:items-start gap-3">
+                  <div className={`${rate.iconBg} w-12 h-12 sm:w-16 sm:h-16 rounded-lg flex items-center justify-center`}>
+                    <Icon className={`w-6 h-6 sm:w-8 sm:h-8 ${rate.iconColor}`} />
+                  </div>
+                  <div>
+                    <div className={`text-2xl sm:text-4xl font-bold ${rate.rateColor} mb-1`}>
+                      {rate.rate}
+                    </div>
+                    <div className={`text-xs sm:text-sm ${rate.rateColor}`}>
+                      {rate.rateType}
+                    </div>
+                  </div>
                 </div>
-                <div className={`text-4xl font-bold ${rate.rateColor} mb-1`}>
-                  {rate.rate}
-                </div>
-                <div className={`text-sm ${rate.rateColor} mb-4`}>
-                  {rate.rateType}
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                <h3 className="mt-3 text-sm sm:text-lg font-bold text-gray-900">
                   {rate.title}
                 </h3>
-                <p className="text-gray-600 text-sm mb-4">
+                <p className="text-gray-600 text-xs sm:text-sm mt-2 mb-4 hidden sm:block">
                   {rate.description}
                 </p>
-                <button className={`${rate.buttonColor} text-white px-4 py-2 rounded-lg text-sm font-semibold w-full hover:opacity-90 transition`}>
+                <button className={`${rate.buttonColor} text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold w-full hover:opacity-90 transition`}>
                   {rate.buttonText}
                 </button>
               </div>

@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { User, Mail, Phone, Lock, Calendar, MapPin, CheckCircle, DollarSign } from 'lucide-react';
+import { User, Mail, Phone, Lock, Calendar, MapPin, CheckCircle, DollarSign, IdCard } from 'lucide-react';
+import api from '@/lib/api';
 
 export default function OpenAccountPage() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function OpenAccountPage() {
     lastName: '',
     email: '',
     phone: '',
+    ssn: '',
     dateOfBirth: '',
     address: '',
     city: '',
@@ -44,6 +46,7 @@ export default function OpenAccountPage() {
       if (!formData.email) newErrors.email = 'Email is required';
       else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
       if (!formData.phone) newErrors.phone = 'Phone number is required';
+      if (!formData.ssn) newErrors.ssn = 'SSN is required';
       if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
     } else if (stepNum === 2) {
       if (!formData.address) newErrors.address = 'Address is required';
@@ -74,11 +77,37 @@ export default function OpenAccountPage() {
     setStep(step - 1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateStep(3)) {
-      // TODO: Implement actual account creation logic
-      router.push('/account-success');
+      try {
+        const response = await api.post('/auth/register', {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          ssn: formData.ssn,
+          password: formData.password,
+          dateOfBirth: formData.dateOfBirth,
+          address: {
+            street: formData.address,
+            city: formData.city,
+            state: formData.state,
+            zipCode: formData.zipCode,
+          },
+          accountType: formData.accountType,
+          initialDeposit: Number(formData.initialDeposit || 0),
+        });
+
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('token', response.data?.token);
+          localStorage.setItem('user', JSON.stringify(response.data?.user));
+        }
+
+        router.push('/account-success');
+      } catch (err: any) {
+        setErrors(prev => ({ ...prev, submit: err.response?.data?.message || 'Failed to open account' }));
+      }
     }
   };
 
@@ -137,6 +166,11 @@ export default function OpenAccountPage() {
           {/* Form */}
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <form onSubmit={handleSubmit}>
+              {errors.submit && (
+                <div className="mb-4 rounded-lg bg-red-50 border border-red-200 text-red-700 px-4 py-3">
+                  {errors.submit}
+                </div>
+              )}
               {/* Step 1: Personal Information */}
               {step === 1 && (
                 <div className="space-y-6">
@@ -218,6 +252,25 @@ export default function OpenAccountPage() {
                       />
                     </div>
                     {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      SSN *
+                    </label>
+                    <div className="relative">
+                      <IdCard className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                      <input
+                        type="text"
+                        name="ssn"
+                        value={formData.ssn}
+                        onChange={handleChange}
+                        className={`w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                          errors.ssn ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="123-45-6789"
+                      />
+                    </div>
+                    {errors.ssn && <p className="text-red-500 text-sm mt-1">{errors.ssn}</p>}
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -456,7 +509,9 @@ export default function OpenAccountPage() {
           </div>
         </div>
       </div>
-      <Footer />
+      <div className="hidden md:block">
+        <Footer />
+      </div>
     </main>
   );
 }

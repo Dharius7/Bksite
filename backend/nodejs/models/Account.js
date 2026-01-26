@@ -9,6 +9,7 @@ const accountSchema = new mongoose.Schema({
   bitcoinBalance: { type: Number, default: 0 },
   isPrimary: { type: Boolean, default: true },
   status: { type: String, enum: ['active', 'closed', 'frozen'], default: 'active' },
+  transferMessage: { type: String, default: '' },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

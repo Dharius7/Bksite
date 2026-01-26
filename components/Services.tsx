@@ -65,21 +65,21 @@ export default function Services() {
         </div>
 
         {/* Service Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <div
                 key={index}
-                className="glass rounded-xl p-6 hover:bg-white/20 transition cursor-pointer backdrop-blur-md"
+                className="glass rounded-xl p-4 sm:p-6 hover:bg-white/20 transition cursor-pointer backdrop-blur-md"
               >
-                <div className="w-16 h-16 bg-white/20 rounded-lg flex items-center justify-center mb-4 backdrop-blur-sm">
-                  <Icon className="w-8 h-8 text-white" />
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-lg flex items-center justify-center mb-3 sm:mb-4 backdrop-blur-sm">
+                  <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">
+                <h3 className="text-sm sm:text-xl font-bold text-white mb-2 sm:mb-3">
                   {service.title}
                 </h3>
-                <p className="text-white/90 leading-relaxed">
+                <p className="text-white/90 leading-relaxed text-xs sm:text-base hidden sm:block">
                   {service.description}
                 </p>
               </div>
