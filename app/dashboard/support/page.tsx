@@ -4,6 +4,10 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
+<<<<<<< HEAD
+=======
+import { trimRequired } from '@/lib/validation';
+>>>>>>> b2ccfa7 (First Update commit)
 import { HelpCircle, Flag, MessageSquare, Send, ChevronDown, CreditCard, ShieldCheck, Plus, Activity } from 'lucide-react';
 
 export default function SupportPage() {
@@ -36,6 +40,25 @@ export default function SupportPage() {
     setError('');
     setSubmitting(true);
 
+<<<<<<< HEAD
+=======
+    if (!trimRequired(title) || !trimRequired(description)) {
+      setError('Please complete all required fields.');
+      setSubmitting(false);
+      return;
+    }
+    if (title.trim().length < 5) {
+      setError('Ticket title must be at least 5 characters.');
+      setSubmitting(false);
+      return;
+    }
+    if (description.trim().length < 10) {
+      setError('Description must be at least 10 characters.');
+      setSubmitting(false);
+      return;
+    }
+
+>>>>>>> b2ccfa7 (First Update commit)
     try {
       const response = await api.post('/support', {
         title: title.trim(),

@@ -2,7 +2,11 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import adminApi from '@/lib/adminApi';
+<<<<<<< HEAD
 import { Download, Filter } from 'lucide-react';
+=======
+import { Download, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
+>>>>>>> b2ccfa7 (First Update commit)
 
 export default function AdminTransactionsPage() {
   const [transactions, setTransactions] = useState<any[]>([]);
@@ -82,23 +86,38 @@ export default function AdminTransactionsPage() {
   }, [typeFilter, statusFilter]);
 
   return (
+<<<<<<< HEAD
     <div className="p-4 md:p-6 space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Transactions</h1>
+=======
+    <div className="p-4 md:p-6 space-y-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-2xl px-4 py-3 bg-gradient-to-r from-indigo-50 via-purple-50 to-fuchsia-50 border border-indigo-100">
+        <div>
+          <h1 className="text-2xl font-bold text-indigo-800">Transactions</h1>
+>>>>>>> b2ccfa7 (First Update commit)
         </div>
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => setFiltersOpen((prev) => !prev)}
+<<<<<<< HEAD
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
+=======
+            className="inline-flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-white"
+>>>>>>> b2ccfa7 (First Update commit)
           >
             <Filter className="w-4 h-4" />
             Filter
           </button>
           <button
             type="button"
+<<<<<<< HEAD
             className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
+=======
+            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-md hover:from-blue-700 hover:to-indigo-700"
+>>>>>>> b2ccfa7 (First Update commit)
           >
             <Download className="w-4 h-4" />
             Export
@@ -112,10 +131,17 @@ export default function AdminTransactionsPage() {
                   return (prev - 1 + total) % total;
                 })
               }
+<<<<<<< HEAD
               className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
               aria-label="Previous transactions"
             >
               ←
+=======
+              className="inline-flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-white"
+              aria-label="Previous transactions"
+            >
+              <ChevronLeft className="w-4 h-4" />
+>>>>>>> b2ccfa7 (First Update commit)
             </button>
             <button
               type="button"
@@ -125,17 +151,29 @@ export default function AdminTransactionsPage() {
                   return (prev + 1) % total;
                 })
               }
+<<<<<<< HEAD
               className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
               aria-label="Next transactions"
             >
               →
+=======
+              className="inline-flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-white"
+              aria-label="Next transactions"
+            >
+              <ChevronRight className="w-4 h-4" />
+>>>>>>> b2ccfa7 (First Update commit)
             </button>
           </div>
         </div>
       </div>
 
       {filtersOpen && (
+<<<<<<< HEAD
         <div className="bg-white rounded-2xl shadow-sm p-4 flex flex-col md:flex-row gap-3">
+=======
+        <div className="bg-white/90 backdrop-blur rounded-3xl shadow-lg p-4 flex flex-col md:flex-row gap-3 border border-slate-100 relative overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-500" />
+>>>>>>> b2ccfa7 (First Update commit)
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
@@ -163,7 +201,12 @@ export default function AdminTransactionsPage() {
         </div>
       )}
 
+<<<<<<< HEAD
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+=======
+      <div className="bg-white/90 backdrop-blur rounded-3xl shadow-lg overflow-hidden border border-slate-100 relative">
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-500" />
+>>>>>>> b2ccfa7 (First Update commit)
         {error && (
           <div className="m-4 rounded-lg bg-red-50 border border-red-200 text-red-700 px-4 py-3">
             {error}
@@ -278,11 +321,19 @@ export default function AdminTransactionsPage() {
                     return (prev - 1 + total) % total;
                   })
                 }
+<<<<<<< HEAD
                 className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
                 aria-label="Previous transactions"
               >
                 ←
               </button>
+=======
+              className="inline-flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-white"
+              aria-label="Previous transactions"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+>>>>>>> b2ccfa7 (First Update commit)
               <button
                 type="button"
                 onClick={() =>
@@ -291,11 +342,19 @@ export default function AdminTransactionsPage() {
                     return (prev + 1) % total;
                   })
                 }
+<<<<<<< HEAD
                 className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
                 aria-label="Next transactions"
               >
                 →
               </button>
+=======
+              className="inline-flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-white"
+              aria-label="Next transactions"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+>>>>>>> b2ccfa7 (First Update commit)
             </div>
 
             <div className="border-t bg-slate-50 px-6 py-4 text-sm text-gray-600">

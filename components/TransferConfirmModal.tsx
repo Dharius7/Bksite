@@ -12,6 +12,8 @@ interface TransferConfirmModalProps {
   sourceLabel?: string;
   fee?: number;
   btcRate?: number | null;
+  statusMessage?: string;
+  statusError?: string;
 }
 
 export default function TransferConfirmModal({
@@ -24,6 +26,8 @@ export default function TransferConfirmModal({
   sourceLabel = 'Account Balance',
   fee = 0,
   btcRate = null,
+  statusMessage = '',
+  statusError = '',
 }: TransferConfirmModalProps) {
   if (!open) return null;
 
@@ -61,33 +65,52 @@ export default function TransferConfirmModal({
         </div>
 
         <div className="p-6 space-y-4 text-sm">
+
+          {statusMessage && (
+            <div className="rounded-lg bg-green-50 border border-green-200 text-green-700 px-4 py-3 text-sm">
+              {statusMessage}
+            </div>
+          )}
+
+          {statusError && (
+            <div className="rounded-lg bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
+              {statusError}
+            </div>
+          )}
+
           <div className="flex items-center justify-between">
             <span className="text-gray-600">Transfer Method</span>
             <span className="font-semibold text-gray-900">{methodLabel}</span>
           </div>
+
           <div className="flex items-center justify-between">
             <span className="text-gray-600">Amount</span>
             <span className="font-semibold text-gray-900">{formatMoney(amount)}</span>
           </div>
+
           <div className="flex items-center justify-between">
             <span className="text-gray-600">Source</span>
             <span className="font-semibold text-gray-900">{sourceLabel}</span>
           </div>
+
           <div className="flex items-center justify-between">
             <span className="text-gray-600">Fee</span>
             <span className="font-semibold text-gray-900">{formatMoney(fee)}</span>
           </div>
+
           <div className="border-t border-gray-100 pt-4 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-gray-600">Total Deducted</span>
               <span className="font-semibold text-gray-900">{formatMoney(totalDeducted)}</span>
             </div>
+
             <div className="flex items-center justify-between">
               <span className="text-gray-600">New Account Balance</span>
               <span className="font-semibold text-gray-900">
                 {newBalance === null ? 'N/A' : formatMoney(newBalance)}
               </span>
             </div>
+
             {btcEquivalent !== null && (
               <div className="flex items-center justify-between">
                 <span className="text-gray-600">BTC Equivalent</span>
@@ -95,6 +118,7 @@ export default function TransferConfirmModal({
               </div>
             )}
           </div>
+
         </div>
 
         <div className="p-6 pt-2 flex flex-col sm:flex-row gap-3 sm:justify-end">
@@ -105,6 +129,7 @@ export default function TransferConfirmModal({
           >
             Cancel
           </button>
+
           <button
             type="button"
             onClick={onConfirm}

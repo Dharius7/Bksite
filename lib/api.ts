@@ -24,7 +24,12 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const requestUrl = error?.config?.url || '';
+    const skipAuthRedirect =
+      requestUrl.includes('/auth/login') ||
+      requestUrl.includes('/auth/verify-otp') ||
+      requestUrl.includes('/auth/resend-otp');
+    if (error.response?.status === 401 && !skipAuthRedirect) {
       if (typeof window !== 'undefined') {
         localStorage.removeItem('token');
         localStorage.removeItem('user');

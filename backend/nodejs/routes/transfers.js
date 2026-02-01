@@ -8,9 +8,16 @@ const Account = require('../models/Account');
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const { toAccount, amount, description, method } = req.body;
+    const numericAmount = Number(amount);
 
-    if (!toAccount || !amount || amount <= 0) {
+    if (!toAccount || typeof toAccount !== 'string') {
+      return res.status(400).json({ message: 'Destination account is required' });
+    }
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
       return res.status(400).json({ message: 'Invalid transfer details' });
+    }
+    if (method && typeof method !== 'string') {
+      return res.status(400).json({ message: 'Invalid transfer method' });
     }
 
     const fromAccount = await Account.findOne({ userId: req.user._id, isPrimary: true });
@@ -18,7 +25,7 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Account not found' });
     }
 
-    if (fromAccount.balance < amount) {
+    if (fromAccount.balance < numericAmount) {
       return res.status(400).json({ message: 'Insufficient balance' });
     }
 
@@ -32,12 +39,12 @@ router.post('/', authMiddleware, async (req, res) => {
       userId: req.user._id,
       accountId: fromAccount._id,
       type: 'transfer',
-      amount: -amount,
+      amount: -numericAmount,
       description: description || `Transfer to ${toAccount}`,
       status: 'completed',
       toAccount: toAccount,
       fromAccount: fromAccount.accountNumber,
-      balanceAfter: fromAccount.balance - amount,
+      balanceAfter: fromAccount.balance - numericAmount,
       metadata: { method: method || 'wire' },
     });
 
@@ -46,18 +53,18 @@ router.post('/', authMiddleware, async (req, res) => {
       userId: toAccountDoc.userId,
       accountId: toAccountDoc._id,
       type: 'transfer',
-      amount: amount,
+      amount: numericAmount,
       description: description || `Transfer from ${fromAccount.accountNumber}`,
       status: 'completed',
       fromAccount: fromAccount.accountNumber,
       toAccount: toAccount,
-      balanceAfter: toAccountDoc.balance + amount,
+      balanceAfter: toAccountDoc.balance + numericAmount,
       metadata: { method: method || 'wire' },
     });
 
     // Update balances
-    fromAccount.balance -= amount;
-    toAccountDoc.balance += amount;
+    fromAccount.balance -= numericAmount;
+    toAccountDoc.balance += numericAmount;
 
     await Promise.all([
       debitTransaction.save(),

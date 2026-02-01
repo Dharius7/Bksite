@@ -4,7 +4,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
+<<<<<<< HEAD
 import { Download, Filter } from 'lucide-react';
+=======
+import { Calendar, CheckCircle2, Clock, Download, Filter, Printer, UserRound, X } from 'lucide-react';
+>>>>>>> b2ccfa7 (First Update commit)
 
 export default function TransactionsPage() {
   const { user, isLoading } = useAuth();
@@ -15,6 +19,10 @@ export default function TransactionsPage() {
   const [statusFilter, setStatusFilter] = useState('');
   const [error, setError] = useState('');
   const [filtersOpen, setFiltersOpen] = useState(false);
+<<<<<<< HEAD
+=======
+  const [selectedTx, setSelectedTx] = useState<any | null>(null);
+>>>>>>> b2ccfa7 (First Update commit)
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -46,6 +54,7 @@ export default function TransactionsPage() {
     fetchTransactions();
   }, [user, typeFilter, statusFilter]);
 
+<<<<<<< HEAD
   if (isLoading || !user) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -53,6 +62,14 @@ export default function TransactionsPage() {
       </div>
     );
   }
+=======
+  const formatLabel = (value: string) => {
+    const normalized = (value || '').toLowerCase();
+    if (!normalized) return 'N/A';
+    if (normalized === 'transfer') return 'Transfered';
+    return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+  };
+>>>>>>> b2ccfa7 (First Update commit)
 
   const statusBadge = (status: string) => {
     const normalized = (status || '').toLowerCase();
@@ -65,11 +82,49 @@ export default function TransactionsPage() {
   const typeBadge = (type: string) => {
     const normalized = (type || '').toLowerCase();
     if (normalized === 'credit' || normalized === 'deposit') return 'bg-green-100 text-green-700';
+<<<<<<< HEAD
+=======
+    if (normalized === 'received') return 'bg-green-100 text-green-700';
+>>>>>>> b2ccfa7 (First Update commit)
     if (normalized === 'debit' || normalized === 'transfer') return 'bg-red-100 text-red-700';
     return 'bg-blue-100 text-blue-700';
   };
 
   const totalCount = useMemo(() => transactions.length, [transactions]);
+<<<<<<< HEAD
+=======
+  const receiptData = useMemo(() => {
+    if (!selectedTx) return null;
+    const createdAt = selectedTx.createdAt ? new Date(selectedTx.createdAt) : null;
+    const methodLabel =
+      selectedTx.metadata?.method ||
+      selectedTx.paymentMethod ||
+      selectedTx.type ||
+      'Transfered';
+    const normalizedType = String(selectedTx.type || '').toLowerCase();
+    const isReceived = normalizedType === 'received';
+    return {
+      ...selectedTx,
+      createdDate: createdAt ? createdAt.toLocaleDateString() : 'N/A',
+      createdTime: createdAt ? createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'N/A',
+      methodLabel,
+      recipientName: isReceived
+        ? (selectedTx.metadata?.senderName || 'N/A')
+        : (selectedTx.metadata?.recipientName || selectedTx.recipientName || 'N/A'),
+      recipientAccount: isReceived
+        ? (selectedTx.metadata?.senderAccount || 'N/A')
+        : (selectedTx.toAccount || selectedTx.recipientAccount || 'N/A'),
+    };
+  }, [selectedTx]);
+
+  if (isLoading || !user) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-gray-600">Loading...</div>
+      </div>
+    );
+  }
+>>>>>>> b2ccfa7 (First Update commit)
 
   return (
     <div className="p-4 md:p-6 space-y-6">
@@ -108,6 +163,10 @@ export default function TransactionsPage() {
             <option value="transfer">Transfer</option>
             <option value="debit">Debit</option>
             <option value="credit">Credit</option>
+<<<<<<< HEAD
+=======
+            <option value="received">Received</option>
+>>>>>>> b2ccfa7 (First Update commit)
             <option value="currency_swap">Currency Swap</option>
           </select>
 
@@ -162,12 +221,20 @@ export default function TransactionsPage() {
                       </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${typeBadge(tx.type)}`}>
+<<<<<<< HEAD
                           {tx.type || 'N/A'}
+=======
+                          {formatLabel(tx.type || 'N/A')}
+>>>>>>> b2ccfa7 (First Update commit)
                         </span>
                       </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${statusBadge(tx.status)}`}>
+<<<<<<< HEAD
                           {tx.status || 'N/A'}
+=======
+                          {formatLabel(tx.status || 'N/A')}
+>>>>>>> b2ccfa7 (First Update commit)
                         </span>
                       </td>
                       <td className="px-6 py-4 font-mono text-xs text-gray-600">
@@ -179,7 +246,15 @@ export default function TransactionsPage() {
                         <span className="text-xs text-gray-500">{new Date(tx.createdAt).toLocaleTimeString()}</span>
                       </td>
                       <td className="px-6 py-4 text-right">
+<<<<<<< HEAD
                         <button className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1.5 text-xs font-semibold text-blue-700">
+=======
+                        <button
+                          type="button"
+                          onClick={() => setSelectedTx(tx)}
+                          className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1.5 text-xs font-semibold text-blue-700"
+                        >
+>>>>>>> b2ccfa7 (First Update commit)
                           Receipt
                         </button>
                       </td>
@@ -197,20 +272,38 @@ export default function TransactionsPage() {
                       ${Math.abs(tx.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
                     <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${typeBadge(tx.type)}`}>
+<<<<<<< HEAD
                       {tx.type || 'N/A'}
+=======
+                      {formatLabel(tx.type || 'N/A')}
+>>>>>>> b2ccfa7 (First Update commit)
                     </span>
                   </div>
                   <div className="mt-2 text-xs text-gray-500">{tx.currency || 'USD'}</div>
                   <div className="mt-3 flex items-center justify-between text-xs text-gray-600">
                     <span>{new Date(tx.createdAt).toLocaleDateString()}</span>
+<<<<<<< HEAD
                     <span className={`rounded-full px-2 py-1 font-semibold ${statusBadge(tx.status)}`}>{tx.status || 'N/A'}</span>
+=======
+                    <span className={`rounded-full px-2 py-1 font-semibold ${statusBadge(tx.status)}`}>
+                      {formatLabel(tx.status || 'N/A')}
+                    </span>
+>>>>>>> b2ccfa7 (First Update commit)
                   </div>
                   <div className="mt-3 text-xs text-gray-500">
                     Ref: {tx.reference || tx._id?.slice(0, 12) || 'N/A'}
                   </div>
                   <div className="mt-2 text-sm text-gray-700">{tx.description || 'Ok'}</div>
                   <div className="mt-3">
+<<<<<<< HEAD
                     <button className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1.5 text-xs font-semibold text-blue-700">
+=======
+                    <button
+                      type="button"
+                      onClick={() => setSelectedTx(tx)}
+                      className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1.5 text-xs font-semibold text-blue-700"
+                    >
+>>>>>>> b2ccfa7 (First Update commit)
                       Receipt
                     </button>
                   </div>
@@ -224,6 +317,128 @@ export default function TransactionsPage() {
           </>
         )}
       </div>
+<<<<<<< HEAD
+=======
+
+      {receiptData && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-3 sm:p-4">
+          <div className="w-full max-w-md rounded-3xl bg-white shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between gap-3 border-b border-gray-100 px-5 py-4">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-green-500" />
+                <div className="text-sm font-semibold text-gray-900">Transaction Receipt</div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedTx(null)}
+                className="inline-flex items-center justify-center rounded-full bg-gray-100 w-8 h-8 text-gray-500"
+                aria-label="Close receipt"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-4 px-4 sm:px-5 py-4">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white"
+                >
+                  <Printer className="w-4 h-4" />
+                  Print Receipt
+                </button>
+                <button
+                  type="button"
+                  onClick={() => router.push('/dashboard')}
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-xs font-semibold text-gray-700"
+                >
+                  Dashboard
+                </button>
+              </div>
+
+              <div className="rounded-2xl border border-gray-100 p-4 shadow-sm">
+                <div className="text-lg font-semibold text-gray-900">Transaction Details</div>
+                <div className="text-sm text-gray-500">
+                  Your account has been {receiptData.type === 'debit' ? 'debited' : 'credited'} with $
+                  {Math.abs(receiptData.amount || 0).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                  .
+                </div>
+
+                <div className="mt-4 grid grid-cols-2 gap-2 sm:gap-3 text-xs text-gray-600">
+                  <div className="rounded-xl border border-gray-100 p-3">
+                    <div className="flex items-center gap-2 text-gray-500">
+                      <Calendar className="w-3.5 h-3.5" />
+                      Transaction Date
+                    </div>
+                    <div className="mt-1 font-semibold text-gray-900">{receiptData.createdDate}</div>
+                  </div>
+                  <div className="rounded-xl border border-gray-100 p-3">
+                    <div className="flex items-center gap-2 text-gray-500">
+                      <Clock className="w-3.5 h-3.5" />
+                      Transaction Time
+                    </div>
+                    <div className="mt-1 font-semibold text-gray-900">{receiptData.createdTime}</div>
+                  </div>
+                  <div className="rounded-xl border border-gray-100 p-3">
+                    <div className="text-gray-500">Payment Method</div>
+                    <div className="mt-1 font-semibold text-gray-900 capitalize">
+                      {String(receiptData.methodLabel).replace(/_/g, ' ')}
+                    </div>
+                  </div>
+                  <div className="rounded-xl border border-gray-100 p-3">
+                    <div className="text-gray-500">Reference ID</div>
+                    <div className="mt-1 font-semibold text-gray-900 break-all">
+                      {receiptData.reference || receiptData._id?.slice(0, 12) || 'N/A'}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-5">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-gray-900">
+                    <UserRound className="w-4 h-4" />
+                    Recipient Details
+                  </div>
+                  <div className="mt-2 rounded-xl border border-gray-100 p-3 text-sm text-gray-700">
+                    <div className="text-xs text-gray-500">Recipient Name</div>
+                    <div className="font-semibold text-gray-900">{receiptData.recipientName}</div>
+                    <div className="mt-2 text-xs text-gray-500">Recipient Account</div>
+                    <div className="font-semibold text-gray-900">{receiptData.recipientAccount}</div>
+                    <div className="mt-2 text-xs text-gray-500">Description</div>
+                    <div className="text-gray-700">{receiptData.description || 'Ok'}</div>
+                  </div>
+                </div>
+
+                <div className="mt-5">
+                  <div className="text-sm font-semibold text-gray-900">Financial Details</div>
+                  <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                    <div className="rounded-xl border border-gray-100 p-3">
+                      <div className="text-xs text-gray-500">Amount Sent</div>
+                      <div className="font-semibold text-gray-900">
+                        ${Math.abs(receiptData.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </div>
+                    </div>
+                    <div className="rounded-xl border border-gray-100 p-3">
+                      <div className="text-xs text-gray-500">Handling & Charges</div>
+                      <div className="font-semibold text-gray-900">
+                        ${Number(receiptData.fee || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-5 text-center text-xs text-gray-400">
+                  This receipt serves as confirmation of this transaction. For any issues, please contact support.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+>>>>>>> b2ccfa7 (First Update commit)
     </div>
   );
 }

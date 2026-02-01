@@ -7,6 +7,7 @@ const SupportTicket = require('../models/SupportTicket');
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const { title, priority, description } = req.body;
+<<<<<<< HEAD
 
     if (!title || !description) {
       return res.status(400).json({ message: 'Title and description are required' });
@@ -17,6 +18,23 @@ router.post('/', authMiddleware, async (req, res) => {
       title,
       priority: priority || 'low',
       description,
+=======
+    const safeTitle = String(title || '').trim();
+    const safeDescription = String(description || '').trim();
+
+    if (!safeTitle || !safeDescription) {
+      return res.status(400).json({ message: 'Title and description are required' });
+    }
+    if (safeTitle.length < 5 || safeDescription.length < 10) {
+      return res.status(400).json({ message: 'Please provide more detail in the ticket.' });
+    }
+
+    const ticket = new SupportTicket({
+      userId: req.user._id,
+      title: safeTitle,
+      priority: priority || 'low',
+      description: safeDescription,
+>>>>>>> b2ccfa7 (First Update commit)
     });
 
     await ticket.save();

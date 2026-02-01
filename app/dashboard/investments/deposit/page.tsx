@@ -4,6 +4,10 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
+<<<<<<< HEAD
+=======
+import { isPositiveAmount } from '@/lib/validation';
+>>>>>>> b2ccfa7 (First Update commit)
 import { ArrowLeft, Coins } from 'lucide-react';
 
 export default function InvestmentDepositPage() {
@@ -35,6 +39,15 @@ export default function InvestmentDepositPage() {
     setError('');
     setSubmitting(true);
 
+<<<<<<< HEAD
+=======
+    if (!isPositiveAmount(amount)) {
+      setError('Enter a valid amount.');
+      setSubmitting(false);
+      return;
+    }
+
+>>>>>>> b2ccfa7 (First Update commit)
     try {
       const params = new URLSearchParams({
         amount,

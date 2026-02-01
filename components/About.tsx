@@ -23,6 +23,28 @@ export default function About() {
       color: 'purple',
     },
   ];
+  const collageImages = [
+    {
+      src: '/images/Baksitepicnew.jpg',
+      alt: 'Customers using mobile banking together',
+      extraClass: '',
+    },
+    {
+      src: '/images/Bnksitepicnew.jpg',
+      alt: 'Smiling couple reviewing banking on a phone',
+      extraClass: 'mt-8',
+    },
+    {
+      src: '/images/Bankstepicnew.jpg',
+      alt: 'Customer using a tablet with a bank card',
+      extraClass: '-mt-8',
+    },
+    {
+      src: '/images/Banksitepinew.jpg',
+      alt: 'Customer checking account details on a laptop',
+      extraClass: '',
+    },
+  ];
 
   return (
     <section className="py-20 bg-gradient-to-b from-white to-blue-50">
@@ -76,35 +98,19 @@ export default function About() {
           </div>
 
           {/* Right Section - Image Collage */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-xl overflow-hidden shadow-lg">
-              <div className="aspect-square bg-gradient-to-br from-blue-200 to-blue-300 flex items-center justify-center">
-                <svg className="w-24 h-24 text-blue-600 opacity-50" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
-                </svg>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-5">
+            {collageImages.map((image) => (
+              <div
+                key={image.src}
+                className={`rounded-xl overflow-hidden shadow-lg ${image.extraClass} sm:rounded-2xl`}
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full object-cover aspect-[4/5] sm:aspect-square lg:aspect-[4/5]"
+                />
               </div>
-            </div>
-            <div className="rounded-xl overflow-hidden shadow-lg mt-8">
-              <div className="aspect-square bg-gradient-to-br from-green-200 to-green-300 flex items-center justify-center">
-                <svg className="w-24 h-24 text-green-600 opacity-50" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
-              </div>
-            </div>
-            <div className="rounded-xl overflow-hidden shadow-lg -mt-8">
-              <div className="aspect-square bg-gradient-to-br from-purple-200 to-purple-300 flex items-center justify-center">
-                <svg className="w-24 h-24 text-purple-600 opacity-50" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
-              </div>
-            </div>
-            <div className="rounded-xl overflow-hidden shadow-lg">
-              <div className="aspect-square bg-gradient-to-br from-orange-200 to-orange-300 flex items-center justify-center">
-                <svg className="w-24 h-24 text-orange-600 opacity-50" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
-                </svg>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

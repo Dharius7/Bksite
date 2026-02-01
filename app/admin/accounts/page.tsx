@@ -16,7 +16,11 @@ export default function AdminAccountsPage() {
   const [message, setMessage] = useState('');
 
   const [modalType, setModalType] = useState<
+<<<<<<< HEAD
     'create' | 'edit' | 'deposit' | 'transfer' | 'debit' | 'message' | null
+=======
+    'create' | 'edit' | 'deposit' | 'transfer' | 'debit' | 'received' | 'message' | null
+>>>>>>> b2ccfa7 (First Update commit)
   >(null);
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
 
@@ -51,8 +55,34 @@ export default function AdminAccountsPage() {
     status: 'active',
   });
 
+<<<<<<< HEAD
   const [depositForm, setDepositForm] = useState({ amount: '', description: '', date: '' });
   const [transferForm, setTransferForm] = useState({ toAccount: '', amount: '', description: '', method: 'wire', date: '' });
+=======
+  const [depositForm, setDepositForm] = useState({
+    depositorName: '',
+    depositType: 'bank',
+    accountNumber: '',
+    amount: '',
+    description: '',
+    date: '',
+  });
+  const [transferForm, setTransferForm] = useState({
+    toAccount: '',
+    recipientName: '',
+    amount: '',
+    description: '',
+    method: 'wire',
+    date: '',
+  });
+  const [receiveForm, setReceiveForm] = useState({
+    senderAccount: '',
+    senderName: '',
+    amount: '',
+    description: '',
+    date: '',
+  });
+>>>>>>> b2ccfa7 (First Update commit)
   const [debitForm, setDebitForm] = useState({ amount: '', description: '', date: '' });
   const [messageForm, setMessageForm] = useState({ transferMessage: '' });
   const searchParams = useSearchParams();
@@ -102,6 +132,13 @@ export default function AdminAccountsPage() {
       openDebit(account);
       return;
     }
+<<<<<<< HEAD
+=======
+    if (action === 'received') {
+      openReceived(account);
+      return;
+    }
+>>>>>>> b2ccfa7 (First Update commit)
     if (action === 'message') {
       openMessage(account);
       return;
@@ -129,13 +166,28 @@ export default function AdminAccountsPage() {
 
   const openDeposit = (account: Account) => {
     setSelectedAccount(account);
+<<<<<<< HEAD
     setDepositForm({ amount: '', description: '' });
+=======
+    setDepositForm({
+      depositorName: '',
+      depositType: 'bank',
+      accountNumber: '',
+      amount: '',
+      description: '',
+      date: '',
+    });
+>>>>>>> b2ccfa7 (First Update commit)
     setModalType('deposit');
   };
 
   const openTransfer = (account: Account) => {
     setSelectedAccount(account);
+<<<<<<< HEAD
     setTransferForm({ toAccount: '', amount: '', description: '', method: 'wire', date: '' });
+=======
+    setTransferForm({ toAccount: '', recipientName: '', amount: '', description: '', method: 'wire', date: '' });
+>>>>>>> b2ccfa7 (First Update commit)
     setModalType('transfer');
   };
 
@@ -145,6 +197,15 @@ export default function AdminAccountsPage() {
     setModalType('debit');
   };
 
+<<<<<<< HEAD
+=======
+  const openReceived = (account: Account) => {
+    setSelectedAccount(account);
+    setReceiveForm({ senderAccount: '', senderName: '', amount: '', description: '', date: '' });
+    setModalType('received');
+  };
+
+>>>>>>> b2ccfa7 (First Update commit)
   const openMessage = (account: Account) => {
     setSelectedAccount(account);
     setMessageForm({ transferMessage: account.transferMessage || '' });
@@ -222,7 +283,26 @@ export default function AdminAccountsPage() {
   const submitDeposit = async () => {
     if (!selectedAccount) return;
     try {
+<<<<<<< HEAD
       await adminApi.post(`/admin/accounts/${selectedAccount._id}/deposit`, {
+=======
+      if (!depositForm.depositorName.trim()) {
+        setError('Depositor name is required');
+        return;
+      }
+      if (!depositForm.amount || Number(depositForm.amount) <= 0) {
+        setError('Enter a valid amount');
+        return;
+      }
+      if (depositForm.depositType === 'bank' && !depositForm.accountNumber.trim()) {
+        setError('Account number is required for bank deposits');
+        return;
+      }
+      await adminApi.post(`/admin/accounts/${selectedAccount._id}/deposit`, {
+        depositorName: depositForm.depositorName,
+        depositType: depositForm.depositType,
+        accountNumber: depositForm.depositType === 'bank' ? depositForm.accountNumber : undefined,
+>>>>>>> b2ccfa7 (First Update commit)
         amount: Number(depositForm.amount || 0),
         description: depositForm.description || 'Admin deposit',
         date: depositForm.date || undefined,
@@ -240,6 +320,10 @@ export default function AdminAccountsPage() {
     try {
       await adminApi.post(`/admin/accounts/${selectedAccount._id}/transfer`, {
         toAccount: transferForm.toAccount,
+<<<<<<< HEAD
+=======
+        recipientName: transferForm.recipientName,
+>>>>>>> b2ccfa7 (First Update commit)
         amount: Number(transferForm.amount || 0),
         description: transferForm.description || 'Admin transfer',
         method: transferForm.method,
@@ -253,6 +337,55 @@ export default function AdminAccountsPage() {
     }
   };
 
+<<<<<<< HEAD
+=======
+  const submitDebit = async () => {
+    if (!selectedAccount) return;
+    try {
+      await adminApi.post(`/admin/accounts/${selectedAccount._id}/debit`, {
+        amount: Number(debitForm.amount || 0),
+        description: debitForm.description || 'Admin debit',
+        date: debitForm.date || undefined,
+      });
+      setMessage('Debit completed');
+      closeModal();
+      fetchData();
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Debit failed');
+    }
+  };
+
+  const submitReceived = async () => {
+    if (!selectedAccount) return;
+    try {
+      if (!receiveForm.senderName.trim()) {
+        setError('Sender name is required');
+        return;
+      }
+      if (!receiveForm.senderAccount.trim()) {
+        setError('Sender account is required');
+        return;
+      }
+      if (!receiveForm.amount || Number(receiveForm.amount) <= 0) {
+        setError('Enter a valid amount');
+        return;
+      }
+      await adminApi.post(`/admin/accounts/${selectedAccount._id}/receive`, {
+        senderName: receiveForm.senderName,
+        senderAccount: receiveForm.senderAccount,
+        amount: Number(receiveForm.amount || 0),
+        description: receiveForm.description || 'Received transfer',
+        date: receiveForm.date || undefined,
+      });
+      setMessage('Received payment added');
+      closeModal();
+      fetchData();
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Failed to add received payment');
+    }
+  };
+
+>>>>>>> b2ccfa7 (First Update commit)
   const saveMessage = async () => {
     if (!selectedAccount) return;
     try {
@@ -271,32 +404,53 @@ export default function AdminAccountsPage() {
     fetchData();
   };
 
+<<<<<<< HEAD
   const statusOptions = ['active', 'frozen', 'closed'];
 
 
   return (
     <div className="p-4 md:p-6 space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+=======
+  const statusOptions = ['active', 'dormant', 'hold', 'frozen', 'closed'];
+
+
+  return (
+    <div className="p-4 md:p-6 space-y-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-2xl px-4 py-3 bg-gradient-to-r from-emerald-50 via-teal-50 to-cyan-50 border border-emerald-100">
+>>>>>>> b2ccfa7 (First Update commit)
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
             <Wallet className="w-5 h-5" />
           </div>
           <div>
+<<<<<<< HEAD
             <h1 className="text-2xl font-bold text-gray-900">Accounts</h1>
+=======
+            <h1 className="text-2xl font-bold text-emerald-800">Accounts</h1>
+>>>>>>> b2ccfa7 (First Update commit)
             <p className="text-sm text-gray-600">Balances, crypto, and status</p>
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
           <a
             href="/admin"
+<<<<<<< HEAD
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
+=======
+            className="inline-flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-white"
+>>>>>>> b2ccfa7 (First Update commit)
           >
             Back to Overview
           </a>
           <button
             type="button"
             onClick={() => setModalType('create')}
+<<<<<<< HEAD
             className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
+=======
+            className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-md hover:from-blue-700 hover:to-indigo-700"
+>>>>>>> b2ccfa7 (First Update commit)
           >
             <Plus className="w-4 h-4" />
             Create New Account
@@ -315,7 +469,12 @@ export default function AdminAccountsPage() {
         </div>
       )}
 
+<<<<<<< HEAD
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-100">
+=======
+      <div className="bg-white/90 backdrop-blur rounded-3xl shadow-lg overflow-hidden border border-slate-100 relative">
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
+>>>>>>> b2ccfa7 (First Update commit)
         <div className="hidden md:block overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead className="bg-slate-50 text-gray-600">
@@ -353,6 +512,10 @@ export default function AdminAccountsPage() {
                       <button className="text-xs text-emerald-600" onClick={() => openDeposit(acct)}>Deposit</button>
                       <button className="text-xs text-indigo-600" onClick={() => openTransfer(acct)}>Transfer</button>
                       <button className="text-xs text-emerald-600" onClick={() => openDebit(acct)}>Debit</button>
+<<<<<<< HEAD
+=======
+                      <button className="text-xs text-sky-600" onClick={() => openReceived(acct)}>Received</button>
+>>>>>>> b2ccfa7 (First Update commit)
                       <button className="text-xs text-amber-600" onClick={() => openMessage(acct)}>Message</button>
                     </div>
                   </td>
@@ -364,7 +527,11 @@ export default function AdminAccountsPage() {
 
         <div className="md:hidden space-y-3 p-4">
           {accounts.map((acct) => (
+<<<<<<< HEAD
             <div key={acct._id} className="rounded-2xl border border-gray-100 p-4">
+=======
+            <div key={acct._id} className="rounded-3xl border border-gray-100 p-4 bg-white/80 shadow-sm">
+>>>>>>> b2ccfa7 (First Update commit)
               <div className="font-semibold text-gray-900">{acct.accountNumber}</div>
               <div className="text-xs text-gray-500">{acct.userId?.firstName} {acct.userId?.lastName}</div>
               <div className="mt-2 text-sm text-gray-700">Balance: ${(acct.balance || 0).toLocaleString()}</div>
@@ -386,6 +553,10 @@ export default function AdminAccountsPage() {
                 <button className="text-xs text-emerald-600" onClick={() => openDeposit(acct)}>Deposit</button>
                 <button className="text-xs text-indigo-600" onClick={() => openTransfer(acct)}>Transfer</button>
                 <button className="text-xs text-emerald-600" onClick={() => openDebit(acct)}>Debit</button>
+<<<<<<< HEAD
+=======
+                <button className="text-xs text-sky-600" onClick={() => openReceived(acct)}>Received</button>
+>>>>>>> b2ccfa7 (First Update commit)
                 <button className="text-xs text-amber-600" onClick={() => openMessage(acct)}>Message</button>
               </div>
             </div>
@@ -395,10 +566,18 @@ export default function AdminAccountsPage() {
 
       {modalType && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
+<<<<<<< HEAD
           <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl p-6 space-y-4">
             {modalType === 'create' && (
               <>
                 <h2 className="text-lg font-semibold text-gray-900">Create New Account</h2>
+=======
+          <div className="w-full max-w-xl bg-white/90 backdrop-blur rounded-3xl shadow-2xl p-6 space-y-4 relative overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500" />
+            {modalType === 'create' && (
+              <>
+                <h2 className="text-lg font-semibold text-emerald-800">Create New Account</h2>
+>>>>>>> b2ccfa7 (First Update commit)
                 <div className="space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <input
@@ -516,7 +695,11 @@ export default function AdminAccountsPage() {
                   </select>
                 </div>
                 <div className="flex justify-end gap-3">
+<<<<<<< HEAD
                   <button className="px-4 py-2 rounded-lg border" onClick={closeModal}>Cancel</button>
+=======
+                  <button className="px-4 py-2 rounded-xl border border-gray-200 bg-white/80" onClick={closeModal}>Cancel</button>
+>>>>>>> b2ccfa7 (First Update commit)
                   <button className="px-4 py-2 rounded-lg bg-blue-600 text-white" onClick={createAccount}>Create</button>
                 </div>
               </>
@@ -549,7 +732,11 @@ export default function AdminAccountsPage() {
                   </select>
                 </div>
                 <div className="flex justify-end gap-3">
+<<<<<<< HEAD
                   <button className="px-4 py-2 rounded-lg border" onClick={closeModal}>Cancel</button>
+=======
+                  <button className="px-4 py-2 rounded-xl border border-gray-200 bg-white/80" onClick={closeModal}>Cancel</button>
+>>>>>>> b2ccfa7 (First Update commit)
                   <button className="px-4 py-2 rounded-lg bg-blue-600 text-white" onClick={saveEdit}>Save</button>
                 </div>
               </>
@@ -558,11 +745,56 @@ export default function AdminAccountsPage() {
             {modalType === 'deposit' && (
               <>
                 <h2 className="text-lg font-semibold text-gray-900">Deposit to Account</h2>
+<<<<<<< HEAD
                 <input className="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Amount" value={depositForm.amount} onChange={(e) => setDepositForm({ ...depositForm, amount: e.target.value })} />
                 <input className="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Description" value={depositForm.description} onChange={(e) => setDepositForm({ ...depositForm, description: e.target.value })} />
                 <input className="w-full border border-gray-300 rounded-lg px-3 py-2" type="datetime-local" value={depositForm.date} onChange={(e) => setDepositForm({ ...depositForm, date: e.target.value })} />
                 <div className="flex justify-end gap-3">
                   <button className="px-4 py-2 rounded-lg border" onClick={closeModal}>Cancel</button>
+=======
+                <input
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Depositor's Name"
+                  value={depositForm.depositorName}
+                  onChange={(e) => setDepositForm({ ...depositForm, depositorName: e.target.value })}
+                />
+                <select
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  value={depositForm.depositType}
+                  onChange={(e) => setDepositForm({ ...depositForm, depositType: e.target.value })}
+                >
+                  <option value="bank">Bank Deposit</option>
+                  <option value="check">Check Deposit</option>
+                </select>
+                {depositForm.depositType === 'bank' && (
+                  <input
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                    placeholder="Account Number"
+                    value={depositForm.accountNumber}
+                    onChange={(e) => setDepositForm({ ...depositForm, accountNumber: e.target.value })}
+                  />
+                )}
+                <input
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Amount"
+                  value={depositForm.amount}
+                  onChange={(e) => setDepositForm({ ...depositForm, amount: e.target.value })}
+                />
+                <input
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Description"
+                  value={depositForm.description}
+                  onChange={(e) => setDepositForm({ ...depositForm, description: e.target.value })}
+                />
+                <input
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  type="datetime-local"
+                  value={depositForm.date}
+                  onChange={(e) => setDepositForm({ ...depositForm, date: e.target.value })}
+                />
+                <div className="flex justify-end gap-3">
+                  <button className="px-4 py-2 rounded-xl border border-gray-200 bg-white/80" onClick={closeModal}>Cancel</button>
+>>>>>>> b2ccfa7 (First Update commit)
                   <button className="px-4 py-2 rounded-lg bg-emerald-600 text-white" onClick={submitDeposit}>Deposit</button>
                 </div>
               </>
@@ -571,6 +803,10 @@ export default function AdminAccountsPage() {
             {modalType === 'transfer' && (
               <>
                 <h2 className="text-lg font-semibold text-gray-900">Transfer from Account</h2>
+<<<<<<< HEAD
+=======
+                <input className="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Recipient Name" value={transferForm.recipientName} onChange={(e) => setTransferForm({ ...transferForm, recipientName: e.target.value })} />
+>>>>>>> b2ccfa7 (First Update commit)
                 <input className="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Destination Account Number" value={transferForm.toAccount} onChange={(e) => setTransferForm({ ...transferForm, toAccount: e.target.value })} />
                 <input className="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Amount" value={transferForm.amount} onChange={(e) => setTransferForm({ ...transferForm, amount: e.target.value })} />
                 <input className="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Description" value={transferForm.description} onChange={(e) => setTransferForm({ ...transferForm, description: e.target.value })} />
@@ -584,7 +820,11 @@ export default function AdminAccountsPage() {
                   <option value="zelle">Zelle</option>
                 </select>
                 <div className="flex justify-end gap-3">
+<<<<<<< HEAD
                   <button className="px-4 py-2 rounded-lg border" onClick={closeModal}>Cancel</button>
+=======
+                  <button className="px-4 py-2 rounded-xl border border-gray-200 bg-white/80" onClick={closeModal}>Cancel</button>
+>>>>>>> b2ccfa7 (First Update commit)
                   <button className="px-4 py-2 rounded-lg bg-indigo-600 text-white" onClick={submitTransfer}>Transfer</button>
                 </div>
               </>
@@ -597,12 +837,59 @@ export default function AdminAccountsPage() {
                 <input className="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="Description" value={debitForm.description} onChange={(e) => setDebitForm({ ...debitForm, description: e.target.value })} />
                 <input className="w-full border border-gray-300 rounded-lg px-3 py-2" type="datetime-local" value={debitForm.date} onChange={(e) => setDebitForm({ ...debitForm, date: e.target.value })} />
                 <div className="flex justify-end gap-3">
+<<<<<<< HEAD
                   <button className="px-4 py-2 rounded-lg border" onClick={closeModal}>Cancel</button>
+=======
+                  <button className="px-4 py-2 rounded-xl border border-gray-200 bg-white/80" onClick={closeModal}>Cancel</button>
+>>>>>>> b2ccfa7 (First Update commit)
                   <button className="px-4 py-2 rounded-lg bg-emerald-600 text-white" onClick={submitDebit}>Debit</button>
                 </div>
               </>
             )}
 
+<<<<<<< HEAD
+=======
+            {modalType === 'received' && (
+              <>
+                <h2 className="text-lg font-semibold text-gray-900">Received Payment</h2>
+                <input
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Sender Account Number"
+                  value={receiveForm.senderAccount}
+                  onChange={(e) => setReceiveForm({ ...receiveForm, senderAccount: e.target.value })}
+                />
+                <input
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Sender Name"
+                  value={receiveForm.senderName}
+                  onChange={(e) => setReceiveForm({ ...receiveForm, senderName: e.target.value })}
+                />
+                <input
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Amount"
+                  value={receiveForm.amount}
+                  onChange={(e) => setReceiveForm({ ...receiveForm, amount: e.target.value })}
+                />
+                <input
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Description"
+                  value={receiveForm.description}
+                  onChange={(e) => setReceiveForm({ ...receiveForm, description: e.target.value })}
+                />
+                <input
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  type="datetime-local"
+                  value={receiveForm.date}
+                  onChange={(e) => setReceiveForm({ ...receiveForm, date: e.target.value })}
+                />
+                <div className="flex justify-end gap-3">
+                  <button className="px-4 py-2 rounded-xl border border-gray-200 bg-white/80" onClick={closeModal}>Cancel</button>
+                  <button className="px-4 py-2 rounded-lg bg-sky-600 text-white" onClick={submitReceived}>Add Received</button>
+                </div>
+              </>
+            )}
+
+>>>>>>> b2ccfa7 (First Update commit)
             {modalType === 'message' && (
               <>
                 <h2 className="text-lg font-semibold text-gray-900">Transfer Message</h2>
@@ -614,7 +901,11 @@ export default function AdminAccountsPage() {
                   onChange={(e) => setMessageForm({ transferMessage: e.target.value })}
                 />
                 <div className="flex justify-end gap-3">
+<<<<<<< HEAD
                   <button className="px-4 py-2 rounded-lg border" onClick={closeModal}>Cancel</button>
+=======
+                  <button className="px-4 py-2 rounded-xl border border-gray-200 bg-white/80" onClick={closeModal}>Cancel</button>
+>>>>>>> b2ccfa7 (First Update commit)
                   <button className="px-4 py-2 rounded-lg bg-amber-600 text-white" onClick={saveMessage}>Save</button>
                 </div>
               </>
@@ -625,6 +916,7 @@ export default function AdminAccountsPage() {
     </div>
   );
 }
+<<<<<<< HEAD
   const submitDebit = async () => {
     if (!selectedAccount) return;
     try {
@@ -640,3 +932,5 @@ export default function AdminAccountsPage() {
       setError(err.response?.data?.message || 'Debit failed');
     }
   };
+=======
+>>>>>>> b2ccfa7 (First Update commit)

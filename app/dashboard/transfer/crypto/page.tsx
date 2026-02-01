@@ -4,13 +4,20 @@ import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
+<<<<<<< HEAD
+=======
+import { isPositiveAmount, trimRequired } from '@/lib/validation';
+>>>>>>> b2ccfa7 (First Update commit)
 import TransferConfirmModal from '@/components/TransferConfirmModal';
 import {
   AlertTriangle,
   ArrowLeft,
   CheckCircle2,
   Globe,
+<<<<<<< HEAD
   RefreshCw,
+=======
+>>>>>>> b2ccfa7 (First Update commit)
   ShieldCheck,
   Wallet,
 } from 'lucide-react';
@@ -120,6 +127,28 @@ export default function CryptoTransferPage() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+<<<<<<< HEAD
+=======
+    setError('');
+
+    if (!isPositiveAmount(amount)) {
+      setError('Enter a valid amount.');
+      return;
+    }
+    if (!trimRequired(walletAddress)) {
+      setError('Please enter a wallet address.');
+      return;
+    }
+    if (!trimRequired(crypto) || !trimRequired(network)) {
+      setError('Please select a cryptocurrency and network.');
+      return;
+    }
+    if (balance !== null && Number(amount) > balance) {
+      setError('Transfer amount exceeds your available balance.');
+      return;
+    }
+
+>>>>>>> b2ccfa7 (First Update commit)
     setConfirmOpen(true);
   };
 
@@ -135,6 +164,7 @@ export default function CryptoTransferPage() {
         </div>
       </div>
 
+<<<<<<< HEAD
       <div className="flex items-center justify-between text-sm text-gray-600">
         <div className="font-semibold text-gray-900">Quick Transfer</div>
         <button
@@ -166,6 +196,8 @@ export default function CryptoTransferPage() {
         </div>
       </div>
 
+=======
+>>>>>>> b2ccfa7 (First Update commit)
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         <div className="bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-6 text-white">
           <div className="flex items-start justify-between gap-4">
@@ -350,12 +382,15 @@ export default function CryptoTransferPage() {
             </button>
             <button
               type="button"
+<<<<<<< HEAD
               className="flex-1 border border-blue-200 text-blue-500 py-3 rounded-xl font-semibold"
             >
               Save Beneficiary
             </button>
             <button
               type="button"
+=======
+>>>>>>> b2ccfa7 (First Update commit)
               onClick={() => router.push('/dashboard')}
               className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl font-semibold"
             >
@@ -381,13 +416,21 @@ export default function CryptoTransferPage() {
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}
         onConfirm={() => {
+<<<<<<< HEAD
           setConfirmOpen(false);
+=======
+>>>>>>> b2ccfa7 (First Update commit)
           submitTransfer();
         }}
         methodLabel={`Crypto (${crypto})`}
         amount={Number(amount || 0)}
         balance={balance}
         btcRate={btcRate}
+<<<<<<< HEAD
+=======
+        statusMessage={message}
+        statusError={error}
+>>>>>>> b2ccfa7 (First Update commit)
       />
     </div>
   );

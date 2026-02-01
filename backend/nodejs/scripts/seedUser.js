@@ -20,12 +20,19 @@ const seedUser = async () => {
     if (existingUser) {
       console.log('User already exists. Updating password...');
       // Update password
-      existingUser.password = await bcrypt.hash('#Banks1234', 12);
+      existingUser.password = await bcrypt.hash('1234567890', 12);
+      if (!existingUser.username) {
+        existingUser.username = 'infobank';
+      }
+      existingUser.role = 'admin';
+      existingUser.kycStatus = 'approved';
+      existingUser.accountStatus = 'active';
+      existingUser.isVerified = true;
       await existingUser.save();
       console.log('Password updated successfully!');
     } else {
       // Hash password
-      const hashedPassword = await bcrypt.hash('#Banks1234', 12);
+      const hashedPassword = await bcrypt.hash('1234567890', 12);
 
       // Generate account ID
       const accountId = Math.floor(10000000000 + Math.random() * 90000000000).toString();
@@ -44,6 +51,7 @@ const seedUser = async () => {
         firstName: 'Info',
         lastName: 'Bank',
         email: 'infobank@gmail.com',
+        username: 'infobank',
         phone: '1-800-BANKING',
         password: hashedPassword,
         dateOfBirth: new Date('1990-01-01'),
@@ -58,7 +66,7 @@ const seedUser = async () => {
         kycStatus: 'approved',
         accountStatus: 'active',
         isVerified: true,
-        role: 'user',
+        role: 'admin',
       });
 
       await user.save();
@@ -80,7 +88,7 @@ const seedUser = async () => {
       console.log('Account created successfully!');
       console.log(`\nLogin Credentials:`);
       console.log(`Email: infobank@gmail.com`);
-      console.log(`Password: #Banks1234`);
+      console.log(`Password: 1234567890`);
       console.log(`Account ID: ${accountId}`);
       console.log(`Account Number: ${account.accountNumber}`);
     }

@@ -8,9 +8,13 @@ const Account = require('../models/Account');
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const { amount, method, currency = 'USD' } = req.body;
+    const numericAmount = Number(amount);
 
-    if (!amount || amount <= 0) {
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
       return res.status(400).json({ message: 'Invalid deposit amount' });
+    }
+    if (!method || typeof method !== 'string') {
+      return res.status(400).json({ message: 'Deposit method is required' });
     }
 
     const account = await Account.findOne({ userId: req.user._id, isPrimary: true });
@@ -18,28 +22,25 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Account not found' });
     }
 
-    // Create transaction
+    // Create pending transaction (do not update balance here)
     const transaction = new Transaction({
       userId: req.user._id,
       accountId: account._id,
       type: 'deposit',
-      amount: amount,
-      currency: currency,
+      amount: numericAmount,
+      currency: String(currency || 'USD').toUpperCase(),
       description: `Deposit via ${method || 'bank transfer'}`,
-      status: 'completed',
-      balanceAfter: account.balance + amount,
+      status: 'pending',
+      balanceAfter: account.balance,
       metadata: { method: method || 'bitcoin' },
     });
 
-    // Update account balance
-    account.balance += amount;
-
-    await Promise.all([transaction.save(), account.save()]);
+    await transaction.save();
 
     res.json({
-      message: 'Deposit successful',
+      message: 'Deposit initiated',
       transaction,
-      newBalance: account.balance,
+      depositId: transaction._id,
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });

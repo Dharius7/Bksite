@@ -4,13 +4,20 @@ import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
+<<<<<<< HEAD
+=======
+import { isEmail, isPositiveAmount, trimRequired } from '@/lib/validation';
+>>>>>>> b2ccfa7 (First Update commit)
 import TransferConfirmModal from '@/components/TransferConfirmModal';
 import {
   ArrowLeft,
   CheckCircle2,
   Globe,
   Mail,
+<<<<<<< HEAD
   RefreshCw,
+=======
+>>>>>>> b2ccfa7 (First Update commit)
   ShieldCheck,
   User,
   Wallet,
@@ -69,11 +76,18 @@ export default function WiseTransferPage() {
     }
   }, [user]);
 
+<<<<<<< HEAD
   const minAmount = 910000;
   const maxAmount = 5000000;
   const amountNumber = Number(amount || 0);
   const amountWarning =
     amountNumber > 0 && (amountNumber < minAmount || amountNumber > maxAmount);
+=======
+  const minAmount = 100;
+  const maxAmount = 5000000;
+  const amountNumber = Number(amount || 0);
+  const amountWarning = amountNumber > 0 && amountNumber < minAmount;
+>>>>>>> b2ccfa7 (First Update commit)
 
   const transferSummary = useMemo(() => {
     const parts = [
@@ -128,6 +142,32 @@ export default function WiseTransferPage() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+<<<<<<< HEAD
+=======
+    setError('');
+
+    if (!isPositiveAmount(amount)) {
+      setError('Enter a valid amount.');
+      return;
+    }
+    if (amountNumber < minAmount) {
+      setError(`Minimum of $${minAmount.toLocaleString()}.`);
+      return;
+    }
+    if (!trimRequired(fullName) || !isEmail(email)) {
+      setError('Please enter a valid name and email.');
+      return;
+    }
+    if (!trimRequired(country)) {
+      setError('Please select a country.');
+      return;
+    }
+    if (balance !== null && amountNumber > balance) {
+      setError('Transfer amount exceeds your available balance.');
+      return;
+    }
+
+>>>>>>> b2ccfa7 (First Update commit)
     setConfirmOpen(true);
   };
 
@@ -143,6 +183,7 @@ export default function WiseTransferPage() {
         </div>
       </div>
 
+<<<<<<< HEAD
       <div className="flex items-center justify-between text-sm text-gray-600">
         <div className="font-semibold text-gray-900">Quick Transfer</div>
         <button
@@ -174,6 +215,8 @@ export default function WiseTransferPage() {
         </div>
       </div>
 
+=======
+>>>>>>> b2ccfa7 (First Update commit)
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         <div className="bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-6 text-white">
           <div className="flex items-start justify-between gap-4">
@@ -263,8 +306,12 @@ export default function WiseTransferPage() {
             </div>
             {amountWarning && (
               <div className="text-sm text-red-600 bg-blue-50 border border-blue-200 rounded-xl px-3 py-2">
+<<<<<<< HEAD
                 Transfer amount must be within ${minAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })} and
                 ${maxAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+=======
+                Minimum of ${minAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+>>>>>>> b2ccfa7 (First Update commit)
               </div>
             )}
           </div>
@@ -349,12 +396,15 @@ export default function WiseTransferPage() {
             </button>
             <button
               type="button"
+<<<<<<< HEAD
               className="flex-1 border border-blue-200 text-blue-500 py-3 rounded-xl font-semibold"
             >
               Save Beneficiary
             </button>
             <button
               type="button"
+=======
+>>>>>>> b2ccfa7 (First Update commit)
               onClick={() => router.push('/dashboard')}
               className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl font-semibold"
             >
@@ -380,13 +430,21 @@ export default function WiseTransferPage() {
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}
         onConfirm={() => {
+<<<<<<< HEAD
           setConfirmOpen(false);
+=======
+>>>>>>> b2ccfa7 (First Update commit)
           submitTransfer();
         }}
         methodLabel="Wise"
         amount={Number(amount || 0)}
         balance={balance}
         btcRate={btcRate}
+<<<<<<< HEAD
+=======
+        statusMessage={message}
+        statusError={error}
+>>>>>>> b2ccfa7 (First Update commit)
       />
     </div>
   );

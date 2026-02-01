@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const transactionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   accountId: { type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: true },
-  type: { type: String, enum: ['credit', 'debit', 'transfer', 'deposit', 'withdrawal', 'currency_swap'], required: true },
+  type: { type: String, enum: ['credit', 'debit', 'transfer', 'deposit', 'withdrawal', 'currency_swap', 'received'], required: true },
   amount: { type: Number, required: true },
   currency: { type: String, default: 'USD' },
   description: { type: String },

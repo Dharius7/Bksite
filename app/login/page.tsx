@@ -24,7 +24,6 @@ function LoginForm() {
 
     try {
       await login(email, password);
-      router.push('/dashboard');
     } catch (err: any) {
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {

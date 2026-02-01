@@ -12,6 +12,8 @@ import {
   Activity,
   Send,
   Plus,
+  ArrowDown,
+  Grid,
   RefreshCw,
   Clock,
   Shield,
@@ -32,7 +34,10 @@ interface DashboardData {
     balance: number;
     bitcoinBalance: number;
     currency: string;
+    accountType?: string;
+    status?: string;
   };
+  userStatus?: string;
   stats: {
     monthlyDeposits: number;
     monthlyExpenses: number;
@@ -91,9 +96,68 @@ export default function DashboardPage() {
   }
 
   const account = dashboardData?.account;
+  const effectiveStatus = account?.status || dashboardData?.userStatus;
   const stats = dashboardData?.stats;
   const recentTransactions = dashboardData?.recentTransactions || [];
 
+<<<<<<< HEAD
+=======
+  const accountTypeLabel = (type?: string) => {
+    switch ((type || '').toLowerCase()) {
+      case 'business':
+        return 'Business Account';
+      case 'personal':
+        return 'Personal Account';
+      case 'inheritance':
+        return 'Inheritance Account';
+      case 'primary':
+        return 'Primary Account';
+      case 'checking':
+        return 'Checking Account';
+      case 'savings':
+        return 'Savings Account';
+      case 'high-yield':
+        return 'High-Yield Account';
+      default:
+        return 'Account';
+    }
+  };
+
+  const statusLabel = (status?: string) => {
+    switch ((status || '').toLowerCase()) {
+      case 'active':
+        return 'Account Active';
+      case 'dormant':
+        return 'Account Dormant';
+      case 'hold':
+        return 'Account Hold';
+      case 'frozen':
+        return 'Account Frozen';
+      case 'closed':
+        return 'Account Closed';
+      default:
+        return 'Account Active';
+    }
+  };
+
+  const statusDot = (status?: string) => {
+    switch ((status || '').toLowerCase()) {
+      case 'active':
+        return 'bg-green-400';
+      case 'dormant':
+        return 'bg-yellow-400';
+      case 'hold':
+        return 'bg-orange-400';
+      case 'frozen':
+        return 'bg-sky-400';
+      case 'closed':
+        return 'bg-gray-400';
+      default:
+        return 'bg-green-400';
+    }
+  };
+
+>>>>>>> b2ccfa7 (First Update commit)
   const statusBadge = (status: string) => {
     const normalized = (status || '').toLowerCase();
     if (normalized === 'completed' || normalized === 'processed') return 'bg-green-100 text-green-700';
@@ -183,15 +247,25 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Primary Account Card */}
           <div className="order-1 lg:order-2 lg:col-span-2">
+<<<<<<< HEAD
             <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-5 md:p-6 text-white shadow-xl">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <div className="flex items-center space-x-2 mb-2">
                     <Building2 className="w-5 h-5" />
                     <span className="text-sm opacity-90">Coral Credit Bank LTD</span>
+=======
+            <div className="bg-[#2E4077] rounded-2xl p-2 md:p-6 text-white shadow-xl">
+              <div className="flex items-start justify-between gap-3 mb-1 md:mb-4">
+                <div className="min-w-0">
+                  <div className="flex items-center space-x-2 mb-0.5">
+                    <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span className="text-xs sm:text-sm opacity-90 truncate">Coral Credit Bank LTD</span>
+>>>>>>> b2ccfa7 (First Update commit)
                   </div>
-                  <div className="text-sm opacity-90">Primary Account</div>
+                  <div className="text-xs sm:text-sm opacity-90">{accountTypeLabel(account?.accountType)}</div>
                 </div>
+<<<<<<< HEAD
                 <div className="text-right">
                   <div className="text-xs opacity-75 mb-1">ACCOUNT NUMBER</div>
                   <div className="text-base font-mono">****** {account?.accountNumber?.slice(-4) || '0000'}</div>
@@ -241,23 +315,90 @@ export default function DashboardPage() {
                     </div>
                     <div className="text-xs opacity-60 mt-1">- 1 BTC = ${bitcoinRate.toLocaleString()}</div>
                   </div>
+=======
+                <div className="text-right shrink-0">
+                  <div className="text-[10px] sm:text-xs opacity-75 mb-0.5">ACCOUNT NUMBER</div>
+                  <div className="text-sm sm:text-base font-mono">****** {account?.accountNumber?.slice(-4) || '0000'}</div>
+                </div>
+              </div>
+
+              <div className="mb-1 md:mb-4">
+                <div className="text-xs sm:text-sm opacity-90">
+                  Account Holder:{' '}
+                  <span className="text-base sm:text-lg font-semibold">{user.firstName} {user.lastName}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 mb-1 md:mb-4">
+                <div className="flex items-center space-x-2 text-[11px] sm:text-sm">
+                  <span className={`w-2 h-2 rounded-full ${statusDot(effectiveStatus)}`}></span>
+                  <span>{statusLabel(effectiveStatus)}</span>
+                </div>
+                <div className="flex items-center space-x-2 text-[11px] sm:text-sm">
+                  <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span>Verified & Secured</span>
+>>>>>>> b2ccfa7 (First Update commit)
                 </div>
                 <div className="mt-2 text-xs opacity-70 md:hidden">Swipe to view balances</div>
               </div>
 
+<<<<<<< HEAD
               <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-row sm:gap-3">
                 <Link
                   href="/dashboard/deposit"
                   className="flex-1 bg-white/20 backdrop-blur-sm text-white px-5 py-3 rounded-lg font-semibold hover:bg-white/30 transition flex items-center justify-center space-x-2 border border-white/30"
+=======
+              <div className="mb-2 md:mb-5">
+                <div className="flex gap-2 md:gap-4 overflow-x-auto snap-x snap-mandatory pb-0.5 md:pb-2 md:overflow-visible md:block hide-scrollbar">
+                  <div className="w-full min-w-[100%] md:min-w-0 snap-start bg-white/10 backdrop-blur-sm rounded-lg p-2 sm:p-3 md:p-4">
+                    <div className="text-xs sm:text-sm opacity-90 mb-0.5">Available Balance</div>
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-bold">
+                      ${(account?.balance || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </div>
+                  </div>
+
+                  <div className="w-full min-w-[100%] md:min-w-0 snap-start rounded-lg p-2 md:p-0">
+                    <div className="text-xs sm:text-sm opacity-90 mb-0.5">Fiat Balance</div>
+                    <div className="text-xl sm:text-2xl md:text-3xl font-bold">
+                      ${(account?.balance || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </div>
+                    <div className="text-xs opacity-75">USD Balance</div>
+                  </div>
+
+                  <div className="w-full min-w-[100%] md:min-w-0 snap-start rounded-lg p-2 md:p-0">
+                    <div className="text-xs sm:text-sm opacity-90 mb-0.5">Bitcoin Balance</div>
+                    <div className="text-sm sm:text-base md:text-lg font-semibold">
+                      {(account?.bitcoinBalance || 0).toFixed(8)} BTC
+                    </div>
+                    <div className="text-xs opacity-75">
+                      ~ ${((account?.bitcoinBalance || 0) * bitcoinRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </div>
+                    <div className="text-xs opacity-60 mt-1">- 1 BTC = ${bitcoinRate.toLocaleString()}</div>
+                  </div>
+                </div>
+                <div className="mt-0.5 text-[11px] opacity-70 md:hidden">Swipe to view balances</div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-row sm:gap-3">
+                <Link
+                  href="/dashboard/deposit"
+                  className="w-full bg-white/20 backdrop-blur-sm text-white px-2.5 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-white/30 transition flex items-center justify-center space-x-2 border border-white/30 whitespace-nowrap"
+>>>>>>> b2ccfa7 (First Update commit)
                 >
-                  <Plus className="w-5 h-5" />
+                  <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Add Money</span>
                 </Link>
                 <Link
                   href="/dashboard/transfer"
+<<<<<<< HEAD
                   className="flex-1 bg-white text-blue-600 px-5 py-3 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center justify-center space-x-2"
                 >
                   <Send className="w-5 h-5" />
+=======
+                  className="w-full bg-white text-blue-600 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-gray-100 transition flex items-center justify-center space-x-2 whitespace-nowrap"
+                >
+                  <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+>>>>>>> b2ccfa7 (First Update commit)
                   <span>Send Money</span>
                 </Link>
               </div>
@@ -266,27 +407,119 @@ export default function DashboardPage() {
             {/* Quick Actions */}
             <div className="mt-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <Link href="/dashboard/transfer" className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition text-center">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+              {/* Mobile quick actions row */}
+              <div className="md:hidden grid grid-cols-5 gap-3">
+                <Link href="/dashboard/deposit" className="text-center">
+                  <div className="w-11 h-11 rounded-full bg-yellow-400 text-gray-900 flex items-center justify-center mx-auto shadow-sm">
+                    <Plus className="w-5 h-5" />
+                  </div>
+                  <div className="mt-2 text-xs font-semibold text-gray-900">Top Up</div>
+                </Link>
+                <Link href="/dashboard/transfer" className="text-center">
+                  <div className="w-11 h-11 rounded-full bg-gray-700 text-white flex items-center justify-center mx-auto shadow-sm">
+                    <Send className="w-5 h-5" />
+                  </div>
+                  <div className="mt-2 text-xs font-semibold text-gray-900">Send</div>
+                </Link>
+                <Link href="/dashboard/investments" className="text-center">
+                  <div className="w-11 h-11 rounded-full bg-purple-500 text-white flex items-center justify-center mx-auto shadow-sm">
+                    <TrendingUp className="w-5 h-5" />
+                  </div>
+                  <div className="mt-2 text-xs font-semibold text-gray-900">Invest</div>
+                </Link>
+                <Link href="/dashboard/transactions" className="text-center">
+                  <div className="w-11 h-11 rounded-full bg-gray-600 text-white flex items-center justify-center mx-auto shadow-sm">
+                    <ArrowDown className="w-5 h-5" />
+                  </div>
+                  <div className="mt-2 text-xs font-semibold text-gray-900">Receive</div>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new Event('open-more-sheet'))}
+                  className="text-center"
+                >
+                  <div className="w-11 h-11 rounded-full bg-gray-700 text-white flex items-center justify-center mx-auto shadow-sm">
+                    <Grid className="w-5 h-5" />
+                  </div>
+                  <div className="mt-2 text-xs font-semibold text-gray-900">More</div>
+                </button>
+              </div>
+
+              {/* Mobile financial services row */}
+              <div className="md:hidden mt-4">
+                <div className="text-[clamp(1rem,3vw,1.125rem)] font-semibold text-gray-900 mb-3">
+                  Financial Services
+                </div>
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                  <div className="bg-white rounded-2xl p-2.5 sm:p-3 shadow-sm border border-gray-100">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center">
+                        <Building2 className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[clamp(0.95rem,2.5vw,1rem)] font-semibold text-gray-900">Loans</div>
+                        <div className="text-[clamp(0.75rem,2.2vw,0.875rem)] text-gray-500">Quick approval</div>
+                      </div>
+                    </div>
+                    <Link
+                      href="/dashboard/loans"
+                      className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-blue-600 px-2 py-1.5 text-[clamp(0.8rem,2.4vw,0.95rem)] font-semibold text-white"
+                    >
+                      Apply Now
+                    </Link>
+                  </div>
+                  <div className="bg-white rounded-2xl p-2.5 sm:p-3 shadow-sm border border-gray-100">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                        <TrendingUp className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[clamp(0.95rem,2.5vw,1rem)] font-semibold text-gray-900">Save & Invest</div>
+                        <div className="text-[clamp(0.75rem,2.2vw,0.875rem)] text-gray-500">Grow your funds</div>
+                      </div>
+                    </div>
+                    <Link
+                      href="/dashboard/investments"
+                      className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-emerald-600 px-2 py-1.5 text-[clamp(0.8rem,2.4vw,0.95rem)] font-semibold text-white"
+                    >
+                      Invest Now
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Desktop quick actions grid */}
+              <div className="hidden md:grid md:grid-cols-4 gap-4">
+                <Link href="/dashboard/transfer" className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition text-center">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
                     <Send className="w-6 h-6 text-blue-600" />
                   </div>
                   <div className="text-sm font-semibold text-gray-900">Transfer Money</div>
                 </Link>
-                <Link href="/dashboard/investments" className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition text-center">
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <Link href="/dashboard/investments" className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition text-center">
+                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
                     <TrendingUp className="w-6 h-6 text-purple-600" />
                   </div>
                   <div className="text-sm font-semibold text-gray-900">Save & Invest</div>
                 </Link>
+<<<<<<< HEAD
                 <Link href="/dashboard/loans" className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition text-center">
                   <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+=======
+                <Link href="/dashboard/loans" className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition text-center">
+                  <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-3">
+>>>>>>> b2ccfa7 (First Update commit)
                     <Building2 className="w-6 h-6 text-pink-600" />
                   </div>
                   <div className="text-sm font-semibold text-gray-900">Loans</div>
                 </Link>
+<<<<<<< HEAD
                 <Link href="/dashboard/accounts" className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition text-center">
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+=======
+                <Link href="/dashboard/accounts" className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition text-center">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+>>>>>>> b2ccfa7 (First Update commit)
                     <Building2 className="w-6 h-6 text-blue-600" />
                   </div>
                   <div className="text-sm font-semibold text-gray-900">Bank Details</div>

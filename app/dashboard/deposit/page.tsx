@@ -5,6 +5,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 import { PiggyBank, Shield, ArrowLeft, Bitcoin } from 'lucide-react';
+<<<<<<< HEAD
+=======
+import { isPositiveAmount } from '@/lib/validation';
+>>>>>>> b2ccfa7 (First Update commit)
 import Link from 'next/link';
 
 export default function DepositPage() {
@@ -37,6 +41,7 @@ export default function DepositPage() {
     setMessage('');
     setSubmitting(true);
 
+<<<<<<< HEAD
     try {
       const payload = {
         amount: Number(amount),
@@ -50,6 +55,18 @@ export default function DepositPage() {
       );
     } catch (err: any) {
       setError(err.response?.data?.message || 'Deposit failed');
+=======
+    if (!isPositiveAmount(amount)) {
+      setError('Enter a valid deposit amount.');
+      setSubmitting(false);
+      return;
+    }
+
+    try {
+      router.push(
+        `/dashboard/deposit/confirm?amount=${encodeURIComponent(amount)}&currency=${encodeURIComponent(currency)}&method=${encodeURIComponent(method)}`
+      );
+>>>>>>> b2ccfa7 (First Update commit)
     } finally {
       setSubmitting(false);
     }

@@ -47,6 +47,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string) => {
     try {
       const response = await api.post('/auth/login', { email, password });
+      if (response.data?.otpRequired) {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('user_otp_token', response.data?.otpToken || '');
+          localStorage.setItem('user_otp_email', email);
+        }
+        router.push('/verify-otp');
+        return;
+      }
+
       const { token, user } = response.data;
       
       if (typeof window !== 'undefined') {

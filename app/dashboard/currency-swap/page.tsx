@@ -4,6 +4,10 @@ import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
+<<<<<<< HEAD
+=======
+import { isPositiveAmount } from '@/lib/validation';
+>>>>>>> b2ccfa7 (First Update commit)
 import { ArrowLeftRight, Coins, RefreshCw } from 'lucide-react';
 
 const currencyOptions = [
@@ -68,6 +72,14 @@ export default function CurrencySwapPage() {
     setMessage('');
     setError('');
 
+<<<<<<< HEAD
+=======
+    if (!isPositiveAmount(amount)) {
+      setError('Enter a valid amount.');
+      return;
+    }
+
+>>>>>>> b2ccfa7 (First Update commit)
     const isSupportedPair =
       (fromCurrency === 'USD' && toCurrency === 'BTC') ||
       (fromCurrency === 'BTC' && toCurrency === 'USD');
@@ -77,6 +89,18 @@ export default function CurrencySwapPage() {
       return;
     }
 
+<<<<<<< HEAD
+=======
+    if (fromCurrency === 'USD' && usdBalance !== null && Number(amount) > usdBalance) {
+      setError('Amount exceeds your USD balance.');
+      return;
+    }
+    if (fromCurrency === 'BTC' && btcBalance !== null && Number(amount) > btcBalance) {
+      setError('Amount exceeds your BTC balance.');
+      return;
+    }
+
+>>>>>>> b2ccfa7 (First Update commit)
     setSubmitting(true);
 
     try {

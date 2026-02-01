@@ -13,8 +13,9 @@ const getExchangeRate = () => {
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const { fromCurrency, toCurrency, amount } = req.body;
+    const numericAmount = Number(amount);
 
-    if (!fromCurrency || !toCurrency || !amount || amount <= 0) {
+    if (!fromCurrency || !toCurrency || !Number.isFinite(numericAmount) || numericAmount <= 0) {
       return res.status(400).json({ message: 'Invalid swap details' });
     }
 
@@ -25,27 +26,27 @@ router.post('/', authMiddleware, async (req, res) => {
 
     if (fromCurrency === 'USD' && toCurrency === 'BTC') {
       const exchangeRate = getExchangeRate();
-      const btcAmount = amount / exchangeRate;
+      const btcAmount = numericAmount / exchangeRate;
 
-      if (account.balance < amount) {
+      if (account.balance < numericAmount) {
         return res.status(400).json({ message: 'Insufficient balance' });
       }
 
-      account.balance -= amount;
+      account.balance -= numericAmount;
       account.bitcoinBalance += btcAmount;
 
       const transaction = new Transaction({
         userId: req.user._id,
         accountId: account._id,
         type: 'currency_swap',
-        amount: -amount,
-        description: `Swapped ${amount} USD to ${btcAmount} BTC`,
+        amount: -numericAmount,
+        description: `Swapped ${numericAmount} USD to ${btcAmount} BTC`,
         status: 'completed',
         balanceAfter: account.balance,
         metadata: {
           fromCurrency: 'USD',
           toCurrency: 'BTC',
-          amount: amount,
+          amount: numericAmount,
           convertedAmount: btcAmount,
           exchangeRate: exchangeRate,
         },
@@ -61,13 +62,13 @@ router.post('/', authMiddleware, async (req, res) => {
       });
     } else if (fromCurrency === 'BTC' && toCurrency === 'USD') {
       const exchangeRate = getExchangeRate();
-      const usdAmount = amount * exchangeRate;
+      const usdAmount = numericAmount * exchangeRate;
 
-      if (account.bitcoinBalance < amount) {
+      if (account.bitcoinBalance < numericAmount) {
         return res.status(400).json({ message: 'Insufficient Bitcoin balance' });
       }
 
-      account.bitcoinBalance -= amount;
+      account.bitcoinBalance -= numericAmount;
       account.balance += usdAmount;
 
       const transaction = new Transaction({
@@ -75,13 +76,13 @@ router.post('/', authMiddleware, async (req, res) => {
         accountId: account._id,
         type: 'currency_swap',
         amount: usdAmount,
-        description: `Swapped ${amount} BTC to ${usdAmount} USD`,
+        description: `Swapped ${numericAmount} BTC to ${usdAmount} USD`,
         status: 'completed',
         balanceAfter: account.balance,
         metadata: {
           fromCurrency: 'BTC',
           toCurrency: 'USD',
-          amount: amount,
+          amount: numericAmount,
           convertedAmount: usdAmount,
           exchangeRate: exchangeRate,
         },

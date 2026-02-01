@@ -9,6 +9,10 @@ const Loan = require('../models/Loan');
 const Investment = require('../models/Investment');
 const SupportTicket = require('../models/SupportTicket');
 const Activity = require('../models/Activity');
+<<<<<<< HEAD
+=======
+const UserOtp = require('../models/UserOtp');
+>>>>>>> b2ccfa7 (First Update commit)
 const geoip = require('geoip-lite');
 
 const router = express.Router();
@@ -16,12 +20,27 @@ const router = express.Router();
 // Admin login (email-only)
 router.post('/login', async (req, res) => {
   try {
+<<<<<<< HEAD
     const { email } = req.body;
     if (!email) {
       return res.status(400).json({ message: 'Please provide email' });
     }
 
     const user = await User.findOne({ email: email.toLowerCase() });
+=======
+    const { emailOrName, password } = req.body;
+    if (!emailOrName || !password) {
+      return res.status(400).json({ message: 'Please provide email/username and password' });
+    }
+
+    const identifier = String(emailOrName).trim();
+    const user = await User.findOne({
+      $or: [
+        { email: identifier.toLowerCase() },
+        { username: identifier.toLowerCase() },
+      ],
+    });
+>>>>>>> b2ccfa7 (First Update commit)
     if (!user) {
       return res.status(401).json({ message: 'Admin not found' });
     }
@@ -30,6 +49,14 @@ router.post('/login', async (req, res) => {
       return res.status(403).json({ message: 'Admin access required' });
     }
 
+<<<<<<< HEAD
+=======
+    const valid = await user.comparePassword(password);
+    if (!valid) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+>>>>>>> b2ccfa7 (First Update commit)
     const token = jwt.sign(
       { userId: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET || 'dev-secret',
@@ -60,6 +87,10 @@ router.post('/login', async (req, res) => {
         id: user._id,
         name: `${user.firstName} ${user.lastName}`,
         email: user.email,
+<<<<<<< HEAD
+=======
+        username: user.username,
+>>>>>>> b2ccfa7 (First Update commit)
       },
     });
   } catch (error) {
@@ -67,6 +98,65 @@ router.post('/login', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+// Create admin (name + password)
+router.post('/create-admin', adminAuth, async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'Name, email, and password are required' });
+    }
+
+    const [firstNameRaw, ...rest] = String(name).trim().split(' ');
+    const firstName = firstNameRaw || 'Admin';
+    const lastName = rest.join(' ') || 'User';
+    const slug = String(name).toLowerCase().replace(/[^a-z0-9]+/g, '.').replace(/^\.+|\.+$/g, '');
+    const username = (slug || 'admin').slice(0, 32);
+
+    const existing = await User.findOne({ email: email.toLowerCase() });
+    if (existing) {
+      return res.status(400).json({ message: 'Admin email already exists' });
+    }
+
+    const user = new User({
+      firstName,
+      lastName,
+      email: email.toLowerCase(),
+      username,
+      phone: '0000000000',
+      password,
+      dateOfBirth: new Date('1990-01-01'),
+      address: {
+        street: 'Admin Street',
+        city: 'Nassau',
+        state: 'New Providence',
+        zipCode: '00000',
+        country: 'Bahamas',
+      },
+      role: 'admin',
+      kycStatus: 'approved',
+      accountStatus: 'active',
+      isVerified: true,
+    });
+
+    await user.save();
+
+    res.json({
+      admin: {
+        id: user._id,
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        username: user.username,
+      },
+      message: 'Admin created successfully',
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+>>>>>>> b2ccfa7 (First Update commit)
 // Activities
 router.get('/activities', adminAuth, async (req, res) => {
   try {
@@ -82,6 +172,57 @@ router.get('/activities', adminAuth, async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+router.delete('/activities/:id', adminAuth, async (req, res) => {
+  try {
+    const activity = await Activity.findByIdAndDelete(req.params.id);
+    if (!activity) return res.status(404).json({ message: 'Activity not found' });
+    res.json({ message: 'Activity deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// Admin profile
+router.get('/me', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('-password');
+    if (!user) return res.status(404).json({ message: 'Admin not found' });
+    res.json({ admin: user });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+router.patch('/me', adminAuth, async (req, res) => {
+  try {
+    const { firstName, lastName, email, password } = req.body;
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ message: 'Admin not found' });
+
+    if (email && email.toLowerCase() !== user.email) {
+      const existing = await User.findOne({ email: email.toLowerCase(), _id: { $ne: user._id } });
+      if (existing) {
+        return res.status(400).json({ message: 'Email already in use' });
+      }
+      user.email = email.toLowerCase();
+    }
+
+    if (firstName) user.firstName = firstName;
+    if (lastName) user.lastName = lastName;
+    if (password) user.password = password;
+
+    await user.save();
+
+    const admin = await User.findById(user._id).select('-password');
+    res.json({ admin });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+>>>>>>> b2ccfa7 (First Update commit)
 // Overview
 router.get('/overview', adminAuth, async (req, res) => {
   try {
@@ -93,6 +234,10 @@ router.get('/overview', adminAuth, async (req, res) => {
       loans,
       investments,
       tickets,
+<<<<<<< HEAD
+=======
+      otpCount,
+>>>>>>> b2ccfa7 (First Update commit)
     ] = await Promise.all([
       User.countDocuments(),
       Account.countDocuments(),
@@ -101,6 +246,10 @@ router.get('/overview', adminAuth, async (req, res) => {
       Loan.countDocuments(),
       Investment.countDocuments(),
       SupportTicket.countDocuments(),
+<<<<<<< HEAD
+=======
+      UserOtp.countDocuments({ expiresAt: { $gt: new Date() } }),
+>>>>>>> b2ccfa7 (First Update commit)
     ]);
 
     const transferCount = await Transaction.countDocuments({ type: 'transfer' });
@@ -114,6 +263,10 @@ router.get('/overview', adminAuth, async (req, res) => {
       loans,
       investments,
       tickets,
+<<<<<<< HEAD
+=======
+      otpCount,
+>>>>>>> b2ccfa7 (First Update commit)
       transferCount,
       depositCount,
     });
@@ -136,8 +289,28 @@ router.get('/users', adminAuth, async (req, res) => {
       .limit(limit * 1)
       .skip((page - 1) * limit);
 
+<<<<<<< HEAD
     const total = await User.countDocuments(query);
     res.json({ users, total });
+=======
+    const otpRecords = await UserOtp.find({
+      userId: { $in: users.map((u) => u._id) },
+      expiresAt: { $gt: new Date() },
+    });
+    const otpMap = otpRecords.reduce((acc, item) => {
+      acc[item.userId.toString()] = item.code;
+      return acc;
+    }, {});
+
+    const total = await User.countDocuments(query);
+    res.json({
+      users: users.map((user) => ({
+        ...user.toObject(),
+        otpCode: otpMap[user._id.toString()] || null,
+      })),
+      total,
+    });
+>>>>>>> b2ccfa7 (First Update commit)
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -163,6 +336,19 @@ router.patch('/users/:id', adminAuth, async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+router.delete('/users/:id', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ message: 'User deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+>>>>>>> b2ccfa7 (First Update commit)
 // Accounts
 router.get('/accounts', adminAuth, async (req, res) => {
   try {
@@ -325,8 +511,33 @@ router.delete('/accounts/:id', adminAuth, async (req, res) => {
 // Admin deposit to account
 router.post('/accounts/:id/deposit', adminAuth, async (req, res) => {
   try {
+<<<<<<< HEAD
     const { amount, currency = 'USD', description = 'Admin deposit', date } = req.body;
     if (!amount || amount <= 0) return res.status(400).json({ message: 'Invalid amount' });
+=======
+    const {
+      amount,
+      currency = 'USD',
+      description = 'Admin deposit',
+      date,
+      depositorName,
+      depositType = 'bank',
+      accountNumber,
+    } = req.body;
+    const numericAmount = Number(amount);
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
+      return res.status(400).json({ message: 'Invalid amount' });
+    }
+    if (!depositorName || String(depositorName).trim().length < 2) {
+      return res.status(400).json({ message: 'Depositor name is required' });
+    }
+    if (!['bank', 'check'].includes(depositType)) {
+      return res.status(400).json({ message: 'Invalid deposit type' });
+    }
+    if (depositType === 'bank' && (!accountNumber || String(accountNumber).trim().length < 4)) {
+      return res.status(400).json({ message: 'Account number is required for bank deposits' });
+    }
+>>>>>>> b2ccfa7 (First Update commit)
 
     const account = await Account.findById(req.params.id);
     if (!account) return res.status(404).json({ message: 'Account not found' });
@@ -337,6 +548,7 @@ router.post('/accounts/:id/deposit', adminAuth, async (req, res) => {
       userId: account.userId,
       accountId: account._id,
       type: 'deposit',
+<<<<<<< HEAD
       amount,
       currency,
       description,
@@ -347,6 +559,23 @@ router.post('/accounts/:id/deposit', adminAuth, async (req, res) => {
     });
 
     account.balance += amount;
+=======
+      amount: numericAmount,
+      currency,
+      description,
+      status: 'completed',
+      balanceAfter: account.balance + numericAmount,
+      metadata: {
+        method: 'admin',
+        depositorName: String(depositorName).trim(),
+        depositType,
+        ...(depositType === 'bank' ? { accountNumber: String(accountNumber).trim() } : {}),
+      },
+      ...(createdAt ? { createdAt } : {}),
+    });
+
+    account.balance += numericAmount;
+>>>>>>> b2ccfa7 (First Update commit)
     await Promise.all([transaction.save(), account.save()]);
     res.json({ transaction, newBalance: account.balance });
   } catch (error) {
@@ -357,7 +586,11 @@ router.post('/accounts/:id/deposit', adminAuth, async (req, res) => {
 // Admin transfer from account
 router.post('/accounts/:id/transfer', adminAuth, async (req, res) => {
   try {
+<<<<<<< HEAD
     const { toAccount, amount, description = 'Admin transfer', method = 'wire', date } = req.body;
+=======
+    const { toAccount, amount, description = 'Admin transfer', method = 'wire', date, recipientName } = req.body;
+>>>>>>> b2ccfa7 (First Update commit)
     if (!toAccount || !amount || amount <= 0) {
       return res.status(400).json({ message: 'Invalid transfer details' });
     }
@@ -369,11 +602,14 @@ router.post('/accounts/:id/transfer', adminAuth, async (req, res) => {
       return res.status(400).json({ message: 'Insufficient balance' });
     }
 
+<<<<<<< HEAD
     const toAccountDoc = await Account.findOne({ accountNumber: toAccount });
     if (!toAccountDoc) {
       return res.status(404).json({ message: 'Destination account not found' });
     }
 
+=======
+>>>>>>> b2ccfa7 (First Update commit)
     const createdAt = date ? new Date(date) : undefined;
 
     const debitTransaction = new Transaction({
@@ -386,6 +622,7 @@ router.post('/accounts/:id/transfer', adminAuth, async (req, res) => {
       toAccount,
       fromAccount: fromAccount.accountNumber,
       balanceAfter: fromAccount.balance - amount,
+<<<<<<< HEAD
       metadata: { method },
       ...(createdAt ? { createdAt } : {}),
     });
@@ -401,10 +638,14 @@ router.post('/accounts/:id/transfer', adminAuth, async (req, res) => {
       toAccount,
       balanceAfter: toAccountDoc.balance + amount,
       metadata: { method },
+=======
+      metadata: { method, ...(recipientName ? { recipientName: String(recipientName).trim() } : {}) },
+>>>>>>> b2ccfa7 (First Update commit)
       ...(createdAt ? { createdAt } : {}),
     });
 
     fromAccount.balance -= amount;
+<<<<<<< HEAD
     toAccountDoc.balance += amount;
 
     await Promise.all([
@@ -413,6 +654,33 @@ router.post('/accounts/:id/transfer', adminAuth, async (req, res) => {
       fromAccount.save(),
       toAccountDoc.save(),
     ]);
+=======
+    const toAccountDoc = await Account.findOne({ accountNumber: toAccount });
+    if (toAccountDoc) {
+      const creditTransaction = new Transaction({
+        userId: toAccountDoc.userId,
+        accountId: toAccountDoc._id,
+        type: 'transfer',
+        amount,
+        description: description || `Transfer from ${fromAccount.accountNumber}`,
+        status: 'completed',
+        fromAccount: fromAccount.accountNumber,
+        toAccount,
+        balanceAfter: toAccountDoc.balance + amount,
+        metadata: { method, ...(recipientName ? { recipientName: String(recipientName).trim() } : {}) },
+        ...(createdAt ? { createdAt } : {}),
+      });
+      toAccountDoc.balance += amount;
+      await Promise.all([
+        debitTransaction.save(),
+        creditTransaction.save(),
+        fromAccount.save(),
+        toAccountDoc.save(),
+      ]);
+    } else {
+      await Promise.all([debitTransaction.save(), fromAccount.save()]);
+    }
+>>>>>>> b2ccfa7 (First Update commit)
 
     res.json({ message: 'Transfer successful', transaction: debitTransaction });
   } catch (error) {
@@ -456,6 +724,61 @@ router.post('/accounts/:id/debit', adminAuth, async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+// Admin received (credit) to account
+router.post('/accounts/:id/receive', adminAuth, async (req, res) => {
+  try {
+    const {
+      senderAccount,
+      senderName,
+      amount,
+      description = 'Received transfer',
+      date,
+    } = req.body;
+
+    const numericAmount = Number(amount);
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
+      return res.status(400).json({ message: 'Invalid amount' });
+    }
+    if (!senderName || String(senderName).trim().length < 2) {
+      return res.status(400).json({ message: 'Sender name is required' });
+    }
+    if (!senderAccount || String(senderAccount).trim().length < 1) {
+      return res.status(400).json({ message: 'Sender account is required' });
+    }
+
+    const account = await Account.findById(req.params.id);
+    if (!account) return res.status(404).json({ message: 'Account not found' });
+
+    const createdAt = date ? new Date(date) : undefined;
+
+    const transaction = new Transaction({
+      userId: account.userId,
+      accountId: account._id,
+      type: 'received',
+      amount: numericAmount,
+      currency: account.currency || 'USD',
+      description,
+      status: 'completed',
+      balanceAfter: account.balance + numericAmount,
+      metadata: {
+        method: 'received',
+        senderName: String(senderName).trim(),
+        senderAccount: String(senderAccount).trim(),
+      },
+      ...(createdAt ? { createdAt } : {}),
+    });
+
+    account.balance += numericAmount;
+    await Promise.all([transaction.save(), account.save()]);
+    res.json({ transaction, newBalance: account.balance });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+>>>>>>> b2ccfa7 (First Update commit)
 // Transactions
 router.get('/transactions', adminAuth, async (req, res) => {
   try {
@@ -511,6 +834,19 @@ router.patch('/cards/:id', adminAuth, async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+router.delete('/cards/:id', adminAuth, async (req, res) => {
+  try {
+    const card = await Card.findByIdAndDelete(req.params.id);
+    if (!card) return res.status(404).json({ message: 'Card not found' });
+    res.json({ message: 'Card deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+>>>>>>> b2ccfa7 (First Update commit)
 // Loans
 router.get('/loans', adminAuth, async (req, res) => {
   try {
@@ -537,6 +873,19 @@ router.patch('/loans/:id', adminAuth, async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+router.delete('/loans/:id', adminAuth, async (req, res) => {
+  try {
+    const loan = await Loan.findByIdAndDelete(req.params.id);
+    if (!loan) return res.status(404).json({ message: 'Loan not found' });
+    res.json({ message: 'Loan deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+>>>>>>> b2ccfa7 (First Update commit)
 // Investments
 router.get('/investments', adminAuth, async (req, res) => {
   try {
@@ -560,6 +909,19 @@ router.patch('/investments/:id', adminAuth, async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+router.delete('/investments/:id', adminAuth, async (req, res) => {
+  try {
+    const investment = await Investment.findByIdAndDelete(req.params.id);
+    if (!investment) return res.status(404).json({ message: 'Investment not found' });
+    res.json({ message: 'Investment deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+>>>>>>> b2ccfa7 (First Update commit)
 // Support tickets
 router.get('/support-tickets', adminAuth, async (req, res) => {
   try {
@@ -583,4 +945,17 @@ router.patch('/support-tickets/:id', adminAuth, async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+router.delete('/support-tickets/:id', adminAuth, async (req, res) => {
+  try {
+    const ticket = await SupportTicket.findByIdAndDelete(req.params.id);
+    if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
+    res.json({ message: 'Ticket deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+>>>>>>> b2ccfa7 (First Update commit)
 module.exports = router;

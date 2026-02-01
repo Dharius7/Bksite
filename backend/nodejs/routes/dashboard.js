@@ -89,6 +89,7 @@ router.get('/', authMiddleware, async (req, res) => {
 
     res.json({
       account: account || null,
+      userStatus: req.user?.accountStatus || 'active',
       stats: {
         monthlyDeposits: monthlyDeposits[0]?.total || 0,
         monthlyExpenses: monthlyExpenses[0]?.total || 0,
