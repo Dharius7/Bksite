@@ -61,18 +61,6 @@ export default function Sidebar() {
 
   return (
     <>
-<<<<<<< HEAD
-      {/* Mobile menu button */}
-      <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white text-gray-800 rounded-lg shadow-sm border border-gray-200"
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-      >
-        {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-      </button>
-
-=======
->>>>>>> b2ccfa7 (First Update commit)
       {/* Sidebar */}
       <aside
         className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 transform ${

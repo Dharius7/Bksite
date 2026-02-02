@@ -100,8 +100,6 @@ export default function DashboardPage() {
   const stats = dashboardData?.stats;
   const recentTransactions = dashboardData?.recentTransactions || [];
 
-<<<<<<< HEAD
-=======
   const accountTypeLabel = (type?: string) => {
     switch ((type || '').toLowerCase()) {
       case 'business':
@@ -157,7 +155,6 @@ export default function DashboardPage() {
     }
   };
 
->>>>>>> b2ccfa7 (First Update commit)
   const statusBadge = (status: string) => {
     const normalized = (status || '').toLowerCase();
     if (normalized === 'completed' || normalized === 'processed') return 'bg-green-100 text-green-700';
@@ -247,75 +244,15 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Primary Account Card */}
           <div className="order-1 lg:order-2 lg:col-span-2">
-<<<<<<< HEAD
-            <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-5 md:p-6 text-white shadow-xl">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Building2 className="w-5 h-5" />
-                    <span className="text-sm opacity-90">Coral Credit Bank LTD</span>
-=======
             <div className="bg-[#2E4077] rounded-2xl p-2 md:p-6 text-white shadow-xl">
               <div className="flex items-start justify-between gap-3 mb-1 md:mb-4">
                 <div className="min-w-0">
                   <div className="flex items-center space-x-2 mb-0.5">
                     <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span className="text-xs sm:text-sm opacity-90 truncate">Coral Credit Bank LTD</span>
->>>>>>> b2ccfa7 (First Update commit)
                   </div>
                   <div className="text-xs sm:text-sm opacity-90">{accountTypeLabel(account?.accountType)}</div>
                 </div>
-<<<<<<< HEAD
-                <div className="text-right">
-                  <div className="text-xs opacity-75 mb-1">ACCOUNT NUMBER</div>
-                  <div className="text-base font-mono">****** {account?.accountNumber?.slice(-4) || '0000'}</div>
-                </div>
-              </div>
-
-              <div className="mb-4">
-                <div className="text-sm opacity-90 mb-1">Account Holder</div>
-                <div className="text-lg font-semibold">{user.firstName} {user.lastName}</div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3 mb-4">
-                <div className="flex items-center space-x-2 text-xs sm:text-sm">
-                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                  <span className="text-sm">Account Active</span>
-                </div>
-                <div className="flex items-center space-x-2 text-xs sm:text-sm">
-                  <Shield className="w-4 h-4" />
-                  <span className="text-sm">Verified & Secured</span>
-                </div>
-              </div>
-
-              <div className="mb-5">
-                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 md:overflow-visible md:block">
-                  <div className="min-w-[80%] md:min-w-0 snap-start bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                    <div className="text-sm opacity-90 mb-2">Available Balance</div>
-                    <div className="text-3xl md:text-4xl font-bold">
-                      ${(account?.balance || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </div>
-                  </div>
-
-                  <div className="min-w-[80%] md:min-w-0 snap-start rounded-lg p-4 md:p-0">
-                    <div className="text-sm opacity-90 mb-1">Fiat Balance</div>
-                    <div className="text-2xl md:text-3xl font-bold">
-                      ${(account?.balance || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </div>
-                    <div className="text-sm opacity-75">USD Balance</div>
-                  </div>
-
-                  <div className="min-w-[80%] md:min-w-0 snap-start rounded-lg p-4 md:p-0">
-                    <div className="text-sm opacity-90 mb-1">Bitcoin Balance</div>
-                    <div className="text-base md:text-lg font-semibold">
-                      {(account?.bitcoinBalance || 0).toFixed(8)} BTC
-                    </div>
-                    <div className="text-sm opacity-75">
-                      ~ ${((account?.bitcoinBalance || 0) * bitcoinRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </div>
-                    <div className="text-xs opacity-60 mt-1">- 1 BTC = ${bitcoinRate.toLocaleString()}</div>
-                  </div>
-=======
                 <div className="text-right shrink-0">
                   <div className="text-[10px] sm:text-xs opacity-75 mb-0.5">ACCOUNT NUMBER</div>
                   <div className="text-sm sm:text-base font-mono">****** {account?.accountNumber?.slice(-4) || '0000'}</div>
@@ -337,17 +274,10 @@ export default function DashboardPage() {
                 <div className="flex items-center space-x-2 text-[11px] sm:text-sm">
                   <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>Verified & Secured</span>
->>>>>>> b2ccfa7 (First Update commit)
                 </div>
                 <div className="mt-2 text-xs opacity-70 md:hidden">Swipe to view balances</div>
               </div>
 
-<<<<<<< HEAD
-              <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-row sm:gap-3">
-                <Link
-                  href="/dashboard/deposit"
-                  className="flex-1 bg-white/20 backdrop-blur-sm text-white px-5 py-3 rounded-lg font-semibold hover:bg-white/30 transition flex items-center justify-center space-x-2 border border-white/30"
-=======
               <div className="mb-2 md:mb-5">
                 <div className="flex gap-2 md:gap-4 overflow-x-auto snap-x snap-mandatory pb-0.5 md:pb-2 md:overflow-visible md:block hide-scrollbar">
                   <div className="w-full min-w-[100%] md:min-w-0 snap-start bg-white/10 backdrop-blur-sm rounded-lg p-2 sm:p-3 md:p-4">
@@ -383,22 +313,15 @@ export default function DashboardPage() {
                 <Link
                   href="/dashboard/deposit"
                   className="w-full bg-white/20 backdrop-blur-sm text-white px-2.5 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-white/30 transition flex items-center justify-center space-x-2 border border-white/30 whitespace-nowrap"
->>>>>>> b2ccfa7 (First Update commit)
                 >
                   <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Add Money</span>
                 </Link>
                 <Link
                   href="/dashboard/transfer"
-<<<<<<< HEAD
-                  className="flex-1 bg-white text-blue-600 px-5 py-3 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center justify-center space-x-2"
-                >
-                  <Send className="w-5 h-5" />
-=======
                   className="w-full bg-white text-blue-600 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-gray-100 transition flex items-center justify-center space-x-2 whitespace-nowrap"
                 >
                   <Send className="w-4 h-4 sm:w-5 sm:h-5" />
->>>>>>> b2ccfa7 (First Update commit)
                   <span>Send Money</span>
                 </Link>
               </div>
@@ -502,24 +425,14 @@ export default function DashboardPage() {
                   </div>
                   <div className="text-sm font-semibold text-gray-900">Save & Invest</div>
                 </Link>
-<<<<<<< HEAD
-                <Link href="/dashboard/loans" className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition text-center">
-                  <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-=======
                 <Link href="/dashboard/loans" className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition text-center">
                   <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-3">
->>>>>>> b2ccfa7 (First Update commit)
                     <Building2 className="w-6 h-6 text-pink-600" />
                   </div>
                   <div className="text-sm font-semibold text-gray-900">Loans</div>
                 </Link>
-<<<<<<< HEAD
-                <Link href="/dashboard/accounts" className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition text-center">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-=======
                 <Link href="/dashboard/accounts" className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition text-center">
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
->>>>>>> b2ccfa7 (First Update commit)
                     <Building2 className="w-6 h-6 text-blue-600" />
                   </div>
                   <div className="text-sm font-semibold text-gray-900">Bank Details</div>

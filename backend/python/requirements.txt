@@ -5,3 +5,4 @@ bcrypt==4.1.2
 PyJWT==2.8.0
 pymongo==4.6.1
 flask-jwt-extended==4.6.0
+gunicorn==21.2.0

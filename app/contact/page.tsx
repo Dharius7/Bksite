@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
-
-export default function ContactPage() {
-=======
 'use client';
 
 import { useState } from 'react';
@@ -42,7 +35,6 @@ export default function ContactPage() {
     setMessage('');
   };
 
->>>>>>> b2ccfa7 (First Update commit)
   return (
     <main className="min-h-screen bg-white">
       <Header />
@@ -72,9 +64,6 @@ export default function ContactPage() {
           {/* Form */}
           <div className="rounded-3xl bg-white p-6 sm:p-8 shadow-sm border border-gray-100">
             <h2 className="text-2xl font-bold text-gray-900">Send us a Message</h2>
-<<<<<<< HEAD
-            <div className="mt-6 space-y-5">
-=======
             {error && (
               <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 {error}
@@ -86,66 +75,43 @@ export default function ContactPage() {
               </div>
             )}
             <form onSubmit={handleSubmit} className="mt-6 space-y-5">
->>>>>>> b2ccfa7 (First Update commit)
               <div>
                 <label className="block text-sm font-semibold text-gray-700">Full Name</label>
                 <input
                   type="text"
-<<<<<<< HEAD
-                  className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3"
-=======
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3"
                   placeholder="Your full name"
                   required
->>>>>>> b2ccfa7 (First Update commit)
                 />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700">Email Address</label>
                 <input
                   type="email"
-<<<<<<< HEAD
-                  className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3"
-=======
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3"
                   placeholder="your@email.com"
                   required
->>>>>>> b2ccfa7 (First Update commit)
                 />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700">Subject</label>
                 <input
                   type="text"
-<<<<<<< HEAD
-                  className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3"
-=======
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3"
                   placeholder="Subject"
                   required
->>>>>>> b2ccfa7 (First Update commit)
                 />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700">Message</label>
                 <textarea
                   rows={5}
-<<<<<<< HEAD
-                  className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3"
-                />
-              </div>
-              <button className="w-full rounded-xl bg-blue-600 py-3 text-white font-semibold flex items-center justify-center gap-2">
-                <Send className="h-4 w-4" />
-                Send Message
-              </button>
-            </div>
-=======
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3"
@@ -161,7 +127,6 @@ export default function ContactPage() {
                 Send Message
               </button>
             </form>
->>>>>>> b2ccfa7 (First Update commit)
           </div>
 
           {/* Info */}

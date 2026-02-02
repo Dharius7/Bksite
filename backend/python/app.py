@@ -6,7 +6,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+
+raw_origins = os.getenv('CORS_ORIGIN', '')
+cors_origins = [origin.strip() for origin in raw_origins.split(',') if origin.strip()]
+CORS(app, origins=cors_origins or '*')
 
 # Configuration
 PORT = int(os.getenv('PORT', 5000))
@@ -42,4 +45,5 @@ def create_account():
     return jsonify({'message': 'Create account endpoint - to be implemented'})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=PORT, host='0.0.0.0')
+    debug = os.getenv('FLASK_DEBUG', '0') == '1'
+    app.run(debug=debug, port=PORT, host='0.0.0.0')

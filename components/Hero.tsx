@@ -9,20 +9,12 @@ export default function Hero() {
       {/* Background Image Overlay */}
       <div className="absolute inset-0 z-0">
         <div 
-<<<<<<< HEAD
-          className="w-full h-full bg-cover bg-center opacity-25 md:opacity-45"
-=======
           className="w-full h-full bg-cover bg-[center_25%] sm:bg-center md:bg-right opacity-100 blur-[4px]"
->>>>>>> b2ccfa7 (First Update commit)
           style={{
             backgroundImage: "url('/images/Banksitpicnew.jpg')"
           }}
         />
-<<<<<<< HEAD
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/70 via-slate-900/40 to-transparent" />
-=======
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/25 via-slate-900/10 to-transparent" />
->>>>>>> b2ccfa7 (First Update commit)
       </div>
 
       <div className="container mx-auto px-4 relative z-10">

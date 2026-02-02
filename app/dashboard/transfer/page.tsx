@@ -9,11 +9,7 @@ import {
   Coins,
   CreditCard,
   DollarSign,
-<<<<<<< HEAD
-  Globe,
-=======
   ArrowLeft,
->>>>>>> b2ccfa7 (First Update commit)
   Landmark,
   MoreHorizontal,
   ShieldCheck,
@@ -122,21 +118,6 @@ export default function TransferPage() {
   return (
     <div className="p-6 space-y-6">
       <div className="bg-white rounded-2xl shadow-sm p-6">
-<<<<<<< HEAD
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center">
-              <Globe className="w-6 h-6" />
-            </div>
-            <div>
-              <h1 className="text-xl font-semibold text-gray-900">International Transfer</h1>
-              <p className="text-gray-600">Send money worldwide with multiple payment methods</p>
-            </div>
-          </div>
-          <Link href="/dashboard/transactions" className="text-sm text-blue-600 hover:text-blue-700">
-            View Transactions
-          </Link>
-=======
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex items-start gap-3">
             <button
@@ -165,7 +146,6 @@ export default function TransferPage() {
               </p>
             </div>
           </div>
->>>>>>> b2ccfa7 (First Update commit)
         </div>
       </div>
 

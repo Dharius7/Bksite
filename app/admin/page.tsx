@@ -11,12 +11,9 @@ import {
   BarChart3,
   LifeBuoy,
   ArrowUpRight,
-<<<<<<< HEAD
-=======
   ChevronLeft,
   ChevronRight,
   Trash2,
->>>>>>> b2ccfa7 (First Update commit)
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -28,16 +25,11 @@ type Overview = {
   loans: number;
   investments: number;
   tickets: number;
-<<<<<<< HEAD
-=======
   otpCount: number;
->>>>>>> b2ccfa7 (First Update commit)
   transferCount: number;
   depositCount: number;
 };
 
-<<<<<<< HEAD
-=======
 const statusBadge = (status: string) => {
   const normalized = (status || '').toLowerCase();
   if (normalized === 'completed' || normalized === 'processed') return 'bg-green-100 text-green-700';
@@ -53,7 +45,6 @@ const typeBadge = (type: string) => {
   return 'bg-blue-100 text-blue-700';
 };
 
->>>>>>> b2ccfa7 (First Update commit)
 export default function AdminDashboardPage() {
   const [overview, setOverview] = useState<Overview | null>(null);
   const [users, setUsers] = useState<any[]>([]);
@@ -69,8 +60,6 @@ export default function AdminDashboardPage() {
   const [txFiltersOpen, setTxFiltersOpen] = useState(false);
   const [txTypeFilter, setTxTypeFilter] = useState('');
   const [txStatusFilter, setTxStatusFilter] = useState('');
-<<<<<<< HEAD
-=======
   const [userPage, setUserPage] = useState(0);
   const [accountPage, setAccountPage] = useState(0);
   const [cardPage, setCardPage] = useState(0);
@@ -78,7 +67,6 @@ export default function AdminDashboardPage() {
   const [investmentPage, setInvestmentPage] = useState(0);
   const [ticketPage, setTicketPage] = useState(0);
   const [activityPage, setActivityPage] = useState(0);
->>>>>>> b2ccfa7 (First Update commit)
 
   const fetchAll = async () => {
     setLoading(true);
@@ -135,8 +123,6 @@ export default function AdminDashboardPage() {
     setTxPage(0);
   }, [txTypeFilter, txStatusFilter]);
 
-<<<<<<< HEAD
-=======
   useEffect(() => {
     setUserPage(0);
   }, [users.length]);
@@ -165,7 +151,6 @@ export default function AdminDashboardPage() {
     setActivityPage(0);
   }, [activities.length]);
 
->>>>>>> b2ccfa7 (First Update commit)
   const updateUser = async (id: string, updates: any) => {
     await adminApi.patch(`/admin/users/${id}`, updates);
     fetchAll();
@@ -181,8 +166,6 @@ export default function AdminDashboardPage() {
     fetchAll();
   };
 
-<<<<<<< HEAD
-=======
   const deleteUser = async (id: string) => {
     if (!confirm('Delete this user? This cannot be undone.')) return;
     await adminApi.delete(`/admin/users/${id}`);
@@ -219,13 +202,10 @@ export default function AdminDashboardPage() {
     fetchAll();
   };
 
->>>>>>> b2ccfa7 (First Update commit)
   const [txPage, setTxPage] = useState(0);
 
   const txPageSizeDesktop = 5;
   const txPageSizeMobile = 2;
-<<<<<<< HEAD
-=======
   const pageSize = 5;
 
   const pagedUsers = useMemo(
@@ -262,7 +242,6 @@ export default function AdminDashboardPage() {
     () => activities.slice(activityPage * pageSize, activityPage * pageSize + pageSize),
     [activities, activityPage]
   );
->>>>>>> b2ccfa7 (First Update commit)
 
   const pagedTransactionsDesktop = useMemo(
     () =>
@@ -302,8 +281,6 @@ export default function AdminDashboardPage() {
     fetchAll();
   };
 
-<<<<<<< HEAD
-=======
   const statusClass = (status?: string) => {
     switch ((status || '').toLowerCase()) {
       case 'active':
@@ -345,17 +322,13 @@ export default function AdminDashboardPage() {
     }
   };
 
->>>>>>> b2ccfa7 (First Update commit)
   const cardsSummary = useMemo(
     () => [
       { label: 'Users', value: overview?.users ?? 0, icon: Users, color: 'bg-blue-100 text-blue-700' },
       { label: 'Accounts', value: overview?.accounts ?? 0, icon: Wallet, color: 'bg-emerald-100 text-emerald-700' },
       { label: 'Transactions', value: overview?.transactions ?? 0, icon: FileText, color: 'bg-indigo-100 text-indigo-700' },
       { label: 'Cards', value: overview?.cards ?? 0, icon: CreditCard, color: 'bg-purple-100 text-purple-700' },
-<<<<<<< HEAD
-=======
       { label: 'OTP', value: overview?.otpCount ?? 0, icon: Shield, color: 'bg-rose-100 text-rose-700' },
->>>>>>> b2ccfa7 (First Update commit)
       { label: 'Loans', value: overview?.loans ?? 0, icon: Shield, color: 'bg-amber-100 text-amber-700' },
       { label: 'Investments', value: overview?.investments ?? 0, icon: BarChart3, color: 'bg-pink-100 text-pink-700' },
       { label: 'Tickets', value: overview?.tickets ?? 0, icon: LifeBuoy, color: 'bg-sky-100 text-sky-700' },
@@ -364,27 +337,16 @@ export default function AdminDashboardPage() {
   );
 
   return (
-<<<<<<< HEAD
-    <div className="p-4 md:p-6 space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-=======
     <div className="p-4 md:p-6 space-y-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-blue-800">Admin Dashboard</h1>
->>>>>>> b2ccfa7 (First Update commit)
           <p className="text-gray-600 text-sm">Manage users, accounts, and platform activity</p>
         </div>
         <button
           type="button"
           onClick={fetchAll}
-<<<<<<< HEAD
-          className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
-=======
           className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-md hover:from-blue-700 hover:to-indigo-700"
->>>>>>> b2ccfa7 (First Update commit)
         >
           Refresh
           <ArrowUpRight className="w-4 h-4" />
@@ -401,18 +363,6 @@ export default function AdminDashboardPage() {
         <div className="text-gray-600">Loading admin data...</div>
       ) : (
         <>
-<<<<<<< HEAD
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-            {cardsSummary.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.label} className="bg-white rounded-2xl shadow-sm p-4 border border-slate-100">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${item.color}`}>
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <div className="mt-3 text-xl font-bold text-gray-900">{item.value}</div>
-                  <div className="text-xs text-gray-500">{item.label}</div>
-=======
           <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-3">
             {cardsSummary.map((item) => {
               const Icon = item.icon;
@@ -426,22 +376,11 @@ export default function AdminDashboardPage() {
                   </div>
                   <div className="mt-2 text-base md:text-xl font-bold text-gray-900">{item.value}</div>
                   <div className="text-[11px] md:text-xs text-gray-500">{item.label}</div>
->>>>>>> b2ccfa7 (First Update commit)
                 </div>
               );
             })}
           </div>
 
-<<<<<<< HEAD
-          <section id="users" className="bg-white rounded-2xl shadow-sm p-4 md:p-6 border border-slate-100">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">
-                <Users className="w-4 h-4" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Users</h2>
-                <p className="text-xs text-gray-500">Manage roles, KYC, and status</p>
-=======
           <section id="users" className="bg-white/90 backdrop-blur rounded-3xl shadow-lg p-4 md:p-6 border border-slate-100 relative overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-500" />
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4 rounded-2xl px-4 py-3 bg-gradient-to-r from-blue-50 via-sky-50 to-indigo-50 border border-blue-100">
@@ -477,7 +416,6 @@ export default function AdminDashboardPage() {
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
->>>>>>> b2ccfa7 (First Update commit)
               </div>
             </div>
             <div className="hidden md:block overflow-x-auto">
@@ -490,28 +428,6 @@ export default function AdminDashboardPage() {
                     <th className="py-2">KYC</th>
                     <th className="py-2">Status</th>
                     <th className="py-2">Action</th>
-<<<<<<< HEAD
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user) => (
-                    <tr key={user._id} className="border-t">
-                      <td className="py-2">{user.firstName} {user.lastName}</td>
-                      <td className="py-2">{user.email}</td>
-                      <td className="py-2">{user.role}</td>
-                      <td className="py-2">{user.kycStatus}</td>
-                      <td className="py-2">{user.accountStatus}</td>
-                      <td className="py-2">
-                        <button
-                          className="text-xs text-blue-600 hover:text-blue-700"
-                          onClick={() => updateUser(user._id, { accountStatus: user.accountStatus === 'active' ? 'suspended' : 'active' })}
-                        >
-                          Toggle Status
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-=======
                     <th className="py-2">OTP</th>
                   </tr>
                 </thead>
@@ -592,48 +508,20 @@ export default function AdminDashboardPage() {
                       </tr>
                     );
                   })}
->>>>>>> b2ccfa7 (First Update commit)
                 </tbody>
               </table>
             </div>
             <div className="md:hidden space-y-3">
-<<<<<<< HEAD
-              {users.map((user) => (
-=======
               {pagedUsers.map((user) => {
                 const account =
                   accounts.find((acct) => acct.userId?._id === user._id && acct.isPrimary) ||
                   accounts.find((acct) => acct.userId?._id === user._id) ||
                   null;
               return (
->>>>>>> b2ccfa7 (First Update commit)
                 <div key={user._id} className="rounded-xl border border-gray-100 p-4 bg-slate-50">
                   <div className="font-semibold text-gray-900">{user.firstName} {user.lastName}</div>
                   <div className="text-xs text-gray-500">{user.email}</div>
                   <div className="mt-2 text-xs text-gray-600">Role: {user.role}</div>
-<<<<<<< HEAD
-                  <div className="text-xs text-gray-600">KYC: {user.kycStatus}</div>
-                  <div className="text-xs text-gray-600">Status: {user.accountStatus}</div>
-                  <button
-                    className="mt-3 text-xs text-blue-600"
-                    onClick={() => updateUser(user._id, { accountStatus: user.accountStatus === 'active' ? 'suspended' : 'active' })}
-                  >
-                    Toggle Status
-                  </button>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section id="accounts" className="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-100">
-            <div className="flex items-center gap-3 px-6 py-4 border-b border-slate-100">
-              <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                <Wallet className="w-4 h-4" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Accounts</h2>
-                <p className="text-xs text-gray-500">Balances, crypto, and status</p>
-=======
                   <div className="mt-3 flex flex-col gap-3">
                       <label className="text-xs text-gray-500">KYC</label>
                       <select
@@ -736,7 +624,6 @@ export default function AdminDashboardPage() {
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
->>>>>>> b2ccfa7 (First Update commit)
               </div>
             </div>
             <div className="hidden md:block overflow-x-auto">
@@ -752,11 +639,7 @@ export default function AdminDashboardPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {accounts.map((acct) => (
-=======
                   {pagedAccounts.map((acct) => (
->>>>>>> b2ccfa7 (First Update commit)
                     <tr key={acct._id} className="border-t">
                       <td className="px-6 py-4 font-mono text-xs text-gray-700">{acct.accountNumber}</td>
                       <td className="px-6 py-4 text-gray-900">{acct.userId?.firstName} {acct.userId?.lastName}</td>
@@ -776,17 +659,10 @@ export default function AdminDashboardPage() {
                       <td className="px-6 py-4">
                         <div className="flex flex-wrap gap-2">
                           <Link className="text-xs text-blue-600" href={`/admin/accounts?accountId=${acct._id}&action=edit`}>Edit</Link>
-<<<<<<< HEAD
-                          <Link className="text-xs text-red-600" href={`/admin/accounts?accountId=${acct._id}&action=delete`}>Delete</Link>
-                          <Link className="text-xs text-emerald-600" href={`/admin/accounts?accountId=${acct._id}&action=deposit`}>Deposit</Link>
-                          <Link className="text-xs text-indigo-600" href={`/admin/accounts?accountId=${acct._id}&action=transfer`}>Transfer</Link>
-                          <Link className="text-xs text-emerald-700" href={`/admin/accounts?accountId=${acct._id}&action=debit`}>Debit</Link>
-=======
                           <Link className="text-xs text-emerald-600" href={`/admin/accounts?accountId=${acct._id}&action=deposit`}>Deposit</Link>
                           <Link className="text-xs text-indigo-600" href={`/admin/accounts?accountId=${acct._id}&action=transfer`}>Transfer</Link>
                           <Link className="text-xs text-emerald-700" href={`/admin/accounts?accountId=${acct._id}&action=debit`}>Debit</Link>
                           <Link className="text-xs text-sky-600" href={`/admin/accounts?accountId=${acct._id}&action=received`}>Received</Link>
->>>>>>> b2ccfa7 (First Update commit)
                           <Link className="text-xs text-amber-600" href={`/admin/accounts?accountId=${acct._id}&action=message`}>Message</Link>
                         </div>
                       </td>
@@ -796,11 +672,7 @@ export default function AdminDashboardPage() {
               </table>
             </div>
             <div className="md:hidden space-y-3 p-4">
-<<<<<<< HEAD
-              {accounts.map((acct) => (
-=======
               {pagedAccounts.map((acct) => (
->>>>>>> b2ccfa7 (First Update commit)
                 <div key={acct._id} className="rounded-2xl border border-gray-100 p-4 bg-slate-50">
                   <div className="font-semibold text-gray-900">{acct.accountNumber}</div>
                   <div className="text-xs text-gray-500">{acct.userId?.firstName} {acct.userId?.lastName}</div>
@@ -819,17 +691,10 @@ export default function AdminDashboardPage() {
                   </div>
                   <div className="mt-3 flex flex-wrap gap-2">
                     <Link className="text-xs text-blue-600" href={`/admin/accounts?accountId=${acct._id}&action=edit`}>Edit</Link>
-<<<<<<< HEAD
-                    <Link className="text-xs text-red-600" href={`/admin/accounts?accountId=${acct._id}&action=delete`}>Delete</Link>
-                    <Link className="text-xs text-emerald-600" href={`/admin/accounts?accountId=${acct._id}&action=deposit`}>Deposit</Link>
-                    <Link className="text-xs text-indigo-600" href={`/admin/accounts?accountId=${acct._id}&action=transfer`}>Transfer</Link>
-                    <Link className="text-xs text-emerald-700" href={`/admin/accounts?accountId=${acct._id}&action=debit`}>Debit</Link>
-=======
                     <Link className="text-xs text-emerald-600" href={`/admin/accounts?accountId=${acct._id}&action=deposit`}>Deposit</Link>
                     <Link className="text-xs text-indigo-600" href={`/admin/accounts?accountId=${acct._id}&action=transfer`}>Transfer</Link>
                     <Link className="text-xs text-emerald-700" href={`/admin/accounts?accountId=${acct._id}&action=debit`}>Debit</Link>
                     <Link className="text-xs text-sky-600" href={`/admin/accounts?accountId=${acct._id}&action=received`}>Received</Link>
->>>>>>> b2ccfa7 (First Update commit)
                     <Link className="text-xs text-amber-600" href={`/admin/accounts?accountId=${acct._id}&action=message`}>Message</Link>
                   </div>
                 </div>
@@ -837,24 +702,15 @@ export default function AdminDashboardPage() {
             </div>
           </section>
 
-<<<<<<< HEAD
-          <section id="transactions" className="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-100">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between px-6 py-4 border-b border-slate-100">
-=======
           <section id="transactions" className="bg-white/90 backdrop-blur rounded-3xl shadow-lg overflow-hidden border border-slate-100 relative">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-500" />
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between px-6 py-4 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 via-purple-50 to-fuchsia-50">
->>>>>>> b2ccfa7 (First Update commit)
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center">
                   <FileText className="w-4 h-4" />
                 </div>
                 <div>
-<<<<<<< HEAD
-                  <h2 className="text-lg font-semibold text-gray-900">Transactions</h2>
-=======
                   <h2 className="text-lg font-semibold text-indigo-800">Transactions</h2>
->>>>>>> b2ccfa7 (First Update commit)
                   <p className="text-xs text-gray-500">Monitor and change statuses</p>
                 </div>
               </div>
@@ -884,11 +740,7 @@ export default function AdminDashboardPage() {
                     className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
                     aria-label="Previous transactions"
                   >
-<<<<<<< HEAD
-                    ←
-=======
                     <ChevronLeft className="w-4 h-4" />
->>>>>>> b2ccfa7 (First Update commit)
                   </button>
                   <button
                     type="button"
@@ -901,11 +753,7 @@ export default function AdminDashboardPage() {
                     className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
                     aria-label="Next transactions"
                   >
-<<<<<<< HEAD
-                    →
-=======
                     <ChevronRight className="w-4 h-4" />
->>>>>>> b2ccfa7 (First Update commit)
                   </button>
                 </div>
               </div>
@@ -1045,11 +893,7 @@ export default function AdminDashboardPage() {
                 className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
                 aria-label="Previous transactions"
               >
-<<<<<<< HEAD
-                ←
-=======
                 <ChevronLeft className="w-4 h-4" />
->>>>>>> b2ccfa7 (First Update commit)
               </button>
               <button
                 type="button"
@@ -1062,25 +906,11 @@ export default function AdminDashboardPage() {
                 className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50"
                 aria-label="Next transactions"
               >
-<<<<<<< HEAD
-                →
-=======
                 <ChevronRight className="w-4 h-4" />
->>>>>>> b2ccfa7 (First Update commit)
               </button>
             </div>
           </section>
 
-<<<<<<< HEAD
-          <section id="activities" className="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-100">
-            <div className="flex items-center gap-3 px-6 py-4 border-b border-slate-100">
-              <div className="w-9 h-9 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
-                <LifeBuoy className="w-4 h-4" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Activities</h2>
-                <p className="text-xs text-gray-500">Recent logins and access details</p>
-=======
           <section id="activities" className="bg-white/90 backdrop-blur rounded-3xl shadow-lg overflow-hidden border border-slate-100 relative">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-500 via-blue-500 to-cyan-500" />
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between px-6 py-4 border-b border-sky-100 bg-gradient-to-r from-sky-50 via-blue-50 to-cyan-50">
@@ -1116,7 +946,6 @@ export default function AdminDashboardPage() {
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
->>>>>>> b2ccfa7 (First Update commit)
               </div>
             </div>
             <div className="hidden md:block overflow-x-auto">
@@ -1128,18 +957,11 @@ export default function AdminDashboardPage() {
                     <th className="px-6 py-3 font-semibold">IP</th>
                     <th className="px-6 py-3 font-semibold">Location</th>
                     <th className="px-6 py-3 font-semibold">Login Date</th>
-<<<<<<< HEAD
-                  </tr>
-                </thead>
-                <tbody>
-                  {activities.map((activity) => (
-=======
                     <th className="px-6 py-3 font-semibold text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {pagedActivities.map((activity) => (
->>>>>>> b2ccfa7 (First Update commit)
                     <tr key={activity._id} className="border-t">
                       <td className="px-6 py-4 font-mono text-xs text-gray-700">
                         {activity.accountId?.accountNumber || activity.userId?.accountId || 'N/A'}
@@ -1157,8 +979,6 @@ export default function AdminDashboardPage() {
                         {new Date(activity.createdAt).toLocaleDateString()} <br />
                         <span className="text-xs text-gray-500">{new Date(activity.createdAt).toLocaleTimeString()}</span>
                       </td>
-<<<<<<< HEAD
-=======
                       <td className="px-6 py-4 text-right">
                         <button
                           className="text-xs text-red-600 inline-flex items-center gap-1"
@@ -1168,7 +988,6 @@ export default function AdminDashboardPage() {
                           Delete
                         </button>
                       </td>
->>>>>>> b2ccfa7 (First Update commit)
                     </tr>
                   ))}
                 </tbody>
@@ -1176,11 +995,7 @@ export default function AdminDashboardPage() {
             </div>
 
             <div className="md:hidden space-y-3 p-4">
-<<<<<<< HEAD
-              {activities.map((activity) => (
-=======
               {pagedActivities.map((activity) => (
->>>>>>> b2ccfa7 (First Update commit)
                 <div key={activity._id} className="rounded-2xl border border-gray-100 p-4 bg-slate-50">
                   <div className="font-semibold text-gray-900">
                     {activity.userId?.firstName} {activity.userId?.lastName}
@@ -1194,8 +1009,6 @@ export default function AdminDashboardPage() {
                   <div className="mt-2 text-xs text-gray-500">
                     {new Date(activity.createdAt).toLocaleDateString()} {new Date(activity.createdAt).toLocaleTimeString()}
                   </div>
-<<<<<<< HEAD
-=======
                   <button
                     className="mt-3 text-xs text-red-600 inline-flex items-center gap-1"
                     onClick={() => deleteActivity(activity._id)}
@@ -1203,22 +1016,11 @@ export default function AdminDashboardPage() {
                     <Trash2 className="w-3 h-3" />
                     Delete
                   </button>
->>>>>>> b2ccfa7 (First Update commit)
                 </div>
               ))}
             </div>
           </section>
 
-<<<<<<< HEAD
-          <section id="cards" className="bg-white rounded-2xl shadow-sm p-4 md:p-6 border border-slate-100">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center">
-                <CreditCard className="w-4 h-4" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Cards</h2>
-                <p className="text-xs text-gray-500">Freeze, block, or activate cards</p>
-=======
           <section id="cards" className="bg-white/90 backdrop-blur rounded-3xl shadow-lg p-4 md:p-6 border border-slate-100 relative overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-purple-500 via-violet-500 to-indigo-500" />
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4 rounded-2xl px-4 py-3 bg-gradient-to-r from-purple-50 via-violet-50 to-indigo-50 border border-purple-100">
@@ -1254,7 +1056,6 @@ export default function AdminDashboardPage() {
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
->>>>>>> b2ccfa7 (First Update commit)
               </div>
             </div>
             <div className="hidden md:block overflow-x-auto">
@@ -1269,30 +1070,13 @@ export default function AdminDashboardPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {cards.map((card) => (
-=======
                   {pagedCards.map((card) => (
->>>>>>> b2ccfa7 (First Update commit)
                     <tr key={card._id} className="border-t">
                       <td className="py-2">{card.userId?.email || 'N/A'}</td>
                       <td className="py-2">{card.cardNumber?.slice(-4)}</td>
                       <td className="py-2">{card.cardType}</td>
                       <td className="py-2">{card.status}</td>
                       <td className="py-2">
-<<<<<<< HEAD
-                        <select
-                          className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
-                          value={card.status}
-                          onChange={(e) => updateCard(card._id, e.target.value)}
-                        >
-                          <option value="active">active</option>
-                          <option value="inactive">inactive</option>
-                          <option value="blocked">blocked</option>
-                          <option value="expired">expired</option>
-                          <option value="pending">pending</option>
-                        </select>
-=======
                         <div className="flex items-center gap-3">
                           <select
                             className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
@@ -1313,7 +1097,6 @@ export default function AdminDashboardPage() {
                             Delete
                           </button>
                         </div>
->>>>>>> b2ccfa7 (First Update commit)
                       </td>
                     </tr>
                   ))}
@@ -1321,29 +1104,12 @@ export default function AdminDashboardPage() {
               </table>
             </div>
             <div className="md:hidden space-y-3">
-<<<<<<< HEAD
-              {cards.map((card) => (
-=======
               {pagedCards.map((card) => (
->>>>>>> b2ccfa7 (First Update commit)
                 <div key={card._id} className="rounded-xl border border-gray-100 p-4 bg-slate-50">
                   <div className="font-semibold text-gray-900">**** {card.cardNumber?.slice(-4)}</div>
                   <div className="text-xs text-gray-500">{card.userId?.email || 'N/A'}</div>
                   <div className="mt-2 text-xs text-gray-600">Type: {card.cardType}</div>
                   <div className="text-xs text-gray-600">Status: {card.status}</div>
-<<<<<<< HEAD
-                  <select
-                    className="mt-3 border border-gray-200 rounded-lg px-2 py-1 text-xs"
-                    value={card.status}
-                    onChange={(e) => updateCard(card._id, e.target.value)}
-                  >
-                    <option value="active">active</option>
-                    <option value="inactive">inactive</option>
-                    <option value="blocked">blocked</option>
-                    <option value="expired">expired</option>
-                    <option value="pending">pending</option>
-                  </select>
-=======
                   <div className="mt-3 flex flex-wrap gap-3 items-center">
                     <select
                       className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
@@ -1364,22 +1130,11 @@ export default function AdminDashboardPage() {
                       Delete
                     </button>
                   </div>
->>>>>>> b2ccfa7 (First Update commit)
                 </div>
               ))}
             </div>
           </section>
 
-<<<<<<< HEAD
-          <section id="loans" className="bg-white rounded-2xl shadow-sm p-4 md:p-6 border border-slate-100">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center">
-                <Shield className="w-4 h-4" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Loans</h2>
-                <p className="text-xs text-gray-500">Approve or reject loan applications</p>
-=======
           <section id="loans" className="bg-white/90 backdrop-blur rounded-3xl shadow-lg p-4 md:p-6 border border-slate-100 relative overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500" />
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4 rounded-2xl px-4 py-3 bg-gradient-to-r from-amber-50 via-orange-50 to-red-50 border border-amber-100">
@@ -1415,7 +1170,6 @@ export default function AdminDashboardPage() {
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
->>>>>>> b2ccfa7 (First Update commit)
               </div>
             </div>
             <div className="hidden md:block overflow-x-auto">
@@ -1430,31 +1184,13 @@ export default function AdminDashboardPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {loans.map((loan) => (
-=======
                   {pagedLoans.map((loan) => (
->>>>>>> b2ccfa7 (First Update commit)
                     <tr key={loan._id} className="border-t">
                       <td className="py-2">{loan.userId?.email || 'N/A'}</td>
                       <td className="py-2">{loan.loanType}</td>
                       <td className="py-2">${loan.amount?.toLocaleString()}</td>
                       <td className="py-2">{loan.status}</td>
                       <td className="py-2">
-<<<<<<< HEAD
-                        <select
-                          className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
-                          value={loan.status}
-                          onChange={(e) => updateLoan(loan._id, e.target.value)}
-                        >
-                          <option value="pending">pending</option>
-                          <option value="approved">approved</option>
-                          <option value="rejected">rejected</option>
-                          <option value="active">active</option>
-                          <option value="paid">paid</option>
-                          <option value="defaulted">defaulted</option>
-                        </select>
-=======
                         <div className="flex items-center gap-3">
                           <select
                             className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
@@ -1476,7 +1212,6 @@ export default function AdminDashboardPage() {
                             Delete
                           </button>
                         </div>
->>>>>>> b2ccfa7 (First Update commit)
                       </td>
                     </tr>
                   ))}
@@ -1484,30 +1219,12 @@ export default function AdminDashboardPage() {
               </table>
             </div>
             <div className="md:hidden space-y-3">
-<<<<<<< HEAD
-              {loans.map((loan) => (
-=======
               {pagedLoans.map((loan) => (
->>>>>>> b2ccfa7 (First Update commit)
                 <div key={loan._id} className="rounded-xl border border-gray-100 p-4 bg-slate-50">
                   <div className="font-semibold text-gray-900">${loan.amount?.toLocaleString()}</div>
                   <div className="text-xs text-gray-500">{loan.userId?.email || 'N/A'}</div>
                   <div className="mt-2 text-xs text-gray-600">Type: {loan.loanType}</div>
                   <div className="text-xs text-gray-600">Status: {loan.status}</div>
-<<<<<<< HEAD
-                  <select
-                    className="mt-3 border border-gray-200 rounded-lg px-2 py-1 text-xs"
-                    value={loan.status}
-                    onChange={(e) => updateLoan(loan._id, e.target.value)}
-                  >
-                    <option value="pending">pending</option>
-                    <option value="approved">approved</option>
-                    <option value="rejected">rejected</option>
-                    <option value="active">active</option>
-                    <option value="paid">paid</option>
-                    <option value="defaulted">defaulted</option>
-                  </select>
-=======
                   <div className="mt-3 flex flex-wrap gap-3 items-center">
                     <select
                       className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
@@ -1529,20 +1246,10 @@ export default function AdminDashboardPage() {
                       Delete
                     </button>
                   </div>
->>>>>>> b2ccfa7 (First Update commit)
                 </div>
               ))}
             </div>
 
-<<<<<<< HEAD
-            <div className="flex items-center gap-3 mt-8 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-pink-100 text-pink-700 flex items-center justify-center">
-                <BarChart3 className="w-4 h-4" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Investments</h2>
-                <p className="text-xs text-gray-500">Manage investment statuses</p>
-=======
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mt-8 mb-4 rounded-2xl px-4 py-3 bg-gradient-to-r from-pink-50 via-rose-50 to-fuchsia-50 border border-pink-100">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-pink-100 text-pink-700 flex items-center justify-center">
@@ -1576,7 +1283,6 @@ export default function AdminDashboardPage() {
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
->>>>>>> b2ccfa7 (First Update commit)
               </div>
             </div>
             <div className="hidden md:block overflow-x-auto">
@@ -1591,29 +1297,13 @@ export default function AdminDashboardPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {investments.map((inv) => (
-=======
                   {pagedInvestments.map((inv) => (
->>>>>>> b2ccfa7 (First Update commit)
                     <tr key={inv._id} className="border-t">
                       <td className="py-2">{inv.userId?.email || 'N/A'}</td>
                       <td className="py-2">{inv.planName}</td>
                       <td className="py-2">${inv.amount?.toLocaleString()}</td>
                       <td className="py-2">{inv.status}</td>
                       <td className="py-2">
-<<<<<<< HEAD
-                        <select
-                          className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
-                          value={inv.status}
-                          onChange={(e) => updateInvestment(inv._id, e.target.value)}
-                        >
-                          <option value="pending">pending</option>
-                          <option value="active">active</option>
-                          <option value="matured">matured</option>
-                          <option value="cancelled">cancelled</option>
-                        </select>
-=======
                         <div className="flex items-center gap-3">
                           <select
                             className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
@@ -1633,7 +1323,6 @@ export default function AdminDashboardPage() {
                             Delete
                           </button>
                         </div>
->>>>>>> b2ccfa7 (First Update commit)
                       </td>
                     </tr>
                   ))}
@@ -1641,28 +1330,12 @@ export default function AdminDashboardPage() {
               </table>
             </div>
             <div className="md:hidden space-y-3">
-<<<<<<< HEAD
-              {investments.map((inv) => (
-=======
               {pagedInvestments.map((inv) => (
->>>>>>> b2ccfa7 (First Update commit)
                 <div key={inv._id} className="rounded-xl border border-gray-100 p-4 bg-slate-50">
                   <div className="font-semibold text-gray-900">${inv.amount?.toLocaleString()}</div>
                   <div className="text-xs text-gray-500">{inv.userId?.email || 'N/A'}</div>
                   <div className="mt-2 text-xs text-gray-600">Plan: {inv.planName}</div>
                   <div className="text-xs text-gray-600">Status: {inv.status}</div>
-<<<<<<< HEAD
-                  <select
-                    className="mt-3 border border-gray-200 rounded-lg px-2 py-1 text-xs"
-                    value={inv.status}
-                    onChange={(e) => updateInvestment(inv._id, e.target.value)}
-                  >
-                    <option value="pending">pending</option>
-                    <option value="active">active</option>
-                    <option value="matured">matured</option>
-                    <option value="cancelled">cancelled</option>
-                  </select>
-=======
                   <div className="mt-3 flex flex-wrap gap-3 items-center">
                     <select
                       className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
@@ -1682,22 +1355,11 @@ export default function AdminDashboardPage() {
                       Delete
                     </button>
                   </div>
->>>>>>> b2ccfa7 (First Update commit)
                 </div>
               ))}
             </div>
           </section>
 
-<<<<<<< HEAD
-          <section id="support" className="bg-white rounded-2xl shadow-sm p-4 md:p-6 border border-slate-100">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center">
-                <LifeBuoy className="w-4 h-4" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Support Tickets</h2>
-                <p className="text-xs text-gray-500">Resolve user issues faster</p>
-=======
           <section id="support" className="bg-white/90 backdrop-blur rounded-3xl shadow-lg p-4 md:p-6 border border-slate-100 relative overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-500" />
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4 rounded-2xl px-4 py-3 bg-gradient-to-r from-cyan-50 via-sky-50 to-blue-50 border border-cyan-100">
@@ -1733,7 +1395,6 @@ export default function AdminDashboardPage() {
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
->>>>>>> b2ccfa7 (First Update commit)
               </div>
             </div>
             <div className="hidden md:block overflow-x-auto">
@@ -1748,28 +1409,13 @@ export default function AdminDashboardPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {tickets.map((ticket) => (
-=======
                   {pagedTickets.map((ticket) => (
->>>>>>> b2ccfa7 (First Update commit)
                     <tr key={ticket._id} className="border-t">
                       <td className="py-2">{ticket.userId?.email || 'N/A'}</td>
                       <td className="py-2">{ticket.title}</td>
                       <td className="py-2">{ticket.priority}</td>
                       <td className="py-2">{ticket.status}</td>
                       <td className="py-2">
-<<<<<<< HEAD
-                        <select
-                          className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
-                          value={ticket.status}
-                          onChange={(e) => updateTicket(ticket._id, e.target.value)}
-                        >
-                          <option value="open">open</option>
-                          <option value="in_progress">in_progress</option>
-                          <option value="resolved">resolved</option>
-                        </select>
-=======
                         <div className="flex items-center gap-3">
                           <select
                             className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
@@ -1788,7 +1434,6 @@ export default function AdminDashboardPage() {
                             Delete
                           </button>
                         </div>
->>>>>>> b2ccfa7 (First Update commit)
                       </td>
                     </tr>
                   ))}
@@ -1796,27 +1441,12 @@ export default function AdminDashboardPage() {
               </table>
             </div>
             <div className="md:hidden space-y-3">
-<<<<<<< HEAD
-              {tickets.map((ticket) => (
-=======
               {pagedTickets.map((ticket) => (
->>>>>>> b2ccfa7 (First Update commit)
                 <div key={ticket._id} className="rounded-xl border border-gray-100 p-4 bg-slate-50">
                   <div className="font-semibold text-gray-900">{ticket.title}</div>
                   <div className="text-xs text-gray-500">{ticket.userId?.email || 'N/A'}</div>
                   <div className="mt-2 text-xs text-gray-600">Priority: {ticket.priority}</div>
                   <div className="text-xs text-gray-600">Status: {ticket.status}</div>
-<<<<<<< HEAD
-                  <select
-                    className="mt-3 border border-gray-200 rounded-lg px-2 py-1 text-xs"
-                    value={ticket.status}
-                    onChange={(e) => updateTicket(ticket._id, e.target.value)}
-                  >
-                    <option value="open">open</option>
-                    <option value="in_progress">in_progress</option>
-                    <option value="resolved">resolved</option>
-                  </select>
-=======
                   <div className="mt-3 flex flex-wrap gap-3 items-center">
                     <select
                       className="border border-gray-200 rounded-lg px-2 py-1 text-xs"
@@ -1835,7 +1465,6 @@ export default function AdminDashboardPage() {
                       Delete
                     </button>
                   </div>
->>>>>>> b2ccfa7 (First Update commit)
                 </div>
               ))}
             </div>
@@ -1845,20 +1474,3 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
-<<<<<<< HEAD
-  const statusBadge = (status: string) => {
-    const normalized = (status || '').toLowerCase();
-    if (normalized === 'completed' || normalized === 'processed') return 'bg-green-100 text-green-700';
-    if (normalized === 'pending') return 'bg-yellow-100 text-yellow-700';
-    if (normalized === 'failed') return 'bg-red-100 text-red-700';
-    return 'bg-gray-100 text-gray-700';
-  };
-
-  const typeBadge = (type: string) => {
-    const normalized = (type || '').toLowerCase();
-    if (normalized === 'credit' || normalized === 'deposit') return 'bg-green-100 text-green-700';
-    if (normalized === 'debit' || normalized === 'transfer') return 'bg-red-100 text-red-700';
-    return 'bg-blue-100 text-blue-700';
-  };
-=======
->>>>>>> b2ccfa7 (First Update commit)

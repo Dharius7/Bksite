@@ -20,11 +20,7 @@ const accountSchema = new mongoose.Schema({
   currency: { type: String, default: 'USD' },
   bitcoinBalance: { type: Number, default: 0 },
   isPrimary: { type: Boolean, default: true },
-<<<<<<< HEAD
-  status: { type: String, enum: ['active', 'closed', 'frozen'], default: 'active' },
-=======
   status: { type: String, enum: ['active', 'closed', 'frozen', 'dormant', 'hold'], default: 'active' },
->>>>>>> b2ccfa7 (First Update commit)
   transferMessage: { type: String, default: '' },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

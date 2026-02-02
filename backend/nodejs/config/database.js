@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const { getMongoUri } = require('./env');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/coral-credit-bank', {
+    const conn = await mongoose.connect(getMongoUri(), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

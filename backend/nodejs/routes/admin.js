@@ -9,25 +9,15 @@ const Loan = require('../models/Loan');
 const Investment = require('../models/Investment');
 const SupportTicket = require('../models/SupportTicket');
 const Activity = require('../models/Activity');
-<<<<<<< HEAD
-=======
 const UserOtp = require('../models/UserOtp');
->>>>>>> b2ccfa7 (First Update commit)
 const geoip = require('geoip-lite');
+const { getJwtSecret } = require('../config/env');
 
 const router = express.Router();
 
 // Admin login (email-only)
 router.post('/login', async (req, res) => {
   try {
-<<<<<<< HEAD
-    const { email } = req.body;
-    if (!email) {
-      return res.status(400).json({ message: 'Please provide email' });
-    }
-
-    const user = await User.findOne({ email: email.toLowerCase() });
-=======
     const { emailOrName, password } = req.body;
     if (!emailOrName || !password) {
       return res.status(400).json({ message: 'Please provide email/username and password' });
@@ -40,7 +30,6 @@ router.post('/login', async (req, res) => {
         { username: identifier.toLowerCase() },
       ],
     });
->>>>>>> b2ccfa7 (First Update commit)
     if (!user) {
       return res.status(401).json({ message: 'Admin not found' });
     }
@@ -49,19 +38,14 @@ router.post('/login', async (req, res) => {
       return res.status(403).json({ message: 'Admin access required' });
     }
 
-<<<<<<< HEAD
-=======
     const valid = await user.comparePassword(password);
     if (!valid) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
->>>>>>> b2ccfa7 (First Update commit)
-    const token = jwt.sign(
-      { userId: user._id, email: user.email, role: user.role },
-      process.env.JWT_SECRET || 'dev-secret',
-      { expiresIn: '7d' }
-    );
+    const token = jwt.sign({ userId: user._id, email: user.email, role: user.role }, getJwtSecret(), {
+      expiresIn: '7d',
+    });
 
     const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || 'unknown';
     const geo = ip && ip !== 'unknown' ? geoip.lookup(ip) : null;
@@ -87,10 +71,7 @@ router.post('/login', async (req, res) => {
         id: user._id,
         name: `${user.firstName} ${user.lastName}`,
         email: user.email,
-<<<<<<< HEAD
-=======
         username: user.username,
->>>>>>> b2ccfa7 (First Update commit)
       },
     });
   } catch (error) {
@@ -98,8 +79,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 // Create admin (name + password)
 router.post('/create-admin', adminAuth, async (req, res) => {
   try {
@@ -156,7 +135,6 @@ router.post('/create-admin', adminAuth, async (req, res) => {
   }
 });
 
->>>>>>> b2ccfa7 (First Update commit)
 // Activities
 router.get('/activities', adminAuth, async (req, res) => {
   try {
@@ -172,8 +150,6 @@ router.get('/activities', adminAuth, async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 router.delete('/activities/:id', adminAuth, async (req, res) => {
   try {
     const activity = await Activity.findByIdAndDelete(req.params.id);
@@ -222,7 +198,6 @@ router.patch('/me', adminAuth, async (req, res) => {
   }
 });
 
->>>>>>> b2ccfa7 (First Update commit)
 // Overview
 router.get('/overview', adminAuth, async (req, res) => {
   try {
@@ -234,10 +209,7 @@ router.get('/overview', adminAuth, async (req, res) => {
       loans,
       investments,
       tickets,
-<<<<<<< HEAD
-=======
       otpCount,
->>>>>>> b2ccfa7 (First Update commit)
     ] = await Promise.all([
       User.countDocuments(),
       Account.countDocuments(),
@@ -246,10 +218,7 @@ router.get('/overview', adminAuth, async (req, res) => {
       Loan.countDocuments(),
       Investment.countDocuments(),
       SupportTicket.countDocuments(),
-<<<<<<< HEAD
-=======
       UserOtp.countDocuments({ expiresAt: { $gt: new Date() } }),
->>>>>>> b2ccfa7 (First Update commit)
     ]);
 
     const transferCount = await Transaction.countDocuments({ type: 'transfer' });
@@ -263,10 +232,7 @@ router.get('/overview', adminAuth, async (req, res) => {
       loans,
       investments,
       tickets,
-<<<<<<< HEAD
-=======
       otpCount,
->>>>>>> b2ccfa7 (First Update commit)
       transferCount,
       depositCount,
     });
@@ -289,10 +255,6 @@ router.get('/users', adminAuth, async (req, res) => {
       .limit(limit * 1)
       .skip((page - 1) * limit);
 
-<<<<<<< HEAD
-    const total = await User.countDocuments(query);
-    res.json({ users, total });
-=======
     const otpRecords = await UserOtp.find({
       userId: { $in: users.map((u) => u._id) },
       expiresAt: { $gt: new Date() },
@@ -310,7 +272,6 @@ router.get('/users', adminAuth, async (req, res) => {
       })),
       total,
     });
->>>>>>> b2ccfa7 (First Update commit)
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -336,8 +297,6 @@ router.patch('/users/:id', adminAuth, async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 router.delete('/users/:id', adminAuth, async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
@@ -348,7 +307,6 @@ router.delete('/users/:id', adminAuth, async (req, res) => {
   }
 });
 
->>>>>>> b2ccfa7 (First Update commit)
 // Accounts
 router.get('/accounts', adminAuth, async (req, res) => {
   try {
@@ -511,10 +469,6 @@ router.delete('/accounts/:id', adminAuth, async (req, res) => {
 // Admin deposit to account
 router.post('/accounts/:id/deposit', adminAuth, async (req, res) => {
   try {
-<<<<<<< HEAD
-    const { amount, currency = 'USD', description = 'Admin deposit', date } = req.body;
-    if (!amount || amount <= 0) return res.status(400).json({ message: 'Invalid amount' });
-=======
     const {
       amount,
       currency = 'USD',
@@ -537,7 +491,6 @@ router.post('/accounts/:id/deposit', adminAuth, async (req, res) => {
     if (depositType === 'bank' && (!accountNumber || String(accountNumber).trim().length < 4)) {
       return res.status(400).json({ message: 'Account number is required for bank deposits' });
     }
->>>>>>> b2ccfa7 (First Update commit)
 
     const account = await Account.findById(req.params.id);
     if (!account) return res.status(404).json({ message: 'Account not found' });
@@ -548,18 +501,6 @@ router.post('/accounts/:id/deposit', adminAuth, async (req, res) => {
       userId: account.userId,
       accountId: account._id,
       type: 'deposit',
-<<<<<<< HEAD
-      amount,
-      currency,
-      description,
-      status: 'completed',
-      balanceAfter: account.balance + amount,
-      metadata: { method: 'admin' },
-      ...(createdAt ? { createdAt } : {}),
-    });
-
-    account.balance += amount;
-=======
       amount: numericAmount,
       currency,
       description,
@@ -575,7 +516,6 @@ router.post('/accounts/:id/deposit', adminAuth, async (req, res) => {
     });
 
     account.balance += numericAmount;
->>>>>>> b2ccfa7 (First Update commit)
     await Promise.all([transaction.save(), account.save()]);
     res.json({ transaction, newBalance: account.balance });
   } catch (error) {
@@ -586,11 +526,7 @@ router.post('/accounts/:id/deposit', adminAuth, async (req, res) => {
 // Admin transfer from account
 router.post('/accounts/:id/transfer', adminAuth, async (req, res) => {
   try {
-<<<<<<< HEAD
-    const { toAccount, amount, description = 'Admin transfer', method = 'wire', date } = req.body;
-=======
     const { toAccount, amount, description = 'Admin transfer', method = 'wire', date, recipientName } = req.body;
->>>>>>> b2ccfa7 (First Update commit)
     if (!toAccount || !amount || amount <= 0) {
       return res.status(400).json({ message: 'Invalid transfer details' });
     }
@@ -602,14 +538,6 @@ router.post('/accounts/:id/transfer', adminAuth, async (req, res) => {
       return res.status(400).json({ message: 'Insufficient balance' });
     }
 
-<<<<<<< HEAD
-    const toAccountDoc = await Account.findOne({ accountNumber: toAccount });
-    if (!toAccountDoc) {
-      return res.status(404).json({ message: 'Destination account not found' });
-    }
-
-=======
->>>>>>> b2ccfa7 (First Update commit)
     const createdAt = date ? new Date(date) : undefined;
 
     const debitTransaction = new Transaction({
@@ -622,39 +550,11 @@ router.post('/accounts/:id/transfer', adminAuth, async (req, res) => {
       toAccount,
       fromAccount: fromAccount.accountNumber,
       balanceAfter: fromAccount.balance - amount,
-<<<<<<< HEAD
-      metadata: { method },
-      ...(createdAt ? { createdAt } : {}),
-    });
-
-    const creditTransaction = new Transaction({
-      userId: toAccountDoc.userId,
-      accountId: toAccountDoc._id,
-      type: 'transfer',
-      amount,
-      description: description || `Transfer from ${fromAccount.accountNumber}`,
-      status: 'completed',
-      fromAccount: fromAccount.accountNumber,
-      toAccount,
-      balanceAfter: toAccountDoc.balance + amount,
-      metadata: { method },
-=======
       metadata: { method, ...(recipientName ? { recipientName: String(recipientName).trim() } : {}) },
->>>>>>> b2ccfa7 (First Update commit)
       ...(createdAt ? { createdAt } : {}),
     });
 
     fromAccount.balance -= amount;
-<<<<<<< HEAD
-    toAccountDoc.balance += amount;
-
-    await Promise.all([
-      debitTransaction.save(),
-      creditTransaction.save(),
-      fromAccount.save(),
-      toAccountDoc.save(),
-    ]);
-=======
     const toAccountDoc = await Account.findOne({ accountNumber: toAccount });
     if (toAccountDoc) {
       const creditTransaction = new Transaction({
@@ -680,7 +580,6 @@ router.post('/accounts/:id/transfer', adminAuth, async (req, res) => {
     } else {
       await Promise.all([debitTransaction.save(), fromAccount.save()]);
     }
->>>>>>> b2ccfa7 (First Update commit)
 
     res.json({ message: 'Transfer successful', transaction: debitTransaction });
   } catch (error) {
@@ -724,8 +623,6 @@ router.post('/accounts/:id/debit', adminAuth, async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 // Admin received (credit) to account
 router.post('/accounts/:id/receive', adminAuth, async (req, res) => {
   try {
@@ -778,7 +675,6 @@ router.post('/accounts/:id/receive', adminAuth, async (req, res) => {
   }
 });
 
->>>>>>> b2ccfa7 (First Update commit)
 // Transactions
 router.get('/transactions', adminAuth, async (req, res) => {
   try {
@@ -834,8 +730,6 @@ router.patch('/cards/:id', adminAuth, async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 router.delete('/cards/:id', adminAuth, async (req, res) => {
   try {
     const card = await Card.findByIdAndDelete(req.params.id);
@@ -846,7 +740,6 @@ router.delete('/cards/:id', adminAuth, async (req, res) => {
   }
 });
 
->>>>>>> b2ccfa7 (First Update commit)
 // Loans
 router.get('/loans', adminAuth, async (req, res) => {
   try {
@@ -873,8 +766,6 @@ router.patch('/loans/:id', adminAuth, async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 router.delete('/loans/:id', adminAuth, async (req, res) => {
   try {
     const loan = await Loan.findByIdAndDelete(req.params.id);
@@ -885,7 +776,6 @@ router.delete('/loans/:id', adminAuth, async (req, res) => {
   }
 });
 
->>>>>>> b2ccfa7 (First Update commit)
 // Investments
 router.get('/investments', adminAuth, async (req, res) => {
   try {
@@ -909,8 +799,6 @@ router.patch('/investments/:id', adminAuth, async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 router.delete('/investments/:id', adminAuth, async (req, res) => {
   try {
     const investment = await Investment.findByIdAndDelete(req.params.id);
@@ -921,7 +809,6 @@ router.delete('/investments/:id', adminAuth, async (req, res) => {
   }
 });
 
->>>>>>> b2ccfa7 (First Update commit)
 // Support tickets
 router.get('/support-tickets', adminAuth, async (req, res) => {
   try {
@@ -945,8 +832,6 @@ router.patch('/support-tickets/:id', adminAuth, async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 router.delete('/support-tickets/:id', adminAuth, async (req, res) => {
   try {
     const ticket = await SupportTicket.findByIdAndDelete(req.params.id);
@@ -957,5 +842,4 @@ router.delete('/support-tickets/:id', adminAuth, async (req, res) => {
   }
 });
 
->>>>>>> b2ccfa7 (First Update commit)
 module.exports = router;

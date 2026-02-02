@@ -14,21 +14,14 @@ import {
   LogOut,
   Settings,
   ChevronDown,
-<<<<<<< HEAD
-=======
   Menu,
   X,
   UserPlus,
->>>>>>> b2ccfa7 (First Update commit)
 } from 'lucide-react';
 
 const navItems = [
   { name: 'Overview', path: '/admin', icon: BarChart3 },
-<<<<<<< HEAD
-  { name: 'Users', path: '/admin#users', icon: Users },
-=======
   { name: 'Users', path: '/admin/users', icon: Users },
->>>>>>> b2ccfa7 (First Update commit)
   { name: 'Accounts', path: '/admin/accounts', icon: Wallet },
   { name: 'Transactions', path: '/admin/transactions', icon: FileText },
   { name: 'Cards', path: '/admin#cards', icon: CreditCard },
@@ -40,8 +33,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const router = useRouter();
   const [profileOpen, setProfileOpen] = useState(false);
-<<<<<<< HEAD
-=======
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [createAdminOpen, setCreateAdminOpen] = useState(false);
   const [adminName, setAdminName] = useState('');
@@ -59,7 +50,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     'Loans & Investments': 'bg-amber-100 text-amber-700',
     Support: 'bg-cyan-100 text-cyan-700',
   };
->>>>>>> b2ccfa7 (First Update commit)
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token');
@@ -68,21 +58,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   }, [pathname, router]);
 
-<<<<<<< HEAD
-  const adminInitials = useMemo(() => {
-    if (typeof window === 'undefined') return 'A';
-    try {
-      const stored = localStorage.getItem('admin');
-      if (!stored) return 'A';
-      const admin = JSON.parse(stored);
-      const name = admin?.name || admin?.email || 'Admin';
-      const parts = name.split(' ');
-      const first = parts[0]?.[0] || 'A';
-      const last = parts[1]?.[0] || '';
-      return `${first}${last}`.toUpperCase();
-    } catch {
-      return 'A';
-=======
   const [adminInitials, setAdminInitials] = useState('A');
 
   useEffect(() => {
@@ -97,7 +72,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       setAdminInitials(`${first}${last}`.toUpperCase());
     } catch {
       setAdminInitials('A');
->>>>>>> b2ccfa7 (First Update commit)
     }
   }, []);
 
@@ -106,17 +80,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen bg-slate-50">
-      <div className="flex">
-        <aside className="hidden lg:flex fixed inset-y-0 left-0 w-64 flex-col border-r border-slate-200 bg-white">
-          <div className="px-6 py-6 border-b border-slate-200">
-=======
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <div className="flex">
         <aside className="hidden lg:flex fixed inset-y-0 left-0 w-64 flex-col border-r border-slate-200 bg-white/80 backdrop-blur">
           <div className="px-6 py-6 border-b border-slate-200 bg-gradient-to-r from-white via-blue-50 to-indigo-50">
->>>>>>> b2ccfa7 (First Update commit)
             <div className="text-xs uppercase text-slate-400 font-semibold">Admin Portal</div>
             <div className="text-lg font-bold text-slate-900">Coral Credit Bank</div>
           </div>
@@ -127,11 +94,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Link
                   key={item.name}
                   href={item.path}
-<<<<<<< HEAD
-                  className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100"
-=======
                   className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-white hover:shadow-sm"
->>>>>>> b2ccfa7 (First Update commit)
                 >
                   <Icon className="w-4 h-4" />
                   {item.name}
@@ -140,16 +103,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             })}
           </nav>
           <div className="px-4 py-4 border-t border-slate-200">
-<<<<<<< HEAD
-              <button
-                type="button"
-                onClick={() => {
-                  localStorage.removeItem('admin_token');
-                  localStorage.removeItem('admin');
-                  router.push('/admin/login');
-                }}
-                className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50"
-=======
             <button
               type="button"
               onClick={() => setCreateAdminOpen(true)}
@@ -166,7 +119,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   router.push('/admin/login');
                 }}
                 className="w-full flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50"
->>>>>>> b2ccfa7 (First Update commit)
               >
               <LogOut className="w-4 h-4" />
               Logout
@@ -175,9 +127,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </aside>
 
         <main className="flex-1 lg:ml-64 min-h-screen">
-<<<<<<< HEAD
-          <div className="fixed top-0 right-0 left-0 lg:left-64 z-30 bg-slate-50 border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-end">
-=======
           <div className="fixed top-0 right-0 left-0 lg:left-64 z-30 bg-white/70 backdrop-blur border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between">
             <button
               type="button"
@@ -188,16 +137,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Menu className="w-4 h-4 text-indigo-600" />
               Menu
             </button>
->>>>>>> b2ccfa7 (First Update commit)
             <div className="relative">
               <button
                 type="button"
                 onClick={() => setProfileOpen((prev) => !prev)}
-<<<<<<< HEAD
-                className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1 shadow-sm"
-=======
                 className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-2 py-1 shadow-sm"
->>>>>>> b2ccfa7 (First Update commit)
                 aria-haspopup="true"
                 aria-expanded={profileOpen}
               >
@@ -237,8 +181,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
         </main>
       </div>
-<<<<<<< HEAD
-=======
 
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 z-40">
@@ -405,7 +347,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
         </div>
       )}
->>>>>>> b2ccfa7 (First Update commit)
     </div>
   );
 }

@@ -1,14 +1,12 @@
-const express = require('express');
+﻿const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Account = require('../models/Account');
 const Transaction = require('../models/Transaction');
 const Activity = require('../models/Activity');
-<<<<<<< HEAD
-=======
 const UserOtp = require('../models/UserOtp');
->>>>>>> b2ccfa7 (First Update commit)
 const geoip = require('geoip-lite');
+const { getJwtSecret, isProd } = require('../config/env');
 
 const router = express.Router();
 
@@ -93,11 +91,7 @@ router.post('/register', async (req, res) => {
       await transaction.save();
     }
 
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET || 'dev-secret',
-      { expiresIn: '7d' }
-    );
+    const token = jwt.sign({ userId: user._id, email: user.email }, getJwtSecret(), { expiresIn: '7d' });
 
     res.json({
       token,
@@ -119,7 +113,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login (DEV mode password bypass)
+// Login
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -133,8 +127,8 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'User not found' });
     }
 
-    // 🔒 Password bypass in DEV only
-    if (process.env.NODE_ENV === 'production') {
+    const allowPasswordless = !isProd && process.env.ALLOW_PASSWORDLESS_LOGIN === 'true';
+    if (!allowPasswordless) {
       if (!password) {
         return res.status(400).json({ message: 'Please provide password' });
       }
@@ -149,9 +143,6 @@ router.post('/login', async (req, res) => {
       return res.status(403).json({ message: 'Account is not active' });
     }
 
-<<<<<<< HEAD
-    // Create JWT token
-=======
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
     await UserOtp.deleteMany({ userId: user._id });
@@ -159,7 +150,7 @@ router.post('/login', async (req, res) => {
 
     const otpToken = jwt.sign(
       { userId: user._id, email: user.email, purpose: 'user_otp' },
-      process.env.JWT_SECRET || 'dev-secret',
+      getJwtSecret(),
       { expiresIn: '10m' }
     );
 
@@ -181,7 +172,7 @@ router.post('/verify-otp', async (req, res) => {
       return res.status(400).json({ message: 'OTP and token are required' });
     }
 
-    const decoded = jwt.verify(otpToken, process.env.JWT_SECRET || 'dev-secret');
+    const decoded = jwt.verify(otpToken, getJwtSecret());
     if (!decoded || decoded.purpose !== 'user_otp') {
       return res.status(401).json({ message: 'Invalid OTP session' });
     }
@@ -198,17 +189,8 @@ router.post('/verify-otp', async (req, res) => {
 
     await UserOtp.deleteMany({ userId: user._id });
 
->>>>>>> b2ccfa7 (First Update commit)
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET || 'dev-secret',
-      { expiresIn: '7d' }
-    );
+    const token = jwt.sign({ userId: user._id, email: user.email }, getJwtSecret(), { expiresIn: '7d' });
 
-<<<<<<< HEAD
-    // Get primary account
-=======
->>>>>>> b2ccfa7 (First Update commit)
     const account = await Account.findOne({ userId: user._id, isPrimary: true });
 
     const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || 'unknown';
@@ -256,7 +238,7 @@ router.post('/resend-otp', async (req, res) => {
       return res.status(400).json({ message: 'OTP token is required' });
     }
 
-    const decoded = jwt.verify(otpToken, process.env.JWT_SECRET || 'dev-secret');
+    const decoded = jwt.verify(otpToken, getJwtSecret());
     if (!decoded || decoded.purpose !== 'user_otp') {
       return res.status(401).json({ message: 'Invalid OTP session' });
     }
@@ -277,7 +259,7 @@ router.post('/resend-otp', async (req, res) => {
 
     const newOtpToken = jwt.sign(
       { userId: user._id, email: user.email, purpose: 'user_otp' },
-      process.env.JWT_SECRET || 'dev-secret',
+      getJwtSecret(),
       { expiresIn: '10m' }
     );
 

@@ -4,20 +4,13 @@ import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
-<<<<<<< HEAD
-=======
 import { isPositiveAmount, trimRequired } from '@/lib/validation';
->>>>>>> b2ccfa7 (First Update commit)
 import TransferConfirmModal from '@/components/TransferConfirmModal';
 import {
   AlertTriangle,
   ArrowLeft,
   CheckCircle2,
   Globe,
-<<<<<<< HEAD
-  RefreshCw,
-=======
->>>>>>> b2ccfa7 (First Update commit)
   ShieldCheck,
   Wallet,
 } from 'lucide-react';
@@ -127,8 +120,6 @@ export default function CryptoTransferPage() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-<<<<<<< HEAD
-=======
     setError('');
 
     if (!isPositiveAmount(amount)) {
@@ -148,7 +139,6 @@ export default function CryptoTransferPage() {
       return;
     }
 
->>>>>>> b2ccfa7 (First Update commit)
     setConfirmOpen(true);
   };
 
@@ -164,40 +154,6 @@ export default function CryptoTransferPage() {
         </div>
       </div>
 
-<<<<<<< HEAD
-      <div className="flex items-center justify-between text-sm text-gray-600">
-        <div className="font-semibold text-gray-900">Quick Transfer</div>
-        <button
-          type="button"
-          onClick={fetchBalance}
-          className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
-        >
-          <RefreshCw className="w-4 h-4" />
-          Refresh
-        </button>
-      </div>
-
-      <div className="bg-white rounded-2xl shadow-sm p-6 flex flex-wrap items-center gap-6">
-        <button
-          type="button"
-          className="w-20 h-20 rounded-full border-2 border-dashed border-gray-300 text-gray-500 flex flex-col items-center justify-center text-xs"
-        >
-          <span className="text-2xl">+</span>
-          Add New
-        </button>
-        <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
-            <Wallet className="w-7 h-7" />
-          </div>
-          <div className="text-sm text-gray-600">
-            <div>No saved beneficiaries yet</div>
-            <div className="text-gray-400">Add one to get started</div>
-          </div>
-        </div>
-      </div>
-
-=======
->>>>>>> b2ccfa7 (First Update commit)
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         <div className="bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-6 text-white">
           <div className="flex items-start justify-between gap-4">
@@ -382,15 +338,6 @@ export default function CryptoTransferPage() {
             </button>
             <button
               type="button"
-<<<<<<< HEAD
-              className="flex-1 border border-blue-200 text-blue-500 py-3 rounded-xl font-semibold"
-            >
-              Save Beneficiary
-            </button>
-            <button
-              type="button"
-=======
->>>>>>> b2ccfa7 (First Update commit)
               onClick={() => router.push('/dashboard')}
               className="flex-1 border border-gray-200 text-gray-600 py-3 rounded-xl font-semibold"
             >
@@ -416,21 +363,14 @@ export default function CryptoTransferPage() {
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}
         onConfirm={() => {
-<<<<<<< HEAD
-          setConfirmOpen(false);
-=======
->>>>>>> b2ccfa7 (First Update commit)
           submitTransfer();
         }}
         methodLabel={`Crypto (${crypto})`}
         amount={Number(amount || 0)}
         balance={balance}
         btcRate={btcRate}
-<<<<<<< HEAD
-=======
         statusMessage={message}
         statusError={error}
->>>>>>> b2ccfa7 (First Update commit)
       />
     </div>
   );
