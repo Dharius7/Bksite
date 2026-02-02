@@ -1,12 +1,12 @@
 'use client';
 
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { FormEvent, Suspense, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import api from '@/lib/api';
 import { ArrowLeft, Check, Copy, Info, Link2 } from 'lucide-react';
 
-export default function InvestmentDepositConfirmPage() {
+function InvestmentDepositConfirmContent() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -187,5 +187,19 @@ export default function InvestmentDepositConfirmPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function InvestmentDepositConfirmPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center h-screen">
+          <div className="text-gray-600">Loading...</div>
+        </div>
+      }
+    >
+      <InvestmentDepositConfirmContent />
+    </Suspense>
   );
 }

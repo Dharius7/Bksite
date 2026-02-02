@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { TrendingUp, Users, Heart } from 'lucide-react';
 
 export default function About() {
@@ -13,7 +14,7 @@ export default function About() {
     {
       icon: Users,
       title: 'Member-Focused',
-      description: "We're owned by our members, not shareholders. Your success is our priority.",
+      description: "We&apos;re owned by our members, not shareholders. Your success is our priority.",
       color: 'green',
     },
     {
@@ -64,7 +65,7 @@ export default function About() {
               Building Strength Together
             </h2>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Coral Credit Bank LTD is a full-service credit union built on the foundation of providing our members with every step of their financial journey. We're committed to helping our members achieve their financial goals through personalized service and competitive rates.
+              Coral Credit Bank LTD is a full-service credit union built on the foundation of providing our members with every step of their financial journey. We&apos;re committed to helping our members achieve their financial goals through personalized service and competitive rates.
             </p>
 
             {/* Feature Cards */}
@@ -102,12 +103,14 @@ export default function About() {
             {collageImages.map((image) => (
               <div
                 key={image.src}
-                className={`rounded-xl overflow-hidden shadow-lg ${image.extraClass} sm:rounded-2xl`}
+                className={`relative rounded-xl overflow-hidden shadow-lg ${image.extraClass} sm:rounded-2xl aspect-[4/5] sm:aspect-square lg:aspect-[4/5]`}
               >
-                <img
+                <Image
                   src={image.src}
                   alt={image.alt}
-                  className="w-full object-cover aspect-[4/5] sm:aspect-square lg:aspect-[4/5]"
+                  fill
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 40vw, 50vw"
+                  className="object-cover"
                 />
               </div>
             ))}

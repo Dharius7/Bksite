@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
@@ -30,7 +30,7 @@ export default function GrantsPage() {
     }
   }, [user, isLoading, router]);
 
-  const fetchGrants = async () => {
+  const fetchGrants = useCallback(async () => {
     if (!user) return;
     setLoading(true);
     setError('');
@@ -42,11 +42,11 @@ export default function GrantsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchGrants();
-  }, [user]);
+  }, [fetchGrants]);
 
   if (isLoading || !user) {
     return (

@@ -99,7 +99,7 @@ export default function SupportPage() {
           <div>
             <div className="text-sm font-semibold text-gray-900">Submit a Support Ticket</div>
             <div className="text-xs text-gray-500">
-              We're here to help. Tell us about your issue and we'll find a solution.
+              We&apos;re here to help. Tell us about your issue and we&apos;ll find a solution.
             </div>
           </div>
         </div>
@@ -166,7 +166,7 @@ export default function SupportPage() {
           <div className="rounded-xl border border-blue-100 bg-blue-50 p-4 text-sm text-blue-700">
             Support Information
             <div className="text-xs text-blue-600 mt-1">
-              Our support team typically responds within 24 hours. For urgent matters, please select "High Priority".
+              Our support team typically responds within 24 hours. For urgent matters, please select &quot;High Priority&quot;.
             </div>
           </div>
 

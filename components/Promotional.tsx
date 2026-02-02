@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { DollarSign, Check, ArrowRight, Users } from 'lucide-react';
 
@@ -11,11 +12,13 @@ export default function Promotional() {
           {/* Left Section - Image */}
           <div className="relative">
             <div className="rounded-2xl overflow-hidden shadow-2xl relative">
-              <div className="aspect-[5/4] sm:aspect-[4/3] lg:aspect-[5/4]">
-                <img
+              <div className="relative aspect-[5/4] sm:aspect-[4/3] lg:aspect-[5/4]">
+                <Image
                   src="/images/BanksitessNew.jpg"
                   alt="Happy Banking"
-                  className="h-full w-full object-cover"
+                  fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  className="object-cover"
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-green-500/20 to-transparent"></div>

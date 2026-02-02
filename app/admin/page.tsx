@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import adminApi from '@/lib/adminApi';
 import {
   Users,
@@ -68,7 +68,7 @@ export default function AdminDashboardPage() {
   const [ticketPage, setTicketPage] = useState(0);
   const [activityPage, setActivityPage] = useState(0);
 
-  const fetchAll = async () => {
+  const fetchAll = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
@@ -113,11 +113,11 @@ export default function AdminDashboardPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [txTypeFilter, txStatusFilter]);
 
   useEffect(() => {
     fetchAll();
-  }, [txTypeFilter, txStatusFilter]);
+  }, [fetchAll]);
 
   useEffect(() => {
     setTxPage(0);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import adminApi from '@/lib/adminApi';
 import { Download, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -12,7 +12,7 @@ export default function AdminTransactionsPage() {
   const [statusFilter, setStatusFilter] = useState('');
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
@@ -28,11 +28,11 @@ export default function AdminTransactionsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [typeFilter, statusFilter]);
 
   useEffect(() => {
     fetchTransactions();
-  }, [typeFilter, statusFilter]);
+  }, [fetchTransactions]);
 
   const statusBadge = (status: string) => {
     const normalized = (status || '').toLowerCase();

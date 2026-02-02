@@ -1,6 +1,6 @@
 # Deployment Guide
 
-This repo has a Next.js frontend and two backend options (Node.js and Python). The Node.js backend is production-ready. The Python backend is currently a minimal stub (login/register/accounts are TODO), so it should not be used for a real production environment without completing those endpoints.
+This repo has a Next.js frontend and two backend options (Node.js and Python). Both backends now provide the same API surface expected by the frontend.
 
 ## Frontend (Vercel)
 
@@ -22,7 +22,7 @@ This repo has a Next.js frontend and two backend options (Node.js and Python). T
    - `CORS_ORIGIN=https://YOUR-VERCEL-APP.vercel.app`
 5. Deploy.
 
-## Backend (Render) - Python (not production-ready)
+## Backend (Render) - Python
 
 If you still want to deploy the Python stub:
 1. Create a new Render Web Service from `backend/python`.
@@ -31,6 +31,8 @@ If you still want to deploy the Python stub:
 4. Environment variables (example values in `backend/python/.env.example`):
    - `PORT=5000`
    - `FLASK_DEBUG=0`
+   - `MONGODB_URI=...`
+   - `JWT_SECRET=...`
    - `CORS_ORIGIN=https://YOUR-VERCEL-APP.vercel.app`
 
 ## Required Production Checks

@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
@@ -69,7 +69,7 @@ export default function InvestmentPlansPage() {
     }
   }, [user, isLoading, router]);
 
-  const fetchWallet = async () => {
+  const fetchWallet = useCallback(async () => {
     if (!user) return;
     try {
       const walletRes = await api.get('/investments/wallet/balance');
@@ -77,11 +77,11 @@ export default function InvestmentPlansPage() {
     } catch {
       setWallet(null);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchWallet();
-  }, [user]);
+  }, [fetchWallet]);
 
   if (isLoading || !user) {
     return (

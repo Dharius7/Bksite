@@ -19,14 +19,14 @@ export default function AccountSuccessPage() {
               Account Application Submitted!
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              Thank you for choosing Coral Credit Bank LTD. We've received your application and will review it shortly.
+              Thank you for choosing Coral Credit Bank LTD. We&apos;ve received your application and will review it shortly.
             </p>
             <div className="bg-blue-50 rounded-lg p-6 mb-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">What's Next?</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">What&apos;s Next?</h2>
               <ul className="text-left space-y-3 text-gray-700">
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>You'll receive an email confirmation within 24 hours</span>
+                  <span>You&apos;ll receive an email confirmation within 24 hours</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
@@ -34,11 +34,11 @@ export default function AccountSuccessPage() {
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>Once approved, you'll receive your account details via email</span>
+                  <span>Once approved, you&apos;ll receive your account details via email</span>
                 </li>
                 <li className="flex items-start">
                   <CheckCircle className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
-                  <span>You'll be eligible for the $200 bonus once your account is activated</span>
+                  <span>You&apos;ll be eligible for the $200 bonus once your account is activated</span>
                 </li>
               </ul>
             </div>

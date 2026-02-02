@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
@@ -66,6 +66,10 @@ export default function SettingsPage() {
     fetchProfile();
   }, [user]);
 
+  const safeFirstName = firstName || user?.firstName || 'U';
+  const safeLastName = lastName || user?.lastName || '';
+  const initials = `${safeFirstName[0] || 'U'}${safeLastName[0] || ''}`.toUpperCase();
+
   if (isLoading || !user) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -73,12 +77,6 @@ export default function SettingsPage() {
       </div>
     );
   }
-
-  const initials = useMemo(() => {
-    const f = firstName?.[0] || user.firstName?.[0] || 'U';
-    const l = lastName?.[0] || user.lastName?.[0] || '';
-    return `${f}${l}`.toUpperCase();
-  }, [firstName, lastName, user.firstName, user.lastName]);
 
   return (
     <div className="p-4 md:p-6 space-y-6">

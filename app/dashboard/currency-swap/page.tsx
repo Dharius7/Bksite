@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
@@ -35,7 +35,7 @@ export default function CurrencySwapPage() {
     }
   }, [user, isLoading, router]);
 
-  const refreshData = async () => {
+  const refreshData = useCallback(async () => {
     if (!user) return;
     try {
       const [rateRes, dashboardRes] = await Promise.all([
@@ -50,11 +50,15 @@ export default function CurrencySwapPage() {
       setUsdBalance(null);
       setBtcBalance(null);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     refreshData();
-  }, [user]);
+  }, [refreshData]);
+
+  const isSupportedPair =
+    (fromCurrency === 'USD' && toCurrency === 'BTC') ||
+    (fromCurrency === 'BTC' && toCurrency === 'USD');
 
   if (isLoading || !user) {
     return (
@@ -73,10 +77,6 @@ export default function CurrencySwapPage() {
       setError('Enter a valid amount.');
       return;
     }
-
-    const isSupportedPair =
-      (fromCurrency === 'USD' && toCurrency === 'BTC') ||
-      (fromCurrency === 'BTC' && toCurrency === 'USD');
 
     if (!isSupportedPair) {
       setError('This currency pair is not available yet.');
@@ -120,13 +120,6 @@ export default function CurrencySwapPage() {
   const currentRateLabel = rate
     ? `1 BTC = ${rate.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`
     : 'Rate unavailable';
-
-  const isSupportedPair = useMemo(
-    () =>
-      (fromCurrency === 'USD' && toCurrency === 'BTC') ||
-      (fromCurrency === 'BTC' && toCurrency === 'USD'),
-    [fromCurrency, toCurrency]
-  );
 
   return (
     <div className="p-4 md:p-6 space-y-6">

@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Shield,
   Lightbulb,
@@ -57,11 +58,13 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="relative">
-            <div className="overflow-hidden rounded-3xl shadow-xl">
-              <img
+            <div className="relative overflow-hidden rounded-3xl shadow-xl h-64 sm:h-80">
+              <Image
                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200"
                 alt="Customer service"
-                className="h-64 sm:h-80 w-full object-cover"
+                fill
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="object-cover"
               />
             </div>
             <div className="absolute -bottom-6 right-6 bg-blue-600 text-white rounded-2xl px-5 py-4 shadow-lg">

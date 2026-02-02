@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
@@ -26,7 +26,7 @@ export default function TaxRefundPage() {
     }
   }, [user, isLoading, router]);
 
-  const fetchRefunds = async () => {
+  const fetchRefunds = useCallback(async () => {
     if (!user) return;
     setLoading(true);
     setError('');
@@ -38,11 +38,11 @@ export default function TaxRefundPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchRefunds();
-  }, [user]);
+  }, [fetchRefunds]);
 
   if (isLoading || !user) {
     return (

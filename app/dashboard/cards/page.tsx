@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
@@ -36,7 +36,7 @@ export default function CardsPage() {
     }
   }, [user, isLoading, router]);
 
-  const fetchCards = async () => {
+  const fetchCards = useCallback(async () => {
     if (!user) return;
     setLoading(true);
     setError('');
@@ -48,21 +48,21 @@ export default function CardsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
-  const fetchBalance = async () => {
+  const fetchBalance = useCallback(async () => {
     try {
       const response = await api.get('/dashboard');
       setBalance(response.data?.account?.balance ?? null);
     } catch {
       setBalance(null);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchCards();
     fetchBalance();
-  }, [user]);
+  }, [fetchCards, fetchBalance]);
 
   const stats = useMemo(() => {
     const active = cards.filter((card) => card.status === 'active').length;

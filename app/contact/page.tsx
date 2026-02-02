@@ -53,7 +53,7 @@ export default function ContactPage() {
           <div className="max-w-2xl mx-auto text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">Contact Us</h1>
             <p className="mt-4 text-base sm:text-lg md:text-xl text-blue-100">
-              We're here to help with all your banking needs. Reach out to us anytime.
+              We&apos;re here to help with all your banking needs. Reach out to us anytime.
             </p>
           </div>
         </div>

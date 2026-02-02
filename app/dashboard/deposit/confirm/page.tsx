@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import api from '@/lib/api';
@@ -10,7 +10,7 @@ import Link from 'next/link';
 const DEFAULT_RATE = 89372;
 const WALLET_ADDRESS = 'bc1qluw8kfan5f97j9qteh6jlq6lfmuguzv9rwmkk3';
 
-export default function DepositConfirmPage() {
+function DepositConfirmContent() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -207,5 +207,19 @@ export default function DepositConfirmPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function DepositConfirmPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center h-screen">
+          <div className="text-gray-600">Loading...</div>
+        </div>
+      }
+    >
+      <DepositConfirmContent />
+    </Suspense>
   );
 }

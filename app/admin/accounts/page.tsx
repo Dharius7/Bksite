@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import adminApi from '@/lib/adminApi';
 import { Wallet, Plus } from 'lucide-react';
@@ -8,7 +8,7 @@ import { Wallet, Plus } from 'lucide-react';
 type Account = any;
 type User = any;
 
-export default function AdminAccountsPage() {
+function AdminAccountsContent() {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -78,7 +78,7 @@ export default function AdminAccountsPage() {
   const [messageForm, setMessageForm] = useState({ transferMessage: '' });
   const searchParams = useSearchParams();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError('');
     setMessage('');
@@ -94,49 +94,13 @@ export default function AdminAccountsPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    fetchData();
   }, []);
 
   useEffect(() => {
-    const accountId = searchParams.get('accountId');
-    const action = searchParams.get('action');
-    if (!accountId || !action || accounts.length === 0) return;
-    const account = accounts.find((acct) => acct._id === accountId);
-    if (!account) return;
+    fetchData();
+  }, [fetchData]);
 
-    if (action === 'edit') {
-      openEdit(account);
-      return;
-    }
-    if (action === 'deposit') {
-      openDeposit(account);
-      return;
-    }
-    if (action === 'transfer') {
-      openTransfer(account);
-      return;
-    }
-    if (action === 'debit') {
-      openDebit(account);
-      return;
-    }
-    if (action === 'received') {
-      openReceived(account);
-      return;
-    }
-    if (action === 'message') {
-      openMessage(account);
-      return;
-    }
-    if (action === 'delete') {
-      deleteAccount(account._id);
-    }
-  }, [searchParams, accounts]);
-
-  const openEdit = (account: Account) => {
+  const openEdit = useCallback((account: Account) => {
     setSelectedAccount(account);
     setEditForm({
       firstName: account.userId?.firstName || '',
@@ -150,9 +114,9 @@ export default function AdminAccountsPage() {
       status: account.status || 'active',
     });
     setModalType('edit');
-  };
+  }, []);
 
-  const openDeposit = (account: Account) => {
+  const openDeposit = useCallback((account: Account) => {
     setSelectedAccount(account);
     setDepositForm({
       depositorName: '',
@@ -163,31 +127,31 @@ export default function AdminAccountsPage() {
       date: '',
     });
     setModalType('deposit');
-  };
+  }, []);
 
-  const openTransfer = (account: Account) => {
+  const openTransfer = useCallback((account: Account) => {
     setSelectedAccount(account);
     setTransferForm({ toAccount: '', recipientName: '', amount: '', description: '', method: 'wire', date: '' });
     setModalType('transfer');
-  };
+  }, []);
 
-  const openDebit = (account: Account) => {
+  const openDebit = useCallback((account: Account) => {
     setSelectedAccount(account);
     setDebitForm({ amount: '', description: '', date: '' });
     setModalType('debit');
-  };
+  }, []);
 
-  const openReceived = (account: Account) => {
+  const openReceived = useCallback((account: Account) => {
     setSelectedAccount(account);
     setReceiveForm({ senderAccount: '', senderName: '', amount: '', description: '', date: '' });
     setModalType('received');
-  };
+  }, []);
 
-  const openMessage = (account: Account) => {
+  const openMessage = useCallback((account: Account) => {
     setSelectedAccount(account);
     setMessageForm({ transferMessage: account.transferMessage || '' });
     setModalType('message');
-  };
+  }, []);
 
   const closeModal = () => {
     setModalType(null);
@@ -364,12 +328,48 @@ export default function AdminAccountsPage() {
     }
   };
 
-  const deleteAccount = async (accountId: string) => {
+  const deleteAccount = useCallback(async (accountId: string) => {
     const ok = window.confirm('Delete this account? This action cannot be undone.');
     if (!ok) return;
     await adminApi.delete(`/admin/accounts/${accountId}`);
     fetchData();
-  };
+  }, [fetchData]);
+
+  useEffect(() => {
+    const accountId = searchParams.get('accountId');
+    const action = searchParams.get('action');
+    if (!accountId || !action || accounts.length === 0) return;
+    const account = accounts.find((acct) => acct._id === accountId);
+    if (!account) return;
+
+    if (action === 'edit') {
+      openEdit(account);
+      return;
+    }
+    if (action === 'deposit') {
+      openDeposit(account);
+      return;
+    }
+    if (action === 'transfer') {
+      openTransfer(account);
+      return;
+    }
+    if (action === 'debit') {
+      openDebit(account);
+      return;
+    }
+    if (action === 'received') {
+      openReceived(account);
+      return;
+    }
+    if (action === 'message') {
+      openMessage(account);
+      return;
+    }
+    if (action === 'delete') {
+      deleteAccount(account._id);
+    }
+  }, [searchParams, accounts, deleteAccount, openDebit, openDeposit, openEdit, openMessage, openReceived, openTransfer]);
 
   const statusOptions = ['active', 'dormant', 'hold', 'frozen', 'closed'];
 
@@ -805,5 +805,19 @@ export default function AdminAccountsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function AdminAccountsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center h-screen">
+          <div className="text-gray-600">Loading...</div>
+        </div>
+      }
+    >
+      <AdminAccountsContent />
+    </Suspense>
   );
 }

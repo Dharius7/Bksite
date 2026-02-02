@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
@@ -38,7 +38,7 @@ export default function LoansPage() {
     }
   }, [user, isLoading, router]);
 
-  const fetchLoans = async () => {
+  const fetchLoans = useCallback(async () => {
     if (!user) return;
     setLoading(true);
     setError('');
@@ -49,9 +49,9 @@ export default function LoansPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
-  const fetchLoanTypes = async () => {
+  const fetchLoanTypes = useCallback(async () => {
     if (!user) return;
     try {
       const response = await api.get('/loans/types/list');
@@ -61,12 +61,51 @@ export default function LoansPage() {
     } catch {
       setLoanTypes(fallbackLoanTypes);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchLoans();
     fetchLoanTypes();
-  }, [user]);
+  }, [fetchLoans, fetchLoanTypes]);
+
+  const loanCards = [
+    {
+      key: 'personal_home',
+      title: 'Personal Home Loans',
+      description: 'Finance your dream home with competitive rates up to 20 years',
+      icon: Home,
+    },
+    {
+      key: 'automobile',
+      title: 'Automobile Loans',
+      description: 'Get on the road with flexible auto financing up to 6 years',
+      icon: Briefcase,
+    },
+    {
+      key: 'business',
+      title: 'Business Loans',
+      description: 'Grow your business with tailored financing up to 5 years',
+      icon: Building2,
+    },
+    {
+      key: 'salary',
+      title: 'Salary Loans',
+      description: 'Quick short-term loans for salaried individuals',
+      icon: Timer,
+    },
+    {
+      key: 'secured_overdraft',
+      title: 'Secured Overdraft',
+      description: 'Flexible credit facility with collateral backing',
+      icon: ShieldCheck,
+    },
+    {
+      key: 'health',
+      title: 'Health Finance',
+      description: 'Medical financing with compassionate terms',
+      icon: HeartPulse,
+    },
+  ];
 
   if (isLoading || !user) {
     return (
@@ -75,47 +114,6 @@ export default function LoansPage() {
       </div>
     );
   }
-
-  const loanCards = useMemo(() => {
-    return [
-      {
-        key: 'personal_home',
-        title: 'Personal Home Loans',
-        description: 'Finance your dream home with competitive rates up to 20 years',
-        icon: Home,
-      },
-      {
-        key: 'automobile',
-        title: 'Automobile Loans',
-        description: 'Get on the road with flexible auto financing up to 6 years',
-        icon: Briefcase,
-      },
-      {
-        key: 'business',
-        title: 'Business Loans',
-        description: 'Grow your business with tailored financing up to 5 years',
-        icon: Building2,
-      },
-      {
-        key: 'salary',
-        title: 'Salary Loans',
-        description: 'Quick short-term loans for salaried individuals',
-        icon: Timer,
-      },
-      {
-        key: 'secured_overdraft',
-        title: 'Secured Overdraft',
-        description: 'Flexible credit facility with collateral backing',
-        icon: ShieldCheck,
-      },
-      {
-        key: 'health',
-        title: 'Health Finance',
-        description: 'Medical financing with compassionate terms',
-        icon: HeartPulse,
-      },
-    ];
-  }, []);
 
   return (
     <div className="p-4 md:p-6 space-y-6">

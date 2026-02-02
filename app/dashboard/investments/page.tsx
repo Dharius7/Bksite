@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
@@ -30,7 +30,7 @@ export default function InvestmentsPage() {
     }
   }, [user, isLoading, router]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!user) return;
     setLoading(true);
     setError('');
@@ -46,11 +46,17 @@ export default function InvestmentsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchData();
-  }, [user]);
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (message || error) {
+      fetchData();
+    }
+  }, [message, error, fetchData]);
 
   if (isLoading || !user) {
     return (
@@ -59,12 +65,6 @@ export default function InvestmentsPage() {
       </div>
     );
   }
-
-  useEffect(() => {
-    if (message || error) {
-      fetchData();
-    }
-  }, [message, error]);
 
   return (
     <div className="p-4 md:p-6 space-y-6">
