@@ -52,7 +52,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('admin_token');
+    const token =
+      localStorage.getItem('admin_token') ||
+      sessionStorage.getItem('admin_token');
     if (!token && pathname !== '/admin/login') {
       router.push('/admin/login');
     }

@@ -18,8 +18,12 @@ export default function AdminLoginPage() {
     setSubmitting(true);
     try {
       const response = await adminApi.post('/admin/login', { emailOrName, password });
-      localStorage.setItem('admin_token', response.data?.token || '');
-      localStorage.setItem('admin', JSON.stringify(response.data?.admin || {}));
+      const token = response.data?.token || '';
+      const admin = response.data?.admin || {};
+      localStorage.setItem('admin_token', token);
+      localStorage.setItem('admin', JSON.stringify(admin));
+      sessionStorage.setItem('admin_token', token);
+      sessionStorage.setItem('admin', JSON.stringify(admin));
       router.push('/admin');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');

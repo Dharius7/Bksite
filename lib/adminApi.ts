@@ -13,7 +13,9 @@ const adminApi = axios.create({
 
 adminApi.interceptors.request.use((config) => {
   if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('admin_token');
+    const token =
+      localStorage.getItem('admin_token') ||
+      sessionStorage.getItem('admin_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -28,6 +30,8 @@ adminApi.interceptors.response.use(
       if (typeof window !== 'undefined') {
         localStorage.removeItem('admin_token');
         localStorage.removeItem('admin');
+        sessionStorage.removeItem('admin_token');
+        sessionStorage.removeItem('admin');
         window.location.href = '/admin/login';
       }
     }
