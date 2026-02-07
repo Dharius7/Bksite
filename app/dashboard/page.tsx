@@ -532,9 +532,9 @@ export default function DashboardPage() {
           {/* Right Sidebar */}
           <div className="order-3 lg:order-3 space-y-6">
             {/* Recent Transactions */}
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-                <h2 className="text-lg font-semibold text-gray-900">Recent Transactions</h2>
+            <div className="bg-white rounded-2xl lg:rounded-3xl shadow-sm overflow-hidden">
+              <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-100">
+                <h2 className="text-lg lg:text-xl font-semibold text-gray-900">Recent Transactions</h2>
                 <Link href="/dashboard/transactions" className="text-sm text-blue-600 hover:text-blue-700">
                   View All
                 </Link>
@@ -544,52 +544,37 @@ export default function DashboardPage() {
               ) : (
                 <>
                   <div className="hidden md:block overflow-x-auto">
-                    <table className="min-w-full text-sm">
+                    <table className="min-w-[640px] lg:min-w-[720px] text-sm lg:text-base">
                       <thead className="bg-slate-50 text-gray-600">
                         <tr className="text-left">
-                          <th className="px-4 py-3 font-semibold">Amount</th>
-                          <th className="px-4 py-3 font-semibold">Type</th>
-                          <th className="px-4 py-3 font-semibold">Status</th>
-                          <th className="px-4 py-3 font-semibold">Reference</th>
-                          <th className="px-4 py-3 font-semibold">Description</th>
-                          <th className="px-4 py-3 font-semibold">Date</th>
-                          <th className="px-4 py-3 font-semibold text-right">Action</th>
+                          <th className="px-4 lg:px-6 py-3 font-semibold whitespace-nowrap">Amount</th>
+                          <th className="px-4 lg:px-6 py-3 font-semibold whitespace-nowrap">Type</th>
+                          <th className="px-4 lg:px-6 py-3 font-semibold whitespace-nowrap">Status</th>
+                          <th className="px-4 lg:px-6 py-3 font-semibold whitespace-nowrap">Date</th>
                         </tr>
                       </thead>
                       <tbody>
                         {recentTransactions.slice(0, 5).map((tx: any) => (
                           <tr key={tx._id} className="border-t">
-                            <td className="px-4 py-3">
+                            <td className="px-4 lg:px-6 py-3">
                               <div className="font-semibold text-gray-900">
                                 ${Math.abs(tx.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                               </div>
                               <div className="text-xs text-gray-500">{tx.currency || 'USD'}</div>
                             </td>
-                            <td className="px-4 py-3">
+                            <td className="px-4 lg:px-6 py-3">
                               <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${typeBadge(tx.type)}`}>
                                 {tx.type || 'N/A'}
                               </span>
                             </td>
-                            <td className="px-4 py-3">
+                            <td className="px-4 lg:px-6 py-3">
                               <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${statusBadge(tx.status)}`}>
                                 {tx.status || 'N/A'}
                               </span>
                             </td>
-                            <td className="px-4 py-3 font-mono text-xs text-gray-600">
-                              {tx.reference || tx._id?.slice(0, 12) || 'N/A'}
-                            </td>
-                            <td className="px-4 py-3 text-gray-700">{tx.description || 'Ok'}</td>
-                            <td className="px-4 py-3 text-gray-600">
+                            <td className="px-4 lg:px-6 py-3 text-gray-600">
                               {new Date(tx.createdAt).toLocaleDateString()} <br />
                               <span className="text-xs text-gray-500">{new Date(tx.createdAt).toLocaleTimeString()}</span>
-                            </td>
-                            <td className="px-4 py-3 text-right">
-                              <Link
-                                href="/dashboard/transactions"
-                                className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1.5 text-xs font-semibold text-blue-700"
-                              >
-                                View
-                              </Link>
                             </td>
                           </tr>
                         ))}
