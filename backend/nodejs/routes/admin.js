@@ -10,6 +10,9 @@ const Investment = require('../models/Investment');
 const SupportTicket = require('../models/SupportTicket');
 const Activity = require('../models/Activity');
 const UserOtp = require('../models/UserOtp');
+const Transaction = require('../models/Transaction');
+const Grant = require('../models/Grant');
+const TaxRefund = require('../models/TaxRefund');
 const geoip = require('geoip-lite');
 const { getJwtSecret } = require('../config/env');
 
@@ -307,6 +310,19 @@ router.delete('/users/:id', adminAuth, async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
     }
+    const userIdQuery = user?._id || id;
+    await Promise.all([
+      Account.deleteMany({ userId: userIdQuery }),
+      Transaction.deleteMany({ userId: userIdQuery }),
+      Card.deleteMany({ userId: userIdQuery }),
+      Loan.deleteMany({ userId: userIdQuery }),
+      Investment.deleteMany({ userId: userIdQuery }),
+      SupportTicket.deleteMany({ userId: userIdQuery }),
+      Activity.deleteMany({ userId: userIdQuery }),
+      UserOtp.deleteMany({ userId: userIdQuery }),
+      Grant.deleteMany({ userId: userIdQuery }),
+      TaxRefund.deleteMany({ userId: userIdQuery }),
+    ]);
     res.json({ message: 'User deleted' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -464,8 +480,19 @@ router.post('/accounts/create-user', adminAuth, async (req, res) => {
 // Delete account
 router.delete('/accounts/:id', adminAuth, async (req, res) => {
   try {
-    const account = await Account.findByIdAndDelete(req.params.id);
-    if (!account) return res.status(404).json({ message: 'Account not found' });
+    const { id } = req.params;
+    const account = await Account.findByIdAndDelete(id);
+    if (!account) {
+      const result = await Account.collection.deleteOne({ _id: id });
+      if (result.deletedCount === 0) {
+        return res.status(404).json({ message: 'Account not found' });
+      }
+    }
+    const accountIdQuery = account?._id || id;
+    await Promise.all([
+      Transaction.deleteMany({ accountId: accountIdQuery }),
+      Activity.deleteMany({ accountId: accountIdQuery }),
+    ]);
     res.json({ message: 'Account deleted' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
