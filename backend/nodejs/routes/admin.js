@@ -299,8 +299,14 @@ router.patch('/users/:id', adminAuth, async (req, res) => {
 
 router.delete('/users/:id', adminAuth, async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    const { id } = req.params;
+    const user = await User.findByIdAndDelete(id);
+    if (!user) {
+      const result = await User.collection.deleteOne({ _id: id });
+      if (result.deletedCount === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+    }
     res.json({ message: 'User deleted' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
