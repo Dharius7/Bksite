@@ -10,7 +10,6 @@ const Investment = require('../models/Investment');
 const SupportTicket = require('../models/SupportTicket');
 const Activity = require('../models/Activity');
 const UserOtp = require('../models/UserOtp');
-const Transaction = require('../models/Transaction');
 const Grant = require('../models/Grant');
 const TaxRefund = require('../models/TaxRefund');
 const geoip = require('geoip-lite');
