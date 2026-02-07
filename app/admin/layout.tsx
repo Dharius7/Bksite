@@ -81,7 +81,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      <div className="flex">
+      <div className="flex min-w-0 w-full">
         <aside className="hidden lg:flex fixed inset-y-0 left-0 w-64 flex-col border-r border-slate-200 bg-white/80 backdrop-blur">
           <div className="px-6 py-6 border-b border-slate-200 bg-gradient-to-r from-white via-blue-50 to-indigo-50">
             <div className="text-xs uppercase text-slate-400 font-semibold">Admin Portal</div>
@@ -126,8 +126,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
         </aside>
 
-        <main className="flex-1 lg:ml-64 min-h-screen">
-          <div className="fixed top-0 right-0 left-0 lg:left-64 z-30 bg-white/70 backdrop-blur border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between">
+        <main className="flex-1 lg:ml-64 min-h-screen min-w-0 w-full">
+          <div className="fixed top-0 right-0 left-0 lg:left-64 z-30 bg-white/70 backdrop-blur border-b border-slate-200 px-3 sm:px-4 md:px-6 py-3 flex items-center justify-between gap-3">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}

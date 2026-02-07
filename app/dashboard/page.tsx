@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
@@ -54,6 +54,9 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [bitcoinRate, setBitcoinRate] = useState(94655);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [isMobileHeaderHidden, setIsMobileHeaderHidden] = useState(false);
+  const lastScrollYRef = useRef(0);
+  const tickingRef = useRef(false);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -82,6 +85,38 @@ export default function DashboardPage() {
       fetchDashboardData();
     }
   }, [user]);
+
+  useEffect(() => {
+    const scrollContainer =
+      (document.querySelector('[data-dashboard-scroll]') as HTMLElement | null) ||
+      document.documentElement;
+
+    const handleScroll = () => {
+      if (tickingRef.current) return;
+      tickingRef.current = true;
+
+      window.requestAnimationFrame(() => {
+        const currentY = scrollContainer.scrollTop || 0;
+        const isMobile = window.innerWidth < 768;
+        const delta = currentY - lastScrollYRef.current;
+        const shouldHide = isMobile && currentY > 80 && delta > 6;
+        const shouldShow = delta < -6 || currentY <= 80;
+
+        if (shouldHide) {
+          setIsMobileHeaderHidden(true);
+        } else if (shouldShow) {
+          setIsMobileHeaderHidden(false);
+        }
+
+        lastScrollYRef.current = currentY;
+        tickingRef.current = false;
+      });
+    };
+
+    lastScrollYRef.current = scrollContainer.scrollTop || 0;
+    scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
+    return () => scrollContainer.removeEventListener('scroll', handleScroll);
+  }, []);
 
   if (isLoading || loading) {
     return (
@@ -173,15 +208,19 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4 fixed top-0 right-0 left-0 lg:left-64 z-30">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600">Welcome back, {user.firstName}</p>
+      <div
+        className={`bg-white border-b border-gray-200 px-3 sm:px-6 py-2.5 sm:py-4 fixed top-0 right-0 left-0 lg:left-64 z-30 transition-transform duration-300 md:translate-y-0 ${
+          isMobileHeaderHidden ? '-translate-y-full' : 'translate-y-0'
+        }`}
+      >
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="text-base sm:text-2xl font-bold text-gray-900 truncate">Dashboard</h1>
+            <p className="text-xs sm:text-base text-gray-600 truncate">Welcome back, {user.firstName}</p>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <ThemeToggle />
-            <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+            <button className="p-1.5 sm:p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
               </svg>
@@ -194,7 +233,7 @@ export default function DashboardPage() {
                 aria-haspopup="true"
                 aria-expanded={profileOpen}
               >
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-sm sm:text-base">
                   {user.firstName[0]}{user.lastName[0]}
                 </div>
                 <div className="hidden md:block text-sm text-left">
@@ -239,7 +278,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="h-[88px]" />
+      <div className="h-[68px] sm:h-[88px]" />
       <div className="p-4 md:p-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Primary Account Card */}

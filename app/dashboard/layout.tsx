@@ -21,7 +21,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
     <>
       <div className="flex h-screen bg-gray-50">
         <Sidebar />
-        <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
+        <main className="flex-1 min-w-0 w-full overflow-y-auto overflow-x-hidden pb-20 md:pb-0" data-dashboard-scroll>
           {children}
         </main>
       </div>

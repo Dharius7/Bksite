@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Moon,
   LogIn,
@@ -25,6 +25,38 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [isMobileHeaderHidden, setIsMobileHeaderHidden] = useState(false);
+  const lastScrollYRef = useRef(0);
+  const tickingRef = useRef(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (tickingRef.current) return;
+      tickingRef.current = true;
+
+      window.requestAnimationFrame(() => {
+        const currentY = window.scrollY || 0;
+        const isMobile = window.innerWidth < 768;
+        const delta = currentY - lastScrollYRef.current;
+        const shouldHide = isMobile && currentY > 80 && delta > 6;
+        const shouldShow = delta < -6 || currentY <= 80;
+
+        if (shouldHide) {
+          setIsMobileHeaderHidden(true);
+          if (mobileMenuOpen) setMobileMenuOpen(false);
+        } else if (shouldShow) {
+          setIsMobileHeaderHidden(false);
+        }
+
+        lastScrollYRef.current = currentY;
+        tickingRef.current = false;
+      });
+    };
+
+    lastScrollYRef.current = window.scrollY || 0;
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [mobileMenuOpen]);
 
   const toggleTheme = () => {
     if (typeof document === 'undefined') return;
@@ -36,18 +68,22 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-white/95 backdrop-blur fixed top-0 inset-x-0 z-50 shadow-sm">
-        <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+      <header
+        className={`bg-white/95 backdrop-blur fixed top-0 inset-x-0 z-50 shadow-sm transition-transform duration-300 md:translate-y-0 ${
+          isMobileHeaderHidden ? '-translate-y-full' : 'translate-y-0'
+        }`}
+      >
+        <nav className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+        <div className="flex items-center justify-between gap-2">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="flex items-center">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">C</span>
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg sm:text-xl">C</span>
               </div>
               <div className="ml-2">
-                <div className="text-orange-600 font-bold text-lg">CORAL CREDIT</div>
-                <div className="text-gray-600 text-xs">PRIVATE BANKING LTD.</div>
+                <div className="text-orange-600 font-bold text-base sm:text-lg leading-tight">CORAL CREDIT</div>
+                <div className="text-gray-600 text-[10px] sm:text-xs leading-tight">PRIVATE BANKING LTD.</div>
               </div>
             </div>
           </Link>
@@ -99,7 +135,7 @@ export default function Header() {
           </div>
 
           {/* Right Side Actions */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <button
               className="hidden md:block p-2 text-gray-700 hover:text-blue-600 transition"
               onClick={toggleTheme}
@@ -123,7 +159,7 @@ export default function Header() {
             </Link>
             <Link 
               href="/login"
-              className="flex sm:hidden items-center space-x-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+              className="flex sm:hidden items-center space-x-2 bg-blue-600 text-white px-3.5 py-2 rounded-lg hover:bg-blue-700 transition text-sm"
             >
               <Star className="w-4 h-4" />
               <span>Login</span>
