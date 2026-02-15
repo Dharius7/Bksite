@@ -87,7 +87,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <aside className="hidden lg:flex fixed inset-y-0 left-0 w-64 flex-col border-r border-slate-200 bg-white/80 backdrop-blur">
           <div className="px-6 py-6 border-b border-slate-200 bg-gradient-to-r from-white via-blue-50 to-indigo-50">
             <div className="text-xs uppercase text-slate-400 font-semibold">Admin Portal</div>
-            <div className="text-lg font-bold text-slate-900">Coral Credit Bank</div>
+            <div className="text-lg font-bold text-slate-900">Orine Credit Bank</div>
           </div>
           <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
             {navItems.map((item) => {
@@ -196,7 +196,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
               <div>
                 <div className="text-xs uppercase text-slate-400 font-semibold">Admin Portal</div>
-                <div className="text-lg font-bold text-slate-900">Coral Credit Bank</div>
+                <div className="text-lg font-bold text-slate-900">Orine Credit Bank</div>
               </div>
               <button
                 type="button"
@@ -306,7 +306,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   value={adminEmail}
                   onChange={(e) => setAdminEmail(e.target.value)}
                   className="w-full border border-gray-200 rounded-xl px-3 py-2"
-                  placeholder="admin@coralcredit.com"
+                  placeholder="admin@orinecredit.com"
                 />
               </div>
               <div>

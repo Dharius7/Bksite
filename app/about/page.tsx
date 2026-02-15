@@ -32,7 +32,7 @@ export default function AboutPage() {
         <div className="relative container mx-auto px-4 py-16 sm:py-20 md:py-24">
           <div className="max-w-2xl mx-auto text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-              About Coral Credit Bank LTD
+              About Orine Credit Bank LTD
             </h1>
             <p className="mt-4 text-base sm:text-lg md:text-xl text-blue-100">
               Trusted banking partner committed to your financial success since our founding.
@@ -47,7 +47,7 @@ export default function AboutPage() {
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Our Mission</h2>
             <p className="mt-4 text-gray-600 leading-relaxed">
-              At Coral Credit Bank LTD, we are dedicated to empowering individuals, families, and
+              At Orine Credit Bank LTD, we are dedicated to empowering individuals, families, and
               businesses to achieve their financial goals through innovative banking solutions,
               personalized service, and unwavering commitment to excellence.
             </p>
@@ -149,7 +149,7 @@ export default function AboutPage() {
                 <h3 className="font-semibold text-gray-900">{item.title}</h3>
                 <p className="text-sm text-gray-600 mt-2">
                   {item.title === 'Founded' &&
-                    'Coral Credit Bank LTD was founded with a simple mission: to provide honest, reliable banking services to our local community.'}
+                    'Orine Credit Bank LTD was founded with a simple mission: to provide honest, reliable banking services to our local community.'}
                   {item.title === 'Digital Era' &&
                     'We embraced the digital revolution, launching our first online banking platform to serve customers 24/7.'}
                   {item.title === 'Mobile First' &&

@@ -6,7 +6,7 @@ import ThemeProvider from "@/components/ThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Coral Credit Bank LTD - Member-Focused Banking",
+  title: "Orine Credit Bank LTD - Member-Focused Banking",
   description: "Building financial strength together with personalized banking solutions for every member.",
 };
 

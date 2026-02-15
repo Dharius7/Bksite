@@ -1,6 +1,6 @@
 # Backend API
 
-This directory contains the backend API for Coral Credit Bank LTD.
+This directory contains the backend API for Orine Credit Bank LTD.
 
 ## Structure
 

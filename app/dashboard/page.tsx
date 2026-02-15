@@ -27,6 +27,7 @@ import {
   LogOut,
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface DashboardData {
   account: {
@@ -215,8 +216,28 @@ export default function DashboardPage() {
       >
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <h1 className="text-base sm:text-2xl font-bold text-gray-900 truncate">Dashboard</h1>
-            <p className="text-xs sm:text-base text-gray-600 truncate">Welcome back, {user.firstName}</p>
+            <div className="sm:hidden min-w-0">
+              <div className="flex items-start gap-2 min-w-0">
+                <span className="relative h-8 w-8 rounded-lg overflow-hidden ring-1 ring-slate-200 shrink-0">
+                  <Image
+                    src="/images/Logo.png"
+                    alt="Orine Credit logo"
+                    fill
+                    className="object-cover"
+                    sizes="32px"
+                  />
+                </span>
+                <div className="min-w-0">
+                  <h1 className="text-sm font-bold text-gray-900 truncate">Orine Credit</h1>
+                  <p className="text-[10px] text-gray-600 truncate mt-0 leading-tight">Welcome back, {user.firstName}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="hidden sm:block">
+              <h1 className="text-base sm:text-2xl font-bold text-gray-900 truncate">Dashboard</h1>
+              <p className="text-xs sm:text-base text-gray-600 truncate">Welcome back, {user.firstName}</p>
+            </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
             <ThemeToggle />
@@ -288,7 +309,7 @@ export default function DashboardPage() {
                 <div className="min-w-0">
                   <div className="flex items-center space-x-2 mb-0.5">
                     <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="text-xs sm:text-sm opacity-90 truncate">Coral Credit Bank LTD</span>
+                    <span className="text-xs sm:text-sm opacity-90 truncate">Orine Credit Bank LTD</span>
                   </div>
                   <div className="text-xs sm:text-sm opacity-90">{accountTypeLabel(account?.accountType)}</div>
                 </div>
@@ -305,7 +326,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 mb-1 md:mb-4">
+              <div className="flex flex-wrap items-center gap-2 mb-0.5 md:mb-3">
                 <div className="flex items-center space-x-2 text-[11px] sm:text-sm">
                   <span className={`w-2 h-2 rounded-full ${statusDot(effectiveStatus)}`}></span>
                   <span>{statusLabel(effectiveStatus)}</span>
@@ -314,7 +335,6 @@ export default function DashboardPage() {
                   <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>Verified & Secured</span>
                 </div>
-                <div className="mt-2 text-xs opacity-70 md:hidden">Swipe to view balances</div>
               </div>
 
               <div className="mb-2 md:mb-5">

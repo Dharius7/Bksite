@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -71,11 +72,17 @@ export default function Sidebar() {
           {/* Logo */}
           <div className="p-6 border-b border-gray-200">
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">C</span>
+              <div className="relative w-10 h-10 rounded-lg overflow-hidden ring-1 ring-slate-200 shadow-sm">
+                <Image
+                  src="/images/Logo.png"
+                  alt="Orine Credit Bank logo"
+                  fill
+                  className="object-cover"
+                  sizes="40px"
+                />
               </div>
               <div>
-                <div className="text-orange-600 font-bold text-sm">CORAL CREDIT</div>
+                <div className="text-orange-600 font-bold text-sm">ORINE CREDIT</div>
                 <div className="text-gray-600 text-xs">PRIVATE BANKING LTD.</div>
               </div>
             </div>

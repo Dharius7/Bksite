@@ -156,7 +156,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900">For Banking verification and inquiries</div>
-                  <p className="text-sm text-gray-600">Email: customerservice@coralcb.com</p>
+                  <p className="text-sm text-gray-600">Email: customerservice@orinecbl.com</p>
                   <p className="text-xs text-gray-500 mt-2">Response within 48 hours</p>
                 </div>
               </div>
@@ -168,7 +168,7 @@ export default function ContactPage() {
                 <div>
                   <div className="font-semibold text-gray-900">For Transactions and Payment of Funds</div>
                   <p className="text-sm text-gray-600">Contact Mr. VISOVSKY Cyril.</p>
-                  <p className="text-sm text-gray-600">Email: CoralCredit247@gmail.com</p>
+                  <p className="text-sm text-gray-600">Email: OrineCredit247@gmail.com</p>
                   <p className="text-xs text-gray-500 mt-2">Response within 3 hours</p>
                 </div>
               </div>

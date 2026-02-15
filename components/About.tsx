@@ -65,7 +65,7 @@ export default function About() {
               Building Strength Together
             </h2>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Coral Credit Bank LTD is a full-service credit union built on the foundation of providing our members with every step of their financial journey. We&apos;re committed to helping our members achieve their financial goals through personalized service and competitive rates.
+              Orine Credit Bank LTD is a full-service credit union built on the foundation of providing our members with every step of their financial journey. We&apos;re committed to helping our members achieve their financial goals through personalized service and competitive rates.
             </p>
 
             {/* Feature Cards */}

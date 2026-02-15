@@ -23,7 +23,7 @@ export default function Hero() {
             <Landmark className="h-7 w-7" />
           </div>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-3 md:mb-4 leading-tight">
-            Coral Credit Bank LTD
+            Orine Credit Bank LTD
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 md:mb-8 leading-relaxed max-w-xl">
             We do banking differently. We believe that people come first, and that everyone deserves a great experience every step of the way.

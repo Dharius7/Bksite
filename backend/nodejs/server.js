@@ -50,7 +50,7 @@ const authLimiter = rateLimit({
 
 // Routes
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Coral Credit Bank API is running' });
+  res.json({ status: 'ok', message: 'Orine Credit Bank API is running' });
 });
 
 // Auth routes

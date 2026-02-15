@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import {
   Moon,
@@ -76,14 +77,21 @@ export default function Header() {
         <nav className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
         <div className="flex items-center justify-between gap-2">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex min-w-0 items-center space-x-2">
             <div className="flex items-center">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg sm:text-xl">C</span>
+              <div className="relative h-8 w-8 sm:h-10 sm:w-10 rounded-lg overflow-hidden ring-1 ring-slate-200 shadow-sm shrink-0">
+                <Image
+                  src="/images/Logo.png"
+                  alt="Orine Credit Bank logo"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 32px, 40px"
+                  priority
+                />
               </div>
-              <div className="ml-2">
-                <div className="text-orange-600 font-bold text-base sm:text-lg leading-tight">CORAL CREDIT</div>
-                <div className="text-gray-600 text-[10px] sm:text-xs leading-tight">PRIVATE BANKING LTD.</div>
+              <div className="ml-2 min-w-0">
+                <div className="text-orange-600 font-bold text-[12px] sm:text-lg leading-tight whitespace-nowrap">ORINE CREDIT</div>
+                <div className="text-gray-600 text-[9px] sm:text-xs leading-tight whitespace-nowrap">PRIVATE BANKING LTD.</div>
               </div>
             </div>
           </Link>

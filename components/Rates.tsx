@@ -21,7 +21,7 @@ export default function Rates() {
       rate: '3.65%',
       rateType: 'APY*',
       title: '18 MONTH CERTIFICATE',
-      description: 'Coral Credit Bank LTD Certificate Rates',
+      description: 'Orine Credit Bank LTD Certificate Rates',
       buttonText: 'SAVINGS',
       buttonColor: 'bg-green-600',
       iconBg: 'bg-green-100',
@@ -33,7 +33,7 @@ export default function Rates() {
       rate: '4.00%',
       rateType: 'APR*',
       title: 'CREDIT CARDS',
-      description: 'Coral Credit Bank LTD Credit Card Rates',
+      description: 'Orine Credit Bank LTD Credit Card Rates',
       buttonText: 'CREDIT',
       buttonColor: 'bg-purple-600',
       iconBg: 'bg-purple-100',
@@ -45,7 +45,7 @@ export default function Rates() {
       rate: '15.49%',
       rateType: 'APR*',
       title: 'LOANS',
-      description: 'Coral Credit Bank LTD Standard Loan Rates',
+      description: 'Orine Credit Bank LTD Standard Loan Rates',
       buttonText: 'MORTGAGE',
       buttonColor: 'bg-orange-600',
       iconBg: 'bg-orange-100',
@@ -61,14 +61,14 @@ export default function Rates() {
         <div className="flex justify-center mb-6">
           <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full">
             <TrendingUp className="w-4 h-4" />
-            <span className="text-sm font-semibold">Coral Credit Bank LTD Rates</span>
+            <span className="text-sm font-semibold">Orine Credit Bank LTD Rates</span>
           </div>
         </div>
 
         {/* Title */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Coral Credit Bank LTD Member Care
+            Orine Credit Bank LTD Member Care
           </h2>
           <p className="text-xl text-gray-600">
             Discover competitive rates designed to help your money grow faster

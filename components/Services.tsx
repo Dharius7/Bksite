@@ -31,7 +31,7 @@ export default function Services() {
     },
     {
       icon: Info,
-      title: 'About Coral Credit Bank LTD',
+      title: 'About Orine Credit Bank LTD',
       description: 'Learn more about our commitment to exceptional banking services and community support.',
     },
   ];

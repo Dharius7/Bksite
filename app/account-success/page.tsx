@@ -19,7 +19,7 @@ export default function AccountSuccessPage() {
               Account Application Submitted!
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              Thank you for choosing Coral Credit Bank LTD. We&apos;ve received your application and will review it shortly.
+              Thank you for choosing Orine Credit Bank LTD. We&apos;ve received your application and will review it shortly.
             </p>
             <div className="bg-blue-50 rounded-lg p-6 mb-8">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">What&apos;s Next?</h2>

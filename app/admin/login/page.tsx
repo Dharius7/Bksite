@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
               value={emailOrName}
               onChange={(e) => setEmailOrName(e.target.value)}
               className="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white"
-              placeholder="admin@coralcredit.com or infobank"
+              placeholder="admin@orinecredit.com or infobank"
               required
             />
           </div>

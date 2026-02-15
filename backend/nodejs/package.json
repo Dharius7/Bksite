@@ -1,7 +1,7 @@
 {
   "name": "coral-credit-bank-backend",
   "version": "1.0.0",
-  "description": "Backend API for Coral Credit Bank LTD",
+  "description": "Backend API for Orine Credit Bank LTD",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

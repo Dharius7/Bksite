@@ -27,7 +27,7 @@ export default function Contact() {
       title: 'Email Support',
       details: [
         'Response within 24hrs',
-        'customerservice@coralcb.com',
+        'customerservice@orinecbl.com',
       ],
     },
     {

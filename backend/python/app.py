@@ -116,7 +116,7 @@ db = _default_db if _default_db is not None else client['coral-credit-bank']
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
-    return jsonify({'status': 'ok', 'message': 'Coral Credit Bank API is running'})
+    return jsonify({'status': 'ok', 'message': 'Orine Credit Bank API is running'})
 
 
 def auth_required(fn):
