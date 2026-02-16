@@ -5,7 +5,15 @@ import ThemeProvider from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {`r`n  title: "Orine Credit",`r`n  description: "Building financial strength together with personalized banking solutions for every member.",`r`n  icons: {`r`n    icon: "/images/Logo.png",`r`n    shortcut: "/images/Logo.png",`r`n    apple: "/images/Logo.png",`r`n  },`r`n};
+export const metadata: Metadata = {
+  title: "Orine Credit",
+  description: "Building financial strength together with personalized banking solutions for every member.",
+  icons: {
+    icon: "/images/Logo.png",
+    shortcut: "/images/Logo.png",
+    apple: "/images/Logo.png",
+  },
+};
 
 export default function RootLayout({
   children,
