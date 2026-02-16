@@ -92,9 +92,9 @@ export default function AccessibilityPage() {
                   <Phone className="h-4 w-4 text-blue-700" />
                   Phone Lines
                 </div>
-                <p className="mt-2 text-sm text-slate-700">Toll-Free: +1 (888) 995-2290</p>
-                <p className="mt-1 text-sm text-slate-700">Fax: +1 (888) 995-22901</p>
-                <p className="mt-1 text-sm text-slate-700">24 hour banking system: +1 (888) 995-2290</p>
+                <p className="mt-2 text-sm text-slate-700">Toll-Free: +1 (484) 408-0053</p>
+                <p className="mt-1 text-sm text-slate-700">Fax: +1 (610) 905-21500</p>
+                <p className="mt-1 text-sm text-slate-700">24 hour banking system: +1 (484) 408-0053</p>
                 <p className="mt-2 text-xs text-blue-700 font-medium">Available 24/7</p>
               </div>
 

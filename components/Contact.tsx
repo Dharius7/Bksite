@@ -19,7 +19,7 @@ export default function Contact() {
       details: [
         'Available 24/7',
         'Call: 1-800-BANKING',
-        'International: +1 (888) 995-2290',
+        'International: +1 (484) 408-0053',
       ],
     },
     {

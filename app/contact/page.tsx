@@ -143,9 +143,9 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900">Phone Lines</div>
-                  <p className="text-sm text-gray-600">Toll-Free: +1 (888) 995-2290</p>
-                  <p className="text-sm text-gray-600">Fax +1 (888) 995-22901</p>
-                  <p className="text-sm text-gray-600">24 hour banking system +1 (888) 995-2290</p>
+                  <p className="text-sm text-gray-600">Toll-Free: +1 (484) 408-0053</p>
+                  <p className="text-sm text-gray-600">Fax +1 (610) 905-21500</p>
+                  <p className="text-sm text-gray-600">24 hour banking system +1 (484) 408-0053</p>
                   <p className="text-xs text-gray-500 mt-2">Available 24/7</p>
                 </div>
               </div>
