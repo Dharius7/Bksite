@@ -150,7 +150,7 @@ export default function AdminUsersPage() {
       )}
 
       {loading ? (
-        <WavePreloader fullScreen={false} />
+        <WavePreloader />
       ) : (
         <section className="bg-white/90 backdrop-blur rounded-3xl shadow-lg p-4 md:p-6 border border-slate-100 relative overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-500" />

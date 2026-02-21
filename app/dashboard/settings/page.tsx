@@ -146,7 +146,7 @@ export default function SettingsPage() {
 
           <div className="p-6 space-y-4">
             {loading ? (
-              <WavePreloader fullScreen={false} />
+              <WavePreloader />
             ) : (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -99,7 +99,7 @@ export default function TaxRefundPage() {
         <div className="bg-white rounded-lg shadow-sm p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Requests</h2>
           {loading ? (
-            <WavePreloader fullScreen={false} />
+            <WavePreloader />
           ) : refunds.length === 0 ? (
             <div className="text-gray-600">No requests yet.</div>
           ) : (

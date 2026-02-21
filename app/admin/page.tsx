@@ -361,7 +361,7 @@ export default function AdminDashboardPage() {
       )}
 
       {loading ? (
-        <WavePreloader fullScreen={false} />
+        <WavePreloader />
       ) : (
         <>
           <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-3">

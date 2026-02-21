@@ -163,7 +163,7 @@ export default function TransactionsPage() {
         )}
 
         {loading ? (
-          <WavePreloader fullScreen={false} />
+          <WavePreloader />
         ) : transactions.length === 0 ? (
           <div className="p-6 text-gray-600">No transactions found.</div>
         ) : (

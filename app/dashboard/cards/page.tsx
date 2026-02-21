@@ -240,7 +240,7 @@ export default function CardsPage() {
             </div>
           )}
           {loading ? (
-            <WavePreloader fullScreen={false} />
+            <WavePreloader />
           ) : cards.length === 0 ? (
             <div className="flex flex-col items-center text-center gap-3 py-10">
               <div className="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center">

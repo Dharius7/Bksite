@@ -123,7 +123,7 @@ export default function DashboardPage() {
   if (isLoading || loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <WavePreloader fullScreen={false} />
+        <WavePreloader />
       </div>
     );
   }

@@ -55,7 +55,7 @@ export default function AccountsPage() {
           </div>
         )}
         {loading ? (
-          <WavePreloader fullScreen={false} />
+          <WavePreloader />
         ) : accounts.length === 0 ? (
           <div className="text-gray-600">No accounts found.</div>
         ) : (

@@ -212,7 +212,7 @@ export default function DepositConfirmPage() {
     <Suspense
       fallback={
         <div className="flex items-center justify-center h-screen">
-          <WavePreloader fullScreen={false} />
+          <WavePreloader />
         </div>
       }
     >
