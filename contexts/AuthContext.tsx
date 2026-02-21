@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 
@@ -29,7 +29,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const inactivityTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const router = useRouter();
+  const INACTIVITY_TIMEOUT_MS = 15 * 60 * 1000;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -71,15 +73,58 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const logout = () => {
+  const clearSession = useCallback((redirectTo: string) => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
     }
     setToken(null);
     setUser(null);
-    router.push('/login');
+    router.push(redirectTo);
+  }, [router]);
+
+  const logout = () => {
+    clearSession('/login');
   };
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !token || !user) return;
+
+    const clearTimer = () => {
+      if (inactivityTimerRef.current) {
+        clearTimeout(inactivityTimerRef.current);
+      }
+    };
+
+    const resetTimer = () => {
+      clearTimer();
+      inactivityTimerRef.current = setTimeout(() => {
+        clearSession('/');
+      }, INACTIVITY_TIMEOUT_MS);
+    };
+
+    const activityEvents: Array<keyof WindowEventMap> = [
+      'mousemove',
+      'mousedown',
+      'keydown',
+      'scroll',
+      'touchstart',
+      'click',
+    ];
+
+    activityEvents.forEach((eventName) => {
+      window.addEventListener(eventName, resetTimer, { passive: true });
+    });
+
+    resetTimer();
+
+    return () => {
+      clearTimer();
+      activityEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, resetTimer);
+      });
+    };
+  }, [token, user, clearSession]);
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout, isLoading }}>
