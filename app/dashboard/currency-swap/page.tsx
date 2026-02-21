@@ -32,7 +32,7 @@ export default function CurrencySwapPage() {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      router.push('/login');
+      router.push('/');
     }
   }, [user, isLoading, router]);
 

@@ -19,7 +19,7 @@ export default function InvestmentDepositPage() {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      router.push('/login');
+      router.push('/');
     }
   }, [user, isLoading, router]);
 

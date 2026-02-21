@@ -44,7 +44,7 @@ export default function WireTransferPage() {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      router.push('/login');
+      router.push('/');
     }
   }, [user, isLoading, router]);
 

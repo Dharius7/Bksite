@@ -19,7 +19,7 @@ export default function LogoutPage() {
         return;
       }
     }
-    router.push('/login');
+    router.push('/');
   }, [router]);
 
   return (
