@@ -151,13 +151,13 @@ export default function WiseTransferPage() {
   };
 
   return (
-    <div className="p-4 md:p-6 space-y-6">
-      <div className="bg-white rounded-2xl shadow-sm p-5 md:p-6 flex items-center gap-4">
+    <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6">
+      <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-5 md:p-6 flex items-start sm:items-center gap-3 sm:gap-4">
         <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center">
           <Globe className="w-6 h-6" />
         </div>
         <div className="flex-1">
-          <h1 className="text-xl font-semibold text-gray-900">International Transfer</h1>
+          <h1 className="text-lg sm:text-xl font-semibold text-gray-900">International Transfer</h1>
           <p className="text-gray-600">Send money worldwide with multiple payment methods</p>
         </div>
       </div>
@@ -183,7 +183,7 @@ export default function WiseTransferPage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-5 md:p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-6">
           {message && (
             <div className="rounded-lg bg-green-50 border border-green-200 text-green-700 px-4 py-3">
               {message}
@@ -197,8 +197,8 @@ export default function WiseTransferPage() {
 
           <div>
             <div className="text-sm font-semibold text-gray-900 mb-2">Available Balance</div>
-            <div className="border border-blue-200 rounded-2xl p-4 flex items-center justify-between">
-              <div className="flex items-center gap-4">
+            <div className="border border-blue-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex items-start sm:items-center gap-3 sm:gap-4">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                   <Wallet className="w-5 h-5" />
                 </div>
@@ -345,7 +345,7 @@ export default function WiseTransferPage() {
         </form>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-3">
+      <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-5 flex items-start sm:items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
           <ShieldCheck className="w-5 h-5" />
         </div>

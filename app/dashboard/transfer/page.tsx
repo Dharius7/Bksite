@@ -113,8 +113,8 @@ export default function TransferPage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="bg-white rounded-2xl shadow-sm p-6">
+    <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6">
+      <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-5 md:p-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex items-start gap-3">
             <button
@@ -129,7 +129,7 @@ export default function TransferPage() {
               <Landmark className="w-6 h-6" />
             </div>
             <div className="min-w-0">
-              <h1 className="text-xl font-semibold text-gray-900">International Transfer</h1>
+              <h1 className="text-lg sm:text-xl font-semibold text-gray-900">International Transfer</h1>
               <p
                 className="text-gray-600 text-sm sm:text-base"
                 style={{
@@ -183,7 +183,7 @@ export default function TransferPage() {
                   }
                   setMethod(item.id);
                 }}
-                className={`text-left bg-white rounded-2xl shadow-sm p-5 border transition ${
+                className={`text-left bg-white rounded-2xl shadow-sm p-4 sm:p-5 border transition ${
                   isActive ? 'border-blue-500 ring-2 ring-blue-100' : 'border-transparent hover:border-gray-200'
                 }`}
               >
@@ -202,7 +202,7 @@ export default function TransferPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-3">
+      <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-5 flex items-start sm:items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
           <ShieldCheck className="w-5 h-5" />
         </div>
