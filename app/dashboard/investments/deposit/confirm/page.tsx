@@ -1,5 +1,6 @@
 'use client';
 
+import WavePreloader from '@/components/WavePreloader';
 import { FormEvent, Suspense, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -31,11 +32,7 @@ function InvestmentDepositConfirmContent() {
   }, [user, isLoading, router]);
 
   if (isLoading || !user) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-gray-600">Loading...</div>
-      </div>
-    );
+    return <WavePreloader fullScreen />;
   }
 
   const handleSubmit = async (e: FormEvent) => {
@@ -195,7 +192,7 @@ export default function InvestmentDepositConfirmPage() {
     <Suspense
       fallback={
         <div className="flex items-center justify-center h-screen">
-          <div className="text-gray-600">Loading...</div>
+          <WavePreloader fullScreen={false} />
         </div>
       }
     >

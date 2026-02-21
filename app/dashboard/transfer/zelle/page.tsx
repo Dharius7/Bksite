@@ -1,5 +1,6 @@
 'use client';
 
+import WavePreloader from '@/components/WavePreloader';
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -86,11 +87,7 @@ export default function ZelleTransferPage() {
   }, [fullName, note, phone, zelleEmail]);
 
   if (isLoading || !user) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-gray-600">Loading...</div>
-      </div>
-    );
+    return <WavePreloader fullScreen />;
   }
 
   const submitTransfer = async () => {

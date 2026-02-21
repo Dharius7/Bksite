@@ -40,17 +40,17 @@ export default function TransferConfirmModal({
     `$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-      <div className="w-full max-w-lg rounded-2xl bg-white shadow-xl">
-        <div className="p-6 border-b border-gray-100 flex items-start justify-between gap-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-2 sm:px-4">
+      <div className="w-full max-w-lg max-h-[90dvh] overflow-hidden rounded-2xl bg-white shadow-xl">
+        <div className="p-4 sm:p-6 border-b border-gray-100 flex items-start justify-between gap-3 sm:gap-4">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
-              <CheckCircle2 className="w-5 h-5" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+              <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Confirm Your Transfer</h3>
-              <p className="text-sm text-gray-500">
-                Please review your transfer details before confirming. Once submitted, this transaction cannot be reversed.
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900">Confirm Your Transfer</h3>
+              <p className="text-xs text-gray-500">
+                Please review your details before confirming. Once submitted, Transaction cannot be reversed.
               </p>
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function TransferConfirmModal({
           </button>
         </div>
 
-        <div className="p-6 space-y-4 text-sm">
+        <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 text-xs sm:text-sm overflow-y-auto">
 
           {statusMessage && (
             <div className="rounded-lg bg-green-50 border border-green-200 text-green-700 px-4 py-3 text-sm">
@@ -121,7 +121,7 @@ export default function TransferConfirmModal({
 
         </div>
 
-        <div className="p-6 pt-2 flex flex-col sm:flex-row gap-3 sm:justify-end">
+        <div className="p-4 sm:p-6 pt-2 flex flex-col sm:flex-row gap-3 sm:justify-end">
           <button
             type="button"
             onClick={onClose}

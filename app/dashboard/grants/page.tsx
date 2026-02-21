@@ -1,5 +1,6 @@
 'use client';
 
+import WavePreloader from '@/components/WavePreloader';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -49,11 +50,7 @@ export default function GrantsPage() {
   }, [fetchGrants]);
 
   if (isLoading || !user) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-gray-600">Loading...</div>
-      </div>
-    );
+    return <WavePreloader fullScreen />;
   }
 
   const handleSubmit = async (e: FormEvent) => {
@@ -118,7 +115,7 @@ export default function GrantsPage() {
         <div className="bg-white rounded-lg shadow-sm p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Applications</h2>
           {loading ? (
-            <div className="text-gray-600">Loading applications...</div>
+            <WavePreloader fullScreen={false} />
           ) : grants.length === 0 ? (
             <div className="text-gray-600">No applications yet.</div>
           ) : (

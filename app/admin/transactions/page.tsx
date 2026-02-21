@@ -1,5 +1,6 @@
 'use client';
 
+import WavePreloader from '@/components/WavePreloader';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import adminApi from '@/lib/adminApi';
 import { Download, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -173,7 +174,7 @@ export default function AdminTransactionsPage() {
         )}
 
         {loading ? (
-          <div className="p-6 text-gray-600">Loading transactions...</div>
+          <WavePreloader fullScreen={false} />
         ) : transactions.length === 0 ? (
           <div className="p-6 text-gray-600">No transactions found.</div>
         ) : (

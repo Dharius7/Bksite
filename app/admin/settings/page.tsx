@@ -1,5 +1,6 @@
 'use client';
 
+import WavePreloader from '@/components/WavePreloader';
 import { useEffect, useState } from 'react';
 import { Settings, Save, User, ArrowLeft } from 'lucide-react';
 import adminApi from '@/lib/adminApi';
@@ -123,7 +124,7 @@ export default function AdminSettingsPage() {
           )}
 
           {loading ? (
-            <div className="text-sm text-gray-600">Loading admin profile...</div>
+            <WavePreloader fullScreen={false} />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">

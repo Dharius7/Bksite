@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import WavePreloader from '@/components/WavePreloader';
 
 export default function LogoutPage() {
   const router = useRouter();
@@ -22,8 +23,6 @@ export default function LogoutPage() {
   }, [router]);
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="text-gray-600">Signing out...</div>
-    </div>
+    <WavePreloader fullScreen />
   );
 }

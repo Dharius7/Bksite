@@ -1,5 +1,6 @@
 'use client';
 
+import WavePreloader from '@/components/WavePreloader';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import adminApi from '@/lib/adminApi';
@@ -813,7 +814,7 @@ export default function AdminAccountsPage() {
     <Suspense
       fallback={
         <div className="flex items-center justify-center h-screen">
-          <div className="text-gray-600">Loading...</div>
+          <WavePreloader fullScreen={false} />
         </div>
       }
     >

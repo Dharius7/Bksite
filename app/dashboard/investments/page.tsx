@@ -1,5 +1,6 @@
 'use client';
 
+import WavePreloader from '@/components/WavePreloader';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -59,11 +60,7 @@ export default function InvestmentsPage() {
   }, [message, error, fetchData]);
 
   if (isLoading || !user) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-gray-600">Loading...</div>
-      </div>
-    );
+    return <WavePreloader fullScreen />;
   }
 
   return (

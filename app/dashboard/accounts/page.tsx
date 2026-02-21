@@ -1,5 +1,6 @@
 'use client';
 
+import WavePreloader from '@/components/WavePreloader';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -37,11 +38,7 @@ export default function AccountsPage() {
   }, [user]);
 
   if (isLoading || !user) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-gray-600">Loading...</div>
-      </div>
-    );
+    return <WavePreloader fullScreen />;
   }
 
   return (
@@ -58,7 +55,7 @@ export default function AccountsPage() {
           </div>
         )}
         {loading ? (
-          <div className="text-gray-600">Loading accounts...</div>
+          <WavePreloader fullScreen={false} />
         ) : accounts.length === 0 ? (
           <div className="text-gray-600">No accounts found.</div>
         ) : (

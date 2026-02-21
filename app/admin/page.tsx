@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import adminApi from '@/lib/adminApi';
+import WavePreloader from '@/components/WavePreloader';
 import {
   Users,
   Wallet,
@@ -360,7 +361,7 @@ export default function AdminDashboardPage() {
       )}
 
       {loading ? (
-        <div className="text-gray-600">Loading admin data...</div>
+        <WavePreloader fullScreen={false} />
       ) : (
         <>
           <div className="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-3">

@@ -1,5 +1,6 @@
 'use client';
 
+import WavePreloader from '@/components/WavePreloader';
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -77,11 +78,7 @@ function DepositConfirmContent() {
   };
 
   if (isLoading || !user) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-gray-600">Loading...</div>
-      </div>
-    );
+    return <WavePreloader fullScreen />;
   }
 
   return (
@@ -215,7 +212,7 @@ export default function DepositConfirmPage() {
     <Suspense
       fallback={
         <div className="flex items-center justify-center h-screen">
-          <div className="text-gray-600">Loading...</div>
+          <WavePreloader fullScreen={false} />
         </div>
       }
     >
