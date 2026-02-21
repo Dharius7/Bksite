@@ -11,7 +11,47 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user } = useAuth();
   const [moreOpen, setMoreOpen] = useState(false);
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
   const isActive = (path: string) => pathname === path;
+
+  useEffect(() => {
+    const isFormElement = (target: EventTarget | null) => {
+      if (!(target instanceof HTMLElement)) return false;
+      const tag = target.tagName.toLowerCase();
+      return tag === 'input' || tag === 'textarea' || tag === 'select' || target.isContentEditable;
+    };
+
+    const onFocusIn = (event: FocusEvent) => {
+      if (isFormElement(event.target)) setKeyboardOpen(true);
+    };
+
+    const onFocusOut = () => {
+      setTimeout(() => {
+        const active = document.activeElement;
+        if (!(active instanceof HTMLElement) || !isFormElement(active)) {
+          setKeyboardOpen(false);
+        }
+      }, 80);
+    };
+
+    const viewport = window.visualViewport;
+    const onViewportResize = () => {
+      if (!viewport) return;
+      const heightGap = window.innerHeight - viewport.height;
+      setKeyboardOpen(heightGap > 140);
+    };
+
+    window.addEventListener('focusin', onFocusIn);
+    window.addEventListener('focusout', onFocusOut);
+    viewport?.addEventListener('resize', onViewportResize);
+
+    return () => {
+      window.removeEventListener('focusin', onFocusIn);
+      window.removeEventListener('focusout', onFocusOut);
+      viewport?.removeEventListener('resize', onViewportResize);
+    };
+  }, []);
+
   useEffect(() => {
     const handleOpen = () => setMoreOpen(true);
     window.addEventListener('open-more-sheet', handleOpen);
@@ -27,7 +67,11 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Mobile bottom nav */}
-      <nav className="mobile-bottom-nav fixed bottom-3 sm:bottom-4 left-1/2 z-50 w-[94%] sm:w-[92%] -translate-x-1/2 rounded-2xl bg-white shadow-lg border border-gray-100 px-3 sm:px-4 py-2 sm:py-2.5 md:hidden">
+      <nav
+        className={`mobile-bottom-nav fixed bottom-3 sm:bottom-4 left-1/2 z-50 w-[94%] sm:w-[92%] -translate-x-1/2 rounded-2xl bg-white shadow-lg border border-gray-100 px-3 sm:px-4 py-2 sm:py-2.5 md:hidden ${
+          keyboardOpen ? 'hidden' : ''
+        }`}
+      >
         <div className="flex items-center justify-between gap-1">
           <Link
             href="/dashboard/transfer/local"

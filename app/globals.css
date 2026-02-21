@@ -262,6 +262,10 @@ body.transfer-confirm-open .mobile-bottom-nav {
   display: none !important;
 }
 
+body.keyboard-open .mobile-bottom-nav {
+  display: none !important;
+}
+
 /* Prevent mobile browser auto-zoom on form focus (notably iOS Safari). */
 @media (max-width: 768px) {
   input,
