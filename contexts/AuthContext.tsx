@@ -84,7 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [router]);
 
   const logout = () => {
-    clearSession('/login');
+    clearSession('/');
   };
 
   useEffect(() => {
