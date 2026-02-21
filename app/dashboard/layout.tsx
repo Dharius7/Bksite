@@ -27,7 +27,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Mobile bottom nav */}
-      <nav className="fixed bottom-3 sm:bottom-4 left-1/2 z-50 w-[94%] sm:w-[92%] -translate-x-1/2 rounded-2xl bg-white shadow-lg border border-gray-100 px-3 sm:px-4 py-2 sm:py-2.5 md:hidden">
+      <nav className="mobile-bottom-nav fixed bottom-3 sm:bottom-4 left-1/2 z-50 w-[94%] sm:w-[92%] -translate-x-1/2 rounded-2xl bg-white shadow-lg border border-gray-100 px-3 sm:px-4 py-2 sm:py-2.5 md:hidden">
         <div className="flex items-center justify-between gap-1">
           <Link
             href="/dashboard/transfer/local"

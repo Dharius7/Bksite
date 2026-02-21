@@ -257,3 +257,7 @@ body {
 .preloader-dots i:nth-child(3) {
   animation-delay: 0.3s;
 }
+
+body.transfer-confirm-open .mobile-bottom-nav {
+  display: none !important;
+}
